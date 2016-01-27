@@ -11,4 +11,7 @@
     <string name="configuration">Configuration</string>
     <string name="about">About</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="title_activity_decks">Decks</string>
+    <string name="title_activity_players">Players</string>
+    <string name="title_activity_matches">Matches</string>
 </resources>

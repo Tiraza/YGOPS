@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import br.com.extractor.ygops.R;
+import br.com.extractor.ygops.view.ParentActivity;
 
 public class Splash extends ParentActivity {
 

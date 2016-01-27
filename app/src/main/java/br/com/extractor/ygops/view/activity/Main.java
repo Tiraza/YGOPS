@@ -1,7 +1,11 @@
 package br.com.extractor.ygops.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
@@ -14,10 +18,18 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import java.util.ArrayList;
 
 import br.com.extractor.ygops.R;
+import br.com.extractor.ygops.view.ParentActivity;
 
 public class Main extends ParentActivity {
 
     private Drawer.Result drawerResult;
+
+    private final int HOME = 0;
+    private final int PLAYERS = 1;
+    private final int DECKS = 2;
+    private final int MATCHES = 3;
+    private final int CONFIGURATION = 5;
+    private final int ABOUT = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +73,32 @@ public class Main extends ParentActivity {
         drawer.withActionBarDrawerToggleAnimated(true);
         drawer.withAccountHeader(headerResult.build());
         drawer.withDrawerItems(drawerItems);
+        drawer.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id, IDrawerItem iDrawerItem) {
+                Intent intent;
+                switch (position){
+                    case HOME:
+                        break;
+                    case PLAYERS:
+                        intent = new Intent(Main.this, Players.class);
+                        startActivity(intent);
+                        break;
+                    case DECKS:
+                        intent = new Intent(Main.this, Decks.class);
+                        startActivity(intent);
+                        break;
+                    case MATCHES:
+                        intent = new Intent(Main.this, Matches.class);
+                        startActivity(intent);
+                        break;
+                    case CONFIGURATION:
+                        break;
+                    case ABOUT:
+                        break;
+                }
+            }
+        });
 
         drawerResult = drawer.build();
     }

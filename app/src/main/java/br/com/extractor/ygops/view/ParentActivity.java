@@ -1,4 +1,4 @@
-package br.com.extractor.ygops.view.activity;
+package br.com.extractor.ygops.view;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

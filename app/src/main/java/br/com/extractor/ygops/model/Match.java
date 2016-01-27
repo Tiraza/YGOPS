@@ -1,5 +1,7 @@
 package br.com.extractor.ygops.model;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 
 /**
@@ -8,10 +10,12 @@ import io.realm.RealmObject;
 public class Match extends RealmObject {
 
     private Player winner;
-    private Deck deckWinner;
-
     private Player loser;
+
+    private Deck deckWinner;
     private Deck deckLoser;
+
+    private Date date;
 
     public Match() {}
 
@@ -41,5 +45,12 @@ public class Match extends RealmObject {
     }
     public void setDeckLoser(Deck deckLoser) {
         this.deckLoser = deckLoser;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
