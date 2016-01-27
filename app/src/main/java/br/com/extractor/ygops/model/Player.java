@@ -1,0 +1,37 @@
+package br.com.extractor.ygops.model;
+
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
+/**
+ * Created by Muryllo Tiraza on 27/01/2016.
+ */
+public class Player extends RealmObject {
+
+    private String uuid;
+    private String nome;
+    private RealmList<Deck> decks;
+
+    public Player() {}
+
+    public String getUuid() {
+        return uuid;
+    }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public RealmList<Deck> getDecks() {
+        return decks;
+    }
+    public void setDecks(RealmList<Deck> decks) {
+        this.decks = decks;
+    }
+}
