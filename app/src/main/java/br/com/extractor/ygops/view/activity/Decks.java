@@ -24,4 +24,8 @@ public class Decks extends ParentActivity {
         transaction.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        this.finish();
+    }
 }

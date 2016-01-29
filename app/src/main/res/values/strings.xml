@@ -14,4 +14,10 @@
     <string name="title_activity_decks">Decks</string>
     <string name="title_activity_players">Players</string>
     <string name="title_activity_matches">Matches</string>
+    <string name="deck_name">Deck Name</string>
+    <string name="flat_done">DONE</string>
+    <string name="field_required">Field Required</string>
+    <string name="insert_deck">Insert Deck</string>
+    <string name="flat_ok">OK</string>
+    <string name="flat_cancel">CANCEL</string>
 </resources>
