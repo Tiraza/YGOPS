@@ -16,9 +16,9 @@ import br.com.extractor.ygops.util.RealmUtils;
 /**
  * Created by Muryllo Tiraza on 02/02/2016.
  */
-public class AddPlayer {
+public class DialogAddPlayer {
 
-    public AddPlayer (final Context context, final DialogResult result) {
+    public DialogAddPlayer(final Context context, final DialogResult result) {
 
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

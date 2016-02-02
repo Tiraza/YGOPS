@@ -16,9 +16,9 @@ import br.com.extractor.ygops.util.RealmUtils;
 /**
  * Created by Muryllo Tiraza on 29/01/2016.
  */
-public class AddDeck {
+public class DialogAddDeck {
 
-    public AddDeck (final Context context, final DialogResult result) {
+    public DialogAddDeck(final Context context, final DialogResult result) {
 
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

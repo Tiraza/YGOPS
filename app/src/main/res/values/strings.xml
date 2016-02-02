@@ -22,4 +22,6 @@
     <string name="flat_cancel">CANCEL</string>
     <string name="player_name">Player Name</string>
     <string name="insert_player">Insert Player</string>
+    <string name="register">Register</string>
+    <string name="name_or_nickname">Name or Nickname</string>
 </resources>

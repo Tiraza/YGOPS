@@ -1,11 +1,14 @@
 package br.com.extractor.ygops.view.activity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
@@ -18,7 +21,12 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import java.util.ArrayList;
 
 import br.com.extractor.ygops.R;
+import br.com.extractor.ygops.model.Owner;
 import br.com.extractor.ygops.view.ParentActivity;
+import br.com.extractor.ygops.view.dialog.DialogRegister;
+import br.com.extractor.ygops.view.fragment.ListDeck;
+import br.com.extractor.ygops.view.fragment.ListPlayer;
+import io.realm.Realm;
 
 public class Main extends ParentActivity {
 
@@ -38,11 +46,19 @@ public class Main extends ParentActivity {
         setupNavigationDrawer();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private void verifyRegister(){
+        Realm realm = Realm.getDefaultInstance();
+        Owner owner = realm.where(Owner.class).findFirst();
+        if(owner == null){
+            new DialogRegister(this);
+        }
+        realm.close();
     }
 
     private void setupNavigationDrawer(){
@@ -81,16 +97,12 @@ public class Main extends ParentActivity {
                     case HOME:
                         break;
                     case PLAYERS:
-                        intent = new Intent(Main.this, Players.class);
-                        startActivity(intent);
+                        replaceFragment(new ListPlayer());
                         break;
                     case DECKS:
-                        intent = new Intent(Main.this, Decks.class);
-                        startActivity(intent);
+                        replaceFragment(new ListDeck());
                         break;
                     case MATCHES:
-                        intent = new Intent(Main.this, Matches.class);
-                        startActivity(intent);
                         break;
                     case CONFIGURATION:
                         break;
@@ -103,4 +115,12 @@ public class Main extends ParentActivity {
         drawerResult = drawer.build();
     }
 
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        ft.replace(R.id.fragmentContainer, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
 }

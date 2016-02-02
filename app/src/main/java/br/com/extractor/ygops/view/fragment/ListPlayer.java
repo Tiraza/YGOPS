@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -12,7 +13,7 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.view.RealmFragment;
 import br.com.extractor.ygops.view.adapter.PlayersAdapter;
-import br.com.extractor.ygops.view.dialog.AddPlayer;
+import br.com.extractor.ygops.view.dialog.DialogAddPlayer;
 import br.com.extractor.ygops.view.dialog.DialogResult;
 import io.realm.RealmResults;
 
@@ -41,9 +42,10 @@ public class ListPlayer extends RealmFragment implements DialogResult {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AddPlayer(activity, ListPlayer.this);
+                new DialogAddPlayer(activity, ListPlayer.this);
             }
         });
+        fab.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -12,7 +13,7 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.view.RealmFragment;
 import br.com.extractor.ygops.view.adapter.DecksAdapter;
-import br.com.extractor.ygops.view.dialog.AddDeck;
+import br.com.extractor.ygops.view.dialog.DialogAddDeck;
 import br.com.extractor.ygops.view.dialog.DialogResult;
 import io.realm.RealmResults;
 
@@ -41,9 +42,10 @@ public class ListDeck extends RealmFragment implements DialogResult {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AddDeck(activity, ListDeck.this);
+                new DialogAddDeck(activity, ListDeck.this);
             }
         });
+        fab.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));
     }
 
     @Override
