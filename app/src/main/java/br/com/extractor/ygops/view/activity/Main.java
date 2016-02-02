@@ -1,7 +1,6 @@
 package br.com.extractor.ygops.view.activity;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -92,7 +91,6 @@ public class Main extends ParentActivity {
         drawer.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id, IDrawerItem iDrawerItem) {
-                Intent intent;
                 switch (position){
                     case HOME:
                         break;
