@@ -10,29 +10,29 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.extractor.ygops.R;
-import br.com.extractor.ygops.model.Deck;
+import br.com.extractor.ygops.model.Player;
 
 /**
- * Created by Muryllo Tiraza on 29/01/2016.
+ * Created by Muryllo Tiraza on 02/02/2016.
  */
-public class DecksAdapter extends BaseAdapter {
+public class PlayersAdapter extends BaseAdapter {
 
-    private List<Deck> decks;
+    private List<Player> players;
     private Context context;
 
-    public DecksAdapter(List<Deck> decks, Context context) {
-        this.decks = decks;
+    public PlayersAdapter(List<Player> players, Context context) {
+        this.players = players;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return decks.size();
+        return players.size();
     }
 
     @Override
-    public Deck getItem(int position) {
-        return decks.get(position);
+    public Player getItem(int position) {
+        return players.get(position);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class DecksAdapter extends BaseAdapter {
             view = layoutInflater.inflate(R.layout.adapter_list_item, null);
         }
 
-        Deck deck = getItem(position);
+        Player deck = getItem(position);
 
         TextView txtDeck = (TextView) view.findViewById(R.id.txtDeck);
         txtDeck.setText(deck.getNome());

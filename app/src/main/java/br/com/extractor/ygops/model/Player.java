@@ -2,12 +2,14 @@ package br.com.extractor.ygops.model;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Muryllo Tiraza on 27/01/2016.
  */
 public class Player extends RealmObject {
 
+    @PrimaryKey
     private String uuid;
     private String nome;
     private RealmList<Deck> decks;

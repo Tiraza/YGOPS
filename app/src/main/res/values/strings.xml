@@ -20,4 +20,6 @@
     <string name="insert_deck">Insert Deck</string>
     <string name="flat_ok">OK</string>
     <string name="flat_cancel">CANCEL</string>
+    <string name="player_name">Player Name</string>
+    <string name="insert_player">Insert Player</string>
 </resources>
