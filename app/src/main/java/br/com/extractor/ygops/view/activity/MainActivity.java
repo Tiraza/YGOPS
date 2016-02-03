@@ -23,11 +23,11 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Owner;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.dialog.DialogRegister;
-import br.com.extractor.ygops.view.fragment.ListDeck;
-import br.com.extractor.ygops.view.fragment.ListPlayer;
+import br.com.extractor.ygops.view.fragment.ListDeckFragment;
+import br.com.extractor.ygops.view.fragment.ListPlayerFragment;
 import io.realm.Realm;
 
-public class Main extends ParentActivity {
+public class MainActivity extends ParentActivity {
 
     private Drawer.Result drawerResult;
 
@@ -40,8 +40,7 @@ public class Main extends ParentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        onCreate(savedInstanceState, R.layout.activity_main);
         setupNavigationDrawer();
     }
 
@@ -51,16 +50,16 @@ public class Main extends ParentActivity {
         return true;
     }
 
-    private void verifyRegister(){
+    private void verifyRegister() {
         Realm realm = Realm.getDefaultInstance();
         Owner owner = realm.where(Owner.class).findFirst();
-        if(owner == null){
+        if (owner == null) {
             new DialogRegister(this);
         }
         realm.close();
     }
 
-    private void setupNavigationDrawer(){
+    private void setupNavigationDrawer() {
         ProfileDrawerItem profileDrawerItem = new ProfileDrawerItem();
         profileDrawerItem.withName("Player");
 
@@ -91,14 +90,14 @@ public class Main extends ParentActivity {
         drawer.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id, IDrawerItem iDrawerItem) {
-                switch (position){
+                switch (position) {
                     case HOME:
                         break;
                     case PLAYERS:
-                        replaceFragment(new ListPlayer());
+                        replaceFragment(new ListPlayerFragment());
                         break;
                     case DECKS:
-                        replaceFragment(new ListDeck());
+                        replaceFragment(new ListDeckFragment());
                         break;
                     case MATCHES:
                         break;
@@ -113,7 +112,7 @@ public class Main extends ParentActivity {
         drawerResult = drawer.build();
     }
 
-    private void replaceFragment(Fragment fragment){
+    private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);

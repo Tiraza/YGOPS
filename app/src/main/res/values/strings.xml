@@ -24,4 +24,10 @@
     <string name="insert_player">Insert Player</string>
     <string name="register">Register</string>
     <string name="name_or_nickname">Name or Nickname</string>
+    <string name="title_activity_match_register">Register Match</string>
+    <string name="match_register">Match Register</string>
+    <string name="title_activity_deck_register">DeckRegisterActivity</string>
+    <string name="title_activity_player_register">PlayerRegisterActivity</string>
+    <string name="deck_register">Deck Register</string>
+    <string name="player_register">Player Register</string>
 </resources>

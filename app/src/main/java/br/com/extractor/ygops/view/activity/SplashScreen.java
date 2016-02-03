@@ -7,7 +7,7 @@ import android.os.Handler;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.view.ParentActivity;
 
-public class Splash extends ParentActivity {
+public class SplashScreen extends ParentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,12 +16,12 @@ public class Splash extends ParentActivity {
 
         int SPLASH_DISPLAY_LENGTH = 2000;
 
-        new Handler().postDelayed(new Runnable(){
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mainIntent = new Intent(Splash.this, Main.class);
-                Splash.this.startActivity(mainIntent);
-                Splash.this.finish();
+                Intent mainIntent = new Intent(SplashScreen.this, MainActivity.class);
+                SplashScreen.this.startActivity(mainIntent);
+                SplashScreen.this.finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
     }

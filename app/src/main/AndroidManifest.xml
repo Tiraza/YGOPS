@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.extractor.ygops" >
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="br.com.extractor.ygops">
 
     <application
         android:name=".application.YgoPS"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:name=".view.activity.Main"
-            android:label="@string/title_activity_main" >
-        </activity>
-        <activity
-            android:name=".view.activity.Splash"
-            android:label="@string/title_activity_splash_screen" >
+            android:name=".view.activity.SplashScreen"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,17 +19,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.activity.Decks"
-            android:label="@string/title_activity_decks" >
-        </activity>
+            android:name=".view.activity.MainActivity"
+            android:label="@string/title_activity_main" />
         <activity
-            android:name=".view.activity.Players"
-            android:label="@string/title_activity_players" >
-        </activity>
+            android:name=".view.activity.MatchRegisterActivity"
+            android:label="@string/title_activity_match_register" />
         <activity
-            android:name=".view.activity.Matches"
-            android:label="@string/title_activity_matches" >
-        </activity>
+            android:name=".view.activity.DeckRegisterActivity"
+            android:label="@string/title_activity_deck_register" />
+        <activity
+            android:name=".view.activity.PlayerRegisterActivity"
+            android:label="@string/title_activity_player_register" />
     </application>
 
 </manifest>
