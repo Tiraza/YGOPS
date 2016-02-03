@@ -39,12 +39,13 @@ public class ListDeckFragment extends RealmFragment {
         ListView listView = getElementById(R.id.listView);
         listView.setAdapter(adapter);
 
-        FloatingActionButton fab = getElementById(R.id.fab);
+        final FloatingActionButton fab = getElementById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, DeckRegisterActivity.class);
                 startActivityForResult(intent, DECK_REGISTER_CODE);
+
             }
         });
         fab.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));

@@ -5,7 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import java.util.List;
 
@@ -42,7 +46,7 @@ public class DecksAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        if(view == null){
+        if (view == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             view = layoutInflater.inflate(R.layout.adapter_list_item, null);
         }
@@ -51,6 +55,15 @@ public class DecksAdapter extends BaseAdapter {
 
         TextView txtDeck = (TextView) view.findViewById(R.id.txtDeck);
         txtDeck.setText(deck.getNome());
+
+        TextDrawable drawable = TextDrawable.builder()
+                .beginConfig()
+                    .bold()
+                    .endConfig()
+                .buildRound(deck.getNome().substring(0, 1).toUpperCase(), ColorGenerator.MATERIAL.getRandomColor());
+
+        ImageView img = (ImageView) view.findViewById(R.id.image_view);
+        img.setImageDrawable(drawable);
 
         return view;
     }

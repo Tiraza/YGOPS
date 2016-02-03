@@ -30,4 +30,5 @@
     <string name="title_activity_player_register">PlayerRegisterActivity</string>
     <string name="deck_register">Deck Register</string>
     <string name="player_register">Player Register</string>
+    <string name="pick_a_image">Pick a Image</string>
 </resources>

@@ -44,12 +44,6 @@ public class MainActivity extends ParentActivity {
         setupNavigationDrawer();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
     private void verifyRegister() {
         Realm realm = Realm.getDefaultInstance();
         Owner owner = realm.where(Owner.class).findFirst();
@@ -65,7 +59,7 @@ public class MainActivity extends ParentActivity {
 
         AccountHeader headerResult = new AccountHeader();
         headerResult.withActivity(this);
-        headerResult.withCompactStyle(false);
+        headerResult.withCompactStyle(true);
         headerResult.addProfiles(profileDrawerItem);
         headerResult.withSelectionListEnabledForSingleProfile(false);
 
@@ -81,7 +75,7 @@ public class MainActivity extends ParentActivity {
         Drawer drawer = new Drawer();
         drawer.withActivity(this);
         drawer.withToolbar(toolbar);
-        drawer.withDisplayBelowToolbar(false);
+        drawer.withDisplayBelowToolbar(true);
         drawer.withTranslucentActionBarCompatibility(false);
         drawer.withTranslucentStatusBar(false);
         drawer.withActionBarDrawerToggleAnimated(true);
@@ -115,7 +109,7 @@ public class MainActivity extends ParentActivity {
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         ft.replace(R.id.fragmentContainer, fragment);
         ft.addToBackStack(null);
         ft.commit();

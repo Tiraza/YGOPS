@@ -42,6 +42,8 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_margin="8dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <TextView
@@ -55,6 +57,8 @@
             <br.com.extractor.ygops.view.widget.CustomTextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
                 app:errorEnabled="true">
 
                 <EditText
@@ -62,32 +66,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/deck_name"
-                    android:inputType="textCapSentences"/>
+                    android:inputType="textCapSentences" />
 
             </br.com.extractor.ygops.view.widget.CustomTextInputLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:gravity="right"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnCancel"
-                    android:text="@string/flat_cancel"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:layout_marginRight="8dp"
-                    android:textColor="?attr/colorAccent"
-                    style="?android:attr/borderlessButtonStyle"/>
+                    android:text="@string/flat_cancel"
+                    android:textColor="?attr/colorAccent" />
 
                 <Button
                     android:id="@+id/btnDone"
-                    android:text="@string/flat_ok"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
-                    android:textColor="?attr/colorAccent"
-                    style="?android:attr/borderlessButtonStyle"/>
+                    android:text="@string/flat_ok"
+                    android:textColor="?attr/colorAccent" />
 
             </LinearLayout>
 

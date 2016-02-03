@@ -1,6 +1,7 @@
 package br.com.extractor.ygops.view.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +25,7 @@ public class DeckRegisterActivity extends ParentActivity {
             @Override
             public void onClick(View view) {
                 EditText edtDeckName = getElementById(R.id.edtDeckName);
-                if (edtDeckName.getText() != null || !"".equals(edtDeckName.getText().toString())) {
+                if (edtDeckName.getText() != null && !"".equals(edtDeckName.getText().toString())) {
                     Deck deck = new Deck();
                     deck.setUuid(UUID.randomUUID().toString());
                     deck.setNome(edtDeckName.getText().toString());

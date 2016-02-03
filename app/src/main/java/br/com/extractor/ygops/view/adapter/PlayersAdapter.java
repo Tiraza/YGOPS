@@ -5,7 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import java.util.List;
 
@@ -47,10 +51,19 @@ public class PlayersAdapter extends BaseAdapter {
             view = layoutInflater.inflate(R.layout.adapter_list_item, null);
         }
 
-        Player deck = getItem(position);
+        Player player = getItem(position);
 
         TextView txtDeck = (TextView) view.findViewById(R.id.txtDeck);
-        txtDeck.setText(deck.getNome());
+        txtDeck.setText(player.getNome());
+
+        TextDrawable drawable = TextDrawable.builder()
+                .beginConfig()
+                .bold()
+                .endConfig()
+                .buildRound(player.getNome().substring(0, 1).toUpperCase(), ColorGenerator.MATERIAL.getRandomColor());
+
+        ImageView img = (ImageView) view.findViewById(R.id.image_view);
+        img.setImageDrawable(drawable);
 
         return view;
     }
