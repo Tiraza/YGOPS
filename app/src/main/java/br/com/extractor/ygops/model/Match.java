@@ -9,42 +9,42 @@ import io.realm.RealmObject;
  */
 public class Match extends RealmObject {
 
-    private Player winner;
-    private Player loser;
+    private Profile profile;
+    private Deck deck;
 
-    private Deck deckWinner;
-    private Deck deckLoser;
+    private Player player;
+    private Deck playerDeck;
 
     private Date date;
 
     public Match() {}
 
-    public Player getWinner() {
-        return winner;
+    public Profile getProfile() {
+        return profile;
     }
-    public void setWinner(Player winner) {
-        this.winner = winner;
-    }
-
-    public Deck getDeckWinner() {
-        return deckWinner;
-    }
-    public void setDeckWinner(Deck deckWinner) {
-        this.deckWinner = deckWinner;
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
-    public Player getLoser() {
-        return loser;
+    public Deck getDeck() {
+        return deck;
     }
-    public void setLoser(Player loser) {
-        this.loser = loser;
+    public void setDeck(Deck deck) {
+        this.deck = deck;
     }
 
-    public Deck getDeckLoser() {
-        return deckLoser;
+    public Player getPlayer() {
+        return player;
     }
-    public void setDeckLoser(Deck deckLoser) {
-        this.deckLoser = deckLoser;
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Deck getPlayerDeck() {
+        return playerDeck;
+    }
+    public void setPlayerDeck(Deck playerDeck) {
+        this.playerDeck = playerDeck;
     }
 
     public Date getDate() {

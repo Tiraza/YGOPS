@@ -10,7 +10,7 @@ import android.widget.EditText;
 import java.util.UUID;
 
 import br.com.extractor.ygops.R;
-import br.com.extractor.ygops.model.Owner;
+import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.util.RealmUtils;
 
 /**
@@ -30,11 +30,11 @@ public class DialogRegister {
             public void onClick(View view) {
                 EditText edtName = (EditText) dialog.findViewById(R.id.edtPlayerName);
                 if(edtName.getText() != null || !"".equals(edtName.getText().toString())){
-                    Owner owner = new Owner();
-                    owner.setUuid(UUID.randomUUID().toString());
-                    owner.setNome(edtName.getText().toString());
+                    Profile profile = new Profile();
+                    profile.setUuid(UUID.randomUUID().toString());
+                    profile.setNome(edtName.getText().toString());
 
-                    RealmUtils.insert(owner);
+                    RealmUtils.insert(profile);
 
                     dialog.dismiss();
                 } else {

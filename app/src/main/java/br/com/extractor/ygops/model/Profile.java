@@ -7,14 +7,14 @@ import io.realm.annotations.PrimaryKey;
 /**
  * Created by Muryllo Tiraza on 02/02/2016.
  */
-public class Owner extends RealmObject {
+public class Profile extends RealmObject {
 
     @PrimaryKey
     private String uuid;
     private String nome;
     private RealmList<Deck> decks;
 
-    public Owner() {}
+    public Profile() {}
 
     public String getUuid() {
         return uuid;

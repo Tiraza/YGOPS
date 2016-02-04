@@ -19,7 +19,7 @@
     <string name="field_required">Field Required</string>
     <string name="insert_deck">Insert Deck</string>
     <string name="flat_ok">OK</string>
-    <string name="flat_cancel">CANCEL</string>
+    <string name="flat_cancel">Cancel</string>
     <string name="player_name">Player Name</string>
     <string name="insert_player">Insert Player</string>
     <string name="register">Register</string>
@@ -35,4 +35,9 @@
     <string name="opponent">Opponent</string>
     <string name="opponent_deck">Opponent Deck</string>
     <string name="winner">Winner</string>
+    <string name="profile">Profile</string>
+    <string name="player">Player</string>
+    <string name="match">Match</string>
+    <string name="profile_register">Profile Register</string>
+    <string name="name">Name</string>
 </resources>

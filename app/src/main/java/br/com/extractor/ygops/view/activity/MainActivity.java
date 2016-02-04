@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -20,7 +19,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import java.util.ArrayList;
 
 import br.com.extractor.ygops.R;
-import br.com.extractor.ygops.model.Owner;
+import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.dialog.DialogRegister;
 import br.com.extractor.ygops.view.fragment.ListDeckFragment;
@@ -46,8 +45,8 @@ public class MainActivity extends ParentActivity {
 
     private void verifyRegister() {
         Realm realm = Realm.getDefaultInstance();
-        Owner owner = realm.where(Owner.class).findFirst();
-        if (owner == null) {
+        Profile profile = realm.where(Profile.class).findFirst();
+        if (profile == null) {
             new DialogRegister(this);
         }
         realm.close();
