@@ -16,6 +16,7 @@ import br.com.extractor.ygops.view.RealmFragment;
 import br.com.extractor.ygops.view.activity.DeckRegisterActivity;
 import br.com.extractor.ygops.view.adapter.DecksAdapter;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by Muryllo Tiraza on 27/01/2016.
@@ -35,6 +36,8 @@ public class ListDeckFragment extends RealmFragment {
         super.onViewCreated(view, savedInstanceState);
 
         RealmResults<Deck> decks = realm.where(Deck.class).findAll();
+        decks.sort("nome", Sort.ASCENDING);
+
         adapter = new DecksAdapter(decks, activity);
         ListView listView = getElementById(R.id.listView);
         listView.setAdapter(adapter);

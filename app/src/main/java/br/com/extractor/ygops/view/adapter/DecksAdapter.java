@@ -9,12 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import java.util.List;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
+import br.com.extractor.ygops.util.ColorGenerator;
 
 /**
  * Created by Muryllo Tiraza on 29/01/2016.
@@ -60,7 +60,7 @@ public class DecksAdapter extends BaseAdapter {
                 .beginConfig()
                     .bold()
                     .endConfig()
-                .buildRound(deck.getNome().substring(0, 1).toUpperCase(), ColorGenerator.MATERIAL.getRandomColor());
+                .buildRound(deck.getNome().substring(0, 1).toUpperCase(), new ColorGenerator().getColor(deck.getColor()));
 
         ImageView img = (ImageView) view.findViewById(R.id.image_view);
         img.setImageDrawable(drawable);

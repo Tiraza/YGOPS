@@ -12,6 +12,7 @@ public class Player extends RealmObject {
     @PrimaryKey
     private String uuid;
     private String nome;
+    private Integer color;
     private RealmList<Deck> decks;
 
     public Player() {}
@@ -35,5 +36,12 @@ public class Player extends RealmObject {
     }
     public void setDecks(RealmList<Deck> decks) {
         this.decks = decks;
+    }
+
+    public Integer getColor() {
+        return color;
+    }
+    public void setColor(Integer color) {
+        this.color = color;
     }
 }

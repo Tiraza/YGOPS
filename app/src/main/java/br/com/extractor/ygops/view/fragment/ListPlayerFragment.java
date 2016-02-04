@@ -16,6 +16,7 @@ import br.com.extractor.ygops.view.RealmFragment;
 import br.com.extractor.ygops.view.activity.PlayerRegisterActivity;
 import br.com.extractor.ygops.view.adapter.PlayersAdapter;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by Muryllo Tiraza on 02/02/2016.
@@ -35,6 +36,9 @@ public class ListPlayerFragment extends RealmFragment {
         super.onViewCreated(view, savedInstanceState);
 
         RealmResults<Player> players = realm.where(Player.class).findAll();
+
+        players.sort("nome", Sort.ASCENDING);
+
         adapter = new PlayersAdapter(players, activity);
         ListView listView = getElementById(R.id.listView);
         listView.setAdapter(adapter);

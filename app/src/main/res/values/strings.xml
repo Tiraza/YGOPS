@@ -31,4 +31,8 @@
     <string name="deck_register">Deck Register</string>
     <string name="player_register">Player Register</string>
     <string name="pick_a_image">Pick a Image</string>
+    <string name="deck">Deck</string>
+    <string name="opponent">Opponent</string>
+    <string name="opponent_deck">Opponent Deck</string>
+    <string name="winner">Winner</string>
 </resources>
