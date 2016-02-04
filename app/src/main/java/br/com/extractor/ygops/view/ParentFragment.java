@@ -1,7 +1,6 @@
 package br.com.extractor.ygops.view;
 
 import android.app.Activity;
-
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +22,8 @@ public abstract class ParentFragment extends Fragment {
         return view;
     }
 
-    protected final <T> T getElementById(int id){
-        return (T)view.findViewById(id);
+    protected final <T> T getElementById(int id) {
+        return (T) view.findViewById(id);
     }
 
     protected final void makeToast(int idMensagem, int duracao) {
