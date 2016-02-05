@@ -25,6 +25,7 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.fragment.ListDeckFragment;
+import br.com.extractor.ygops.view.fragment.ListMatchFragment;
 import br.com.extractor.ygops.view.fragment.ListPlayerFragment;
 import io.realm.Realm;
 
@@ -90,6 +91,7 @@ public class MainActivity extends ParentActivity {
                         replaceFragment(new ListDeckFragment());
                         break;
                     case MATCHES:
+                        replaceFragment(new ListMatchFragment());
                         break;
                     case CONFIGURATION:
                         break;

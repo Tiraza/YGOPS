@@ -6,13 +6,16 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import br.com.extractor.ygops.R;
+import io.realm.Realm;
 
 /**
  * Created by Muryllo Tiraza on 27/01/2016.
  */
 public abstract class ParentActivity  extends ActionBarActivity  {
+
     private Toast toast;
     protected Toolbar toolbar;
+    protected Realm realm;
 
     protected void onCreate(Bundle savedInstanceState, int layoutId) {
         super.onCreate(savedInstanceState);
@@ -20,6 +23,19 @@ public abstract class ParentActivity  extends ActionBarActivity  {
 
         toolbar = getElementById(R.id.tb_main);
         setSupportActionBar(toolbar);
+        realm = Realm.getDefaultInstance();
+    }
+
+    @Override
+    protected void onPause() {
+        realm.close();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        realm = Realm.getDefaultInstance();
+        super.onResume();
     }
 
     protected final <T> T getElementById(int id){

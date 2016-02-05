@@ -9,22 +9,13 @@ import io.realm.RealmObject;
  */
 public class Match extends RealmObject {
 
-    private Profile profile;
+    private Date date;
     private Deck deck;
 
     private Player player;
     private Deck playerDeck;
 
-    private Date date;
-
     public Match() {}
-
-    public Profile getProfile() {
-        return profile;
-    }
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-    }
 
     public Deck getDeck() {
         return deck;

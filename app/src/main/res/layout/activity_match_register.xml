@@ -62,33 +62,33 @@
 
             <Spinner
                 android:id="@+id/spnDeck1"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dialog" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/opponent"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Spinner
-                android:id="@+id/spnPlayer2"
-                android:layout_width="wrap_content"
+                android:id="@+id/spnPlayer"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dialog" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/opponent_deck"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Spinner
                 android:id="@+id/spnDeck2"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dialog" />
 
