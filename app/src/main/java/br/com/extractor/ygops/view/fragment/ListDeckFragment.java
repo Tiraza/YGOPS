@@ -48,7 +48,7 @@ public class ListDeckFragment extends RealmFragment {
             public void onClick(View view) {
                 Intent intent = new Intent(activity, DeckRegisterActivity.class);
                 startActivityForResult(intent, DECK_REGISTER_CODE);
-
+                activity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             }
         });
         fab.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));

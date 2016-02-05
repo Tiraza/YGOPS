@@ -1,6 +1,9 @@
 package br.com.extractor.ygops.view.activity;
 
 
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,7 +24,6 @@ import java.util.ArrayList;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.view.ParentActivity;
-import br.com.extractor.ygops.view.dialog.DialogRegister;
 import br.com.extractor.ygops.view.fragment.ListDeckFragment;
 import br.com.extractor.ygops.view.fragment.ListPlayerFragment;
 import io.realm.Realm;
@@ -43,18 +45,15 @@ public class MainActivity extends ParentActivity {
         setupNavigationDrawer();
     }
 
-    private void verifyRegister() {
+    private void setupNavigationDrawer() {
         Realm realm = Realm.getDefaultInstance();
         Profile profile = realm.where(Profile.class).findFirst();
-        if (profile == null) {
-            new DialogRegister(this);
-        }
-        realm.close();
-    }
 
-    private void setupNavigationDrawer() {
         ProfileDrawerItem profileDrawerItem = new ProfileDrawerItem();
-        profileDrawerItem.withName("Player");
+        profileDrawerItem.withName(profile.getNome());
+        if(profile.getImage() != null){
+            profileDrawerItem.withIcon(getDrawableFromByte(profile.getImage()));
+        }
 
         AccountHeader headerResult = new AccountHeader();
         headerResult.withActivity(this);
@@ -74,9 +73,6 @@ public class MainActivity extends ParentActivity {
         Drawer drawer = new Drawer();
         drawer.withActivity(this);
         drawer.withToolbar(toolbar);
-        drawer.withDisplayBelowToolbar(true);
-        drawer.withTranslucentActionBarCompatibility(false);
-        drawer.withTranslucentStatusBar(false);
         drawer.withActionBarDrawerToggleAnimated(true);
         drawer.withAccountHeader(headerResult.build());
         drawer.withDrawerItems(drawerItems);
@@ -103,6 +99,7 @@ public class MainActivity extends ParentActivity {
         });
 
         drawerResult = drawer.build();
+        realm.close();
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -112,5 +109,9 @@ public class MainActivity extends ParentActivity {
         ft.replace(R.id.fragmentContainer, fragment);
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    private Drawable getDrawableFromByte(byte[] bytes) {
+        return new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
     }
 }

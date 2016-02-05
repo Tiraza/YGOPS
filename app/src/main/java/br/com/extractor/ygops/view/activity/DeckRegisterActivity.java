@@ -1,13 +1,10 @@
 package br.com.extractor.ygops.view.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-
-import java.util.UUID;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
@@ -20,8 +17,6 @@ public class DeckRegisterActivity extends ParentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_deck_register);
-        overridePendingTransition(android.R.anim.slide_out_right, android.R.anim.slide_in_left);
-
         setTitle(getString(R.string.decks));
 
         ColorAdapter adapter = new ColorAdapter(this);
@@ -53,6 +48,12 @@ public class DeckRegisterActivity extends ParentActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     @Override

@@ -16,4 +16,11 @@ public class RealmUtils {
         realm.close();
     }
 
+    public static <T extends RealmObject>  T get(Class<T> tClass) {
+        Realm realm = Realm.getDefaultInstance();
+        T result = realm.where(tClass).findFirstAsync();
+        realm.close();
+        return result;
+    }
+
 }

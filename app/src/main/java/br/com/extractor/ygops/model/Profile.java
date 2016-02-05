@@ -12,6 +12,7 @@ public class Profile extends RealmObject {
     @PrimaryKey
     private String uuid;
     private String nome;
+    private byte[] image;
     private RealmList<Deck> decks;
 
     public Profile() {}
@@ -35,5 +36,12 @@ public class Profile extends RealmObject {
     }
     public void setDecks(RealmList<Deck> decks) {
         this.decks = decks;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

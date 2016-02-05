@@ -10,7 +10,6 @@ import java.util.UUID;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Player;
-import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.adapter.ColorAdapter;
