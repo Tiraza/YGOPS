@@ -60,6 +60,7 @@ public class MainActivity extends ParentActivity {
         headerResult.withCompactStyle(true);
         headerResult.addProfiles(profileDrawerItem);
         headerResult.withSelectionListEnabledForSingleProfile(false);
+        headerResult.withHeaderBackground(R.color.primary);
 
         ArrayList<IDrawerItem> drawerItems = new ArrayList<>();
         drawerItems.add(new PrimaryDrawerItem().withName(R.string.home));

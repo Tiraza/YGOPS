@@ -40,4 +40,5 @@
     <string name="match">Match</string>
     <string name="profile_register">Profile Register</string>
     <string name="name">Name</string>
+    <string name="delete">Delete</string>
 </resources>

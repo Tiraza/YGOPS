@@ -82,8 +82,8 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_weight="1"
-                    android:background="@null"
-                    android:src="@android:drawable/ic_menu_camera" />
+                    android:background="@color/accent"
+                    android:src="@drawable/ic_camera" />
 
             </LinearLayout>
 
