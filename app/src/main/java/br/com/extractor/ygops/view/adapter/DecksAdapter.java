@@ -53,7 +53,7 @@ public class DecksAdapter extends BaseAdapter {
 
         Deck deck = getItem(position);
 
-        TextView txtDeck = (TextView) view.findViewById(R.id.txtDeck);
+        TextView txtDeck = (TextView) view.findViewById(R.id.txtName);
         txtDeck.setText(deck.getNome());
 
         TextDrawable drawable = TextDrawable.builder()

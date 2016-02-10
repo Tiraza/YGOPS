@@ -53,7 +53,7 @@ public class PlayersAdapter extends BaseAdapter {
 
         Player player = getItem(position);
 
-        TextView txtDeck = (TextView) view.findViewById(R.id.txtDeck);
+        TextView txtDeck = (TextView) view.findViewById(R.id.txtName);
         txtDeck.setText(player.getNome());
 
         TextDrawable drawable = TextDrawable.builder()

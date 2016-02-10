@@ -1,6 +1,7 @@
 package br.com.extractor.ygops.view.activity;
 
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
+import br.com.extractor.ygops.util.ImageHelper;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.fragment.ListDeckFragment;
 import br.com.extractor.ygops.view.fragment.ListMatchFragment;
@@ -115,6 +117,14 @@ public class MainActivity extends ParentActivity {
     }
 
     private Drawable getDrawableFromByte(byte[] bytes) {
-        return new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        bitmap = Bitmap.createScaledBitmap(bitmap, 120, 120, true);
+        return new BitmapDrawable(getResources(), bitmap);
+    }
+
+    public void toggleIconToolbar(boolean show){
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(show);
+        }
     }
 }

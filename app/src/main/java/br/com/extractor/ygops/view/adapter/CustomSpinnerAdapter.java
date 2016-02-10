@@ -54,8 +54,8 @@ public class CustomSpinnerAdapter extends ArrayAdapter implements SpinnerAdapter
 
         ItemAdapter item = list.get(position);
 
-        TextView txtDeck = (TextView) convertView.findViewById(R.id.txtDeck);
-        txtDeck.setText(item.getNome());
+        TextView txtName = (TextView) convertView.findViewById(R.id.txtName);
+        txtName.setText(item.getNome());
 
         TextDrawable drawable = TextDrawable.builder()
                 .beginConfig()
@@ -67,5 +67,10 @@ public class CustomSpinnerAdapter extends ArrayAdapter implements SpinnerAdapter
         img.setImageDrawable(drawable);
 
         return convertView;
+    }
+
+    public void setError(View v){
+        TextView selected = (TextView) v.findViewById(R.id.txtName);
+        selected.setError(context.getString(R.string.field_required));
     }
 }

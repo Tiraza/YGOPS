@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">YGO PS</string>
+    <string name="title_activity_main">Home</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="home">Home</string>
+    <string name="decks">Decks</string>
+    <string name="players">Players</string>
+    <string name="matches">Partidas</string>
+    <string name="configuration">Configurações</string>
+    <string name="about">Sobre</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="title_activity_decks">Decks</string>
+    <string name="title_activity_players">Players</string>
+    <string name="title_activity_matches">Matches</string>
+    <string name="deck_name">Nome do Deck</string>
+    <string name="flat_done">DONE</string>
+    <string name="field_required">Campo Obrigatório</string>
+    <string name="insert_deck">Insira um Deck</string>
+    <string name="flat_ok">OK</string>
+    <string name="flat_cancel">Cancelar</string>
+    <string name="player_name">Nome do Player</string>
+    <string name="insert_player">Inserir Player</string>
+    <string name="register">Registrar</string>
+    <string name="name_or_nickname">Nome ou Apelido</string>
+    <string name="title_activity_match_register">Cadastrar Partida</string>
+    <string name="match_register">Cadastrar Partida</string>
+    <string name="title_activity_deck_register">DeckRegisterActivity</string>
+    <string name="title_activity_player_register">PlayerRegisterActivity</string>
+    <string name="deck_register">Cadastrar Deck</string>
+    <string name="player_register">Cadastrar Player</string>
+    <string name="pick_a_image">Escolha uma imagem</string>
+    <string name="deck">Deck</string>
+    <string name="opponent">Oponente</string>
+    <string name="opponent_deck">Deck do oponente</string>
+    <string name="winner">Vencedor</string>
+    <string name="profile">Perfil</string>
+    <string name="player">Player</string>
+    <string name="match">Partida</string>
+    <string name="profile_register">Cadastrar Perfil</string>
+    <string name="name">Nome</string>
+    <string name="delete">Deletar</string>
+    <string name="select_a_player">Selecione um player</string>
+    <string name="select_a_deck">Selecione um deck</string>
+    <string name="duelist">Duelista</string>
+</resources>
