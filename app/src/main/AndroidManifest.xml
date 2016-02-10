@@ -39,6 +39,10 @@
             android:name=".view.activity.register.ProfileRegisterActivity"
             android:screenOrientation="portrait"
             android:label="@string/profile" />
+        <activity
+            android:name=".view.activity.consult.DeckConsultActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/deck" />
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package br.com.extractor.ygops.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.CharacterPickerDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +20,7 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.view.RealmFragment;
+import br.com.extractor.ygops.view.activity.consult.DeckConsultActivity;
 import br.com.extractor.ygops.view.activity.register.DeckRegisterActivity;
 import br.com.extractor.ygops.view.adapter.DecksAdapter;
 import br.com.extractor.ygops.view.adapter.DecksDeleteAdapter;
@@ -64,6 +66,18 @@ public class ListDeckFragment extends RealmFragment implements DeleteAdapter{
                 listView.setAdapter(deleteAdapter);
                 menuDelete.setVisible(true);
                 return false;
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Deck deck = adapter.getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("deckName", deck.getNome());
+                Intent intent = new Intent(activity, DeckConsultActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
