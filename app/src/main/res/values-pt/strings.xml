@@ -48,4 +48,8 @@
     <string name="match_loser_hint">D</string>
     <string name="empty" />
     <string name="successfully_included">Incluído com sucesso</string>
+    <string name="total_matches">Total de partidas</string>
+    <string name="wins">Vitórias</string>
+    <string name="losses">Derrotas</string>
+    <string name="record_already_used">Registro já utilizado</string>
 </resources>

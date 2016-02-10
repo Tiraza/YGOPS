@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 
 import br.com.extractor.ygops.R;
+import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.view.RealmFragment;
 import br.com.extractor.ygops.view.activity.register.PlayerRegisterActivity;
@@ -98,22 +100,34 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menuDelete){
-            realm.beginTransaction();
-            RealmQuery<Player> query = realm.where(Player.class);
-            query.equalTo("nome", "");
+            RealmQuery<Match> queryMatch = realm.where(Match.class);
+            queryMatch.equalTo("player.nome", "");
 
             for(Player player : deleteAdapter.getSelectedItens()){
-                query.or().equalTo("nome", player.getNome());
+                queryMatch.or().equalTo("player.nome", player.getNome());
             }
 
-            query.findAll().clear();
-            realm.commitTransaction();
+            if(queryMatch.findAll().isEmpty()) {
+                realm.beginTransaction();
+                RealmQuery<Player> query = realm.where(Player.class);
+                query.equalTo("nome", "");
 
-            RealmResults<Player> players = realm.where(Player.class).findAll();
-            players.sort("nome", Sort.ASCENDING);
-            adapter = new PlayersAdapter(players, activity);
-            listView.setAdapter(adapter);
-            menuDelete.setVisible(false);
+                for (Player player : deleteAdapter.getSelectedItens()) {
+                    query.or().equalTo("nome", player.getNome());
+                }
+
+                query.findAll().clear();
+                realm.commitTransaction();
+
+                RealmResults<Player> players = realm.where(Player.class).findAll();
+                players.sort("nome", Sort.ASCENDING);
+                adapter = new PlayersAdapter(players, activity);
+                listView.setAdapter(adapter);
+                menuDelete.setVisible(false);
+            } else {
+                makeToast(R.string.record_already_used, Toast.LENGTH_LONG);
+                onDelete();
+            }
         }
 
         return super.onOptionsItemSelected(item);

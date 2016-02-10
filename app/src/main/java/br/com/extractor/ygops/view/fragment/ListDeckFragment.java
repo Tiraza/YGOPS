@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
+import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.view.RealmFragment;
 import br.com.extractor.ygops.view.activity.register.DeckRegisterActivity;
 import br.com.extractor.ygops.view.adapter.DecksAdapter;
@@ -98,22 +100,35 @@ public class ListDeckFragment extends RealmFragment implements DeleteAdapter{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menuDelete){
-            realm.beginTransaction();
-            RealmQuery<Deck> query = realm.where(Deck.class);
-            query.equalTo("nome", "");
+            RealmQuery<Match> queryMatch = realm.where(Match.class);
+            queryMatch.equalTo("deck.nome", "");
 
             for(Deck deck : deleteAdapter.getSelectedItens()){
-                query.or().equalTo("nome", deck.getNome());
+                queryMatch.or().equalTo("deck.nome", deck.getNome());
+                queryMatch.or().equalTo("playerDeck.nome", deck.getNome());
             }
 
-            query.findAll().clear();
-            realm.commitTransaction();
+            if(queryMatch.findAll().isEmpty()){
+                realm.beginTransaction();
+                RealmQuery<Deck> query = realm.where(Deck.class);
+                query.equalTo("nome", "");
 
-            RealmResults<Deck> decks = realm.where(Deck.class).findAll();
-            decks.sort("nome", Sort.ASCENDING);
-            adapter = new DecksAdapter(decks, activity);
-            listView.setAdapter(adapter);
-            menuDelete.setVisible(false);
+                for(Deck deck : deleteAdapter.getSelectedItens()){
+                    query.or().equalTo("nome", deck.getNome());
+                }
+
+                query.findAll().clear();
+                realm.commitTransaction();
+
+                RealmResults<Deck> decks = realm.where(Deck.class).findAll();
+                decks.sort("nome", Sort.ASCENDING);
+                adapter = new DecksAdapter(decks, activity);
+                listView.setAdapter(adapter);
+                menuDelete.setVisible(false);
+            } else {
+                makeToast(R.string.record_already_used, Toast.LENGTH_LONG);
+                onDelete();
+            }
         }
 
         return super.onOptionsItemSelected(item);

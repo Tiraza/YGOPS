@@ -49,4 +49,9 @@
     <string name="vs">VS</string>
     <string name="empty" />
     <string name="successfully_included">Successfully included</string>
+    <string name="info">Info</string>
+    <string name="total_matches">Total matches</string>
+    <string name="wins">Wins</string>
+    <string name="losses">Losses</string>
+    <string name="record_already_used">Record already used</string>
 </resources>
