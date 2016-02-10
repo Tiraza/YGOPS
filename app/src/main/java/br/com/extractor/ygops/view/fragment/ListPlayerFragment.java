@@ -15,12 +15,9 @@ import android.widget.ListView;
 import com.github.clans.fab.FloatingActionButton;
 
 import br.com.extractor.ygops.R;
-import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.view.RealmFragment;
-import br.com.extractor.ygops.view.activity.PlayerRegisterActivity;
-import br.com.extractor.ygops.view.adapter.DecksAdapter;
-import br.com.extractor.ygops.view.adapter.DecksDeleteAdapter;
+import br.com.extractor.ygops.view.activity.register.PlayerRegisterActivity;
 import br.com.extractor.ygops.view.adapter.PlayersAdapter;
 import br.com.extractor.ygops.view.adapter.PlayersDeleteAdapter;
 import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
@@ -50,6 +47,7 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+        activity.setTitle(R.string.players);
 
         final RealmResults<Player> players = realm.where(Player.class).findAll();
         players.sort("nome", Sort.ASCENDING);

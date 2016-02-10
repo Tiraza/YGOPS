@@ -10,4 +10,6 @@
     <color name="divider">#B6B6B6</color>
 
     <color name="selected">#B6B6B6</color>
+    <color name="match_loser">#F44336</color>
+    <color name="match_winner">#4CAF50</color>
 </resources>

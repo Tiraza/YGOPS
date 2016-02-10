@@ -1,4 +1,4 @@
-package br.com.extractor.ygops.view.activity;
+package br.com.extractor.ygops.view.activity.register;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +31,7 @@ public class MatchRegisterActivity extends ParentActivity {
     private Spinner spnDeck1;
     private Spinner spnDeck2;
     private Spinner spnPlayer;
-    private Boolean isWinner;
+    private Boolean isWinner = false;
 
     private RealmResults<Player> listPlayer;
     private RealmResults<Deck> listDeck;
@@ -68,6 +69,7 @@ public class MatchRegisterActivity extends ParentActivity {
                     match.setPlayerDeck(listDeck.get(spnDeck2.getSelectedItemPosition() - 1));
                     match.setWinner(isWinner);
 
+                    makeToast(R.string.successfully_included, Toast.LENGTH_LONG);
                     RealmUtils.insert(match);
                     MatchRegisterActivity.this.finish();
                 }

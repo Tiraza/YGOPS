@@ -1,4 +1,4 @@
-package br.com.extractor.ygops.view.activity;
+package br.com.extractor.ygops.view.activity.register;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +15,7 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
+import br.com.extractor.ygops.view.activity.MainActivity;
 import br.com.extractor.ygops.view.dialog.ImagePicker;
 
 /**

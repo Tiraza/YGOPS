@@ -1,10 +1,11 @@
-package br.com.extractor.ygops.view.activity;
+package br.com.extractor.ygops.view.activity.register;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.UUID;
 
@@ -36,6 +37,7 @@ public class PlayerRegisterActivity extends ParentActivity {
                     player.setNome(edtPlayerName.getText().toString());
                     player.setColor(spnColor.getSelectedItemPosition());
 
+                    makeToast(R.string.successfully_included, Toast.LENGTH_LONG);
                     RealmUtils.insert(player);
                     finish();
                 } else {

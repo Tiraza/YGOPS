@@ -7,6 +7,7 @@ import android.os.Handler;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.view.ParentActivity;
+import br.com.extractor.ygops.view.activity.register.ProfileRegisterActivity;
 import io.realm.Realm;
 
 public class SplashScreen extends ParentActivity {

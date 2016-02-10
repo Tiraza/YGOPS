@@ -108,8 +108,13 @@ public class MainActivity extends ParentActivity {
     }
 
     private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
+
         //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         ft.replace(R.id.fragmentContainer, fragment);
         ft.addToBackStack(null);

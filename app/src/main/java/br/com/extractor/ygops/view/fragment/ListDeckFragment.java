@@ -17,7 +17,7 @@ import com.github.clans.fab.FloatingActionButton;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.view.RealmFragment;
-import br.com.extractor.ygops.view.activity.DeckRegisterActivity;
+import br.com.extractor.ygops.view.activity.register.DeckRegisterActivity;
 import br.com.extractor.ygops.view.adapter.DecksAdapter;
 import br.com.extractor.ygops.view.adapter.DecksDeleteAdapter;
 import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
@@ -46,6 +46,7 @@ public class ListDeckFragment extends RealmFragment implements DeleteAdapter{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+        activity.setTitle(R.string.decks);
 
         final RealmResults<Deck> decks = realm.where(Deck.class).findAll();
         decks.sort("nome", Sort.ASCENDING);
