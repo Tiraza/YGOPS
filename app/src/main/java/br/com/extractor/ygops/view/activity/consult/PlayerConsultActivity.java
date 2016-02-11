@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
@@ -80,19 +79,19 @@ public class PlayerConsultActivity extends ParentActivity {
         TextView txtDeck3 = getElementById(R.id.txtDeck3);
         TextView txtTotalDeck3 = getElementById(R.id.txtTotalDeck3);
 
-        if(!sortedMap.isEmpty()){
+        if (!sortedMap.isEmpty()) {
             Map.Entry<String, Integer> value = sortedMap.entrySet().iterator().next();
             txtDeck1.setText(value.getKey());
             txtTotalDeck1.setText(value.getValue().toString());
             sortedMap.remove(value.getKey());
 
-            if(!sortedMap.isEmpty()){
+            if (!sortedMap.isEmpty()) {
                 value = sortedMap.entrySet().iterator().next();
                 txtDeck2.setText(value.getKey());
                 txtTotalDeck2.setText(value.getValue().toString());
                 sortedMap.remove(value.getKey());
 
-                if(!sortedMap.isEmpty()){
+                if (!sortedMap.isEmpty()) {
                     value = sortedMap.entrySet().iterator().next();
                     txtDeck3.setText(value.getKey());
                     txtTotalDeck3.setText(value.getValue().toString());
@@ -109,7 +108,7 @@ public class PlayerConsultActivity extends ParentActivity {
         }
     }
 
-    public HashMap<String, Integer> getSortedValues(Player player){
+    public HashMap<String, Integer> getSortedValues(Player player) {
         List<Deck> decks = player.getDecks();
 
         HashMap<String, Integer> map = new HashMap<>();
