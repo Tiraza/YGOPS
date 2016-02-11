@@ -7,4 +7,4 @@
     android:pivotY="50%"
     android:toXScale="1"
     android:toYScale="1"
-    android:interpolator="@android:interpolator/overshoot"/>
+    android:interpolator="@android:interpolator/overshoot" />
