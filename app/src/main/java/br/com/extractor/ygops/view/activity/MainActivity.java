@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.view.ParentActivity;
+import br.com.extractor.ygops.view.fragment.HomeFragment;
 import br.com.extractor.ygops.view.fragment.ListDeckFragment;
 import br.com.extractor.ygops.view.fragment.ListMatchFragment;
 import br.com.extractor.ygops.view.fragment.ListPlayerFragment;
@@ -45,6 +46,7 @@ public class MainActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_main);
         setupNavigationDrawer();
+        replaceFragment(new HomeFragment());
     }
 
     private void setupNavigationDrawer() {
@@ -84,6 +86,7 @@ public class MainActivity extends ParentActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id, IDrawerItem iDrawerItem) {
                 switch (position) {
                     case HOME:
+                        replaceFragment(new HomeFragment());
                         break;
                     case PLAYERS:
                         replaceFragment(new ListPlayerFragment());
