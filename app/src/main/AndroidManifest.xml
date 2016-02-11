@@ -42,7 +42,11 @@
         <activity
             android:name=".view.activity.consult.DeckConsultActivity"
             android:screenOrientation="portrait"
-            android:label="@string/deck" />
+            android:label="@string/deck_consult" />
+        <activity
+            android:name=".view.activity.consult.PlayerConsultActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/player_consult" />
     </application>
 
 </manifest>

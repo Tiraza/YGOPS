@@ -52,4 +52,7 @@
     <string name="wins">Vitórias</string>
     <string name="losses">Derrotas</string>
     <string name="record_already_used">Registro já utilizado</string>
+    <string name="deck_consult">Consulta de Deck</string>
+    <string name="player_consult">Consulta de Player</string>
+    <string name="more_used_decks">Decks mais usados</string>
 </resources>

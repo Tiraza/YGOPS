@@ -16,9 +16,12 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 
 import br.com.extractor.ygops.R;
+import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.view.RealmFragment;
+import br.com.extractor.ygops.view.activity.consult.DeckConsultActivity;
+import br.com.extractor.ygops.view.activity.consult.PlayerConsultActivity;
 import br.com.extractor.ygops.view.activity.register.PlayerRegisterActivity;
 import br.com.extractor.ygops.view.adapter.PlayersAdapter;
 import br.com.extractor.ygops.view.adapter.PlayersDeleteAdapter;
@@ -65,6 +68,18 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
                 listView.setAdapter(deleteAdapter);
                 menuDelete.setVisible(true);
                 return false;
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Player player = adapter.getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("playerUuid", player.getUuid());
+                Intent intent = new Intent(activity, PlayerConsultActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 

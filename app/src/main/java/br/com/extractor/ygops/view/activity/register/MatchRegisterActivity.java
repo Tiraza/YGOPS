@@ -61,12 +61,18 @@ public class MatchRegisterActivity extends ParentActivity {
             @Override
             public void onClick(View view) {
                 if (validaCampos()) {
+                    realm.beginTransaction();
+                    Player opponent = listPlayer.get(spnPlayer.getSelectedItemPosition() - 1);
+                    Deck opponentDeck = listDeck.get(spnDeck2.getSelectedItemPosition() - 1);
+                    opponent.getDecks().add(opponentDeck);
+                    realm.commitTransaction();
+
                     Match match = new Match();
                     match.setDate(new Date());
                     match.setUuid(UUID.randomUUID().toString());
                     match.setDeck(listDeck.get(spnDeck1.getSelectedItemPosition() - 1));
-                    match.setPlayer(listPlayer.get(spnPlayer.getSelectedItemPosition() - 1));
-                    match.setPlayerDeck(listDeck.get(spnDeck2.getSelectedItemPosition() - 1));
+                    match.setPlayer(opponent);
+                    match.setPlayerDeck(opponentDeck);
                     match.setWinner(isWinner);
 
                     makeToast(R.string.successfully_included, Toast.LENGTH_LONG);

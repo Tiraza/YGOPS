@@ -54,4 +54,7 @@
     <string name="wins">Wins</string>
     <string name="losses">Losses</string>
     <string name="record_already_used">Record already used</string>
+    <string name="deck_consult">Deck Consult</string>
+    <string name="player_consult">Player Consult</string>
+    <string name="more_used_decks">More used decks</string>
 </resources>

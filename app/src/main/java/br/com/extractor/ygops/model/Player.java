@@ -15,7 +15,9 @@ public class Player extends RealmObject {
     private Integer color;
     private RealmList<Deck> decks;
 
-    public Player() {}
+    public Player() {
+        decks = new RealmList<>();
+    }
 
     public String getUuid() {
         return uuid;
