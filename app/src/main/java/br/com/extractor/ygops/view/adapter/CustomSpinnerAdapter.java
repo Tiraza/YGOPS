@@ -69,7 +69,7 @@ public class CustomSpinnerAdapter extends ArrayAdapter implements SpinnerAdapter
         return convertView;
     }
 
-    public void setError(View v){
+    public void setError(View v) {
         TextView selected = (TextView) v.findViewById(R.id.txtName);
         selected.setError(context.getString(R.string.field_required));
     }

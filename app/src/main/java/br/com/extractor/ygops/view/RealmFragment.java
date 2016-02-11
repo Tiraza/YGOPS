@@ -21,7 +21,7 @@ public abstract class RealmFragment extends ParentFragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(realm != null){
+        if (realm != null) {
             realm = Realm.getDefaultInstance();
         }
     }
@@ -32,7 +32,7 @@ public abstract class RealmFragment extends ParentFragment {
         realm.close();
     }
 
-    protected <T extends RealmObject> T consult(Class<T> tClass, Long idObject){
+    protected <T extends RealmObject> T consult(Class<T> tClass, Long idObject) {
         RealmQuery<T> query = realm.where(tClass);
         query = query.equalTo("id", idObject);
         return query.findFirst();

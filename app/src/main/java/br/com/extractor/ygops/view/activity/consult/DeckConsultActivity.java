@@ -8,7 +8,7 @@ import android.widget.TextView;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.model.Match;
-import br.com.extractor.ygops.util.ImageHelper;
+import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import io.realm.RealmQuery;
 
@@ -38,7 +38,7 @@ public class DeckConsultActivity extends ParentActivity {
         edtDeckName.setText(deck.getNome());
 
         ImageView img = getElementById(R.id.image_view);
-        img.setImageDrawable(ImageHelper.getDrawableRealm(R.string.empty, deck.getColor(), this));
+        img.setImageDrawable(ImageUtils.getDrawableRealm(R.string.empty, deck.getColor(), this));
     }
 
     private void setupCardInfo(Deck deck) {

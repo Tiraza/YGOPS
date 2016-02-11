@@ -58,8 +58,8 @@ public class DecksAdapter extends BaseAdapter {
 
         TextDrawable drawable = TextDrawable.builder()
                 .beginConfig()
-                    .bold()
-                    .endConfig()
+                .bold()
+                .endConfig()
                 .buildRound(deck.getNome().substring(0, 1).toUpperCase(), new ColorGenerator().getColor(deck.getColor()));
 
         ImageView img = (ImageView) view.findViewById(R.id.image_view);

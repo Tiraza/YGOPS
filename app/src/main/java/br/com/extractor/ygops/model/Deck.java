@@ -12,11 +12,13 @@ public class Deck extends RealmObject {
     private String nome;
     private Integer color;
 
-    public Deck() {}
+    public Deck() {
+    }
 
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -24,6 +26,7 @@ public class Deck extends RealmObject {
     public Integer getColor() {
         return color;
     }
+
     public void setColor(Integer color) {
         this.color = color;
     }

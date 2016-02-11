@@ -21,11 +21,13 @@ public class Match extends RealmObject {
 
     private Boolean winner;
 
-    public Match() {}
+    public Match() {
+    }
 
     public String getUuid() {
         return uuid;
     }
+
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
@@ -33,6 +35,7 @@ public class Match extends RealmObject {
     public Deck getDeck() {
         return deck;
     }
+
     public void setDeck(Deck deck) {
         this.deck = deck;
     }
@@ -40,6 +43,7 @@ public class Match extends RealmObject {
     public Player getPlayer() {
         return player;
     }
+
     public void setPlayer(Player player) {
         this.player = player;
     }
@@ -47,6 +51,7 @@ public class Match extends RealmObject {
     public Deck getPlayerDeck() {
         return playerDeck;
     }
+
     public void setPlayerDeck(Deck playerDeck) {
         this.playerDeck = playerDeck;
     }
@@ -54,6 +59,7 @@ public class Match extends RealmObject {
     public Date getDate() {
         return date;
     }
+
     public void setDate(Date date) {
         this.date = date;
     }
@@ -61,6 +67,7 @@ public class Match extends RealmObject {
     public Boolean getWinner() {
         return winner;
     }
+
     public void setWinner(Boolean winner) {
         this.winner = winner;
     }

@@ -10,7 +10,8 @@ public class ItemAdapter implements Serializable {
     private String nome;
     private Integer color;
 
-    public ItemAdapter() {}
+    public ItemAdapter() {
+    }
 
     public ItemAdapter(String nome, Integer color) {
         this.nome = nome;
@@ -20,6 +21,7 @@ public class ItemAdapter implements Serializable {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -27,6 +29,7 @@ public class ItemAdapter implements Serializable {
     public Integer getColor() {
         return color;
     }
+
     public void setColor(Integer color) {
         this.color = color;
     }

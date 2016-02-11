@@ -2,7 +2,6 @@ package br.com.extractor.ygops.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.CharacterPickerDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,7 +31,7 @@ import io.realm.Sort;
 /**
  * Created by Muryllo Tiraza on 27/01/2016.
  */
-public class ListDeckFragment extends RealmFragment implements DeleteAdapter{
+public class ListDeckFragment extends RealmFragment implements DeleteAdapter {
 
     private DecksAdapter adapter;
     private DecksDeleteAdapter deleteAdapter;
@@ -113,21 +112,21 @@ public class ListDeckFragment extends RealmFragment implements DeleteAdapter{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.menuDelete){
+        if (item.getItemId() == R.id.menuDelete) {
             RealmQuery<Match> queryMatch = realm.where(Match.class);
             queryMatch.equalTo("deck.nome", "");
 
-            for(Deck deck : deleteAdapter.getSelectedItens()){
+            for (Deck deck : deleteAdapter.getSelectedItens()) {
                 queryMatch.or().equalTo("deck.nome", deck.getNome());
                 queryMatch.or().equalTo("playerDeck.nome", deck.getNome());
             }
 
-            if(queryMatch.findAll().isEmpty()){
+            if (queryMatch.findAll().isEmpty()) {
                 realm.beginTransaction();
                 RealmQuery<Deck> query = realm.where(Deck.class);
                 query.equalTo("nome", "");
 
-                for(Deck deck : deleteAdapter.getSelectedItens()){
+                for (Deck deck : deleteAdapter.getSelectedItens()) {
                     query.or().equalTo("nome", deck.getNome());
                 }
 

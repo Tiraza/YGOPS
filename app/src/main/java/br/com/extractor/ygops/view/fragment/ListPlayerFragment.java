@@ -16,11 +16,9 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 
 import br.com.extractor.ygops.R;
-import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.view.RealmFragment;
-import br.com.extractor.ygops.view.activity.consult.DeckConsultActivity;
 import br.com.extractor.ygops.view.activity.consult.PlayerConsultActivity;
 import br.com.extractor.ygops.view.activity.register.PlayerRegisterActivity;
 import br.com.extractor.ygops.view.adapter.PlayersAdapter;
@@ -114,15 +112,15 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.menuDelete){
+        if (item.getItemId() == R.id.menuDelete) {
             RealmQuery<Match> queryMatch = realm.where(Match.class);
             queryMatch.equalTo("player.nome", "");
 
-            for(Player player : deleteAdapter.getSelectedItens()){
+            for (Player player : deleteAdapter.getSelectedItens()) {
                 queryMatch.or().equalTo("player.nome", player.getNome());
             }
 
-            if(queryMatch.findAll().isEmpty()) {
+            if (queryMatch.findAll().isEmpty()) {
                 realm.beginTransaction();
                 RealmQuery<Player> query = realm.where(Player.class);
                 query.equalTo("nome", "");

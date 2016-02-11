@@ -96,12 +96,12 @@ public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.menuDelete){
+        if (item.getItemId() == R.id.menuDelete) {
             realm.beginTransaction();
             RealmQuery<Match> query = realm.where(Match.class);
             query.equalTo("uuid", "");
 
-            for(Match player : deleteAdapter.getSelectedItens()){
+            for (Match player : deleteAdapter.getSelectedItens()) {
                 query.or().equalTo("uuid", player.getUuid());
             }
 

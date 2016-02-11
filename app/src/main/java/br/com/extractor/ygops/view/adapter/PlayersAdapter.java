@@ -46,7 +46,7 @@ public class PlayersAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        if(view == null){
+        if (view == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             view = layoutInflater.inflate(R.layout.adapter_list_item, null);
         }

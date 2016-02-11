@@ -98,7 +98,7 @@ public class MatchesDeleteAdapter extends BaseAdapter {
         holder.opponentName.setText(match.getPlayer().getNome());
         holder.opponentDeck.setText(match.getPlayerDeck().getNome());
 
-        if(matchSelector.getIsSelect()){
+        if (matchSelector.getIsSelect()) {
             holder.icon.setVisibility(View.VISIBLE);
             holder.image.setImageDrawable(getDrawable(R.string.empty, R.color.accent));
             holder.row.setBackgroundColor(context.getResources().getColor(R.color.selected));

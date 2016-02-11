@@ -74,7 +74,7 @@ public class ImagePicker {
         if (resultCode == Activity.RESULT_OK) {
             Uri selectedImage;
             boolean isCamera = (imageReturnedIntent == null ||
-                    imageReturnedIntent.getData() == null  ||
+                    imageReturnedIntent.getData() == null ||
                     imageReturnedIntent.getData().equals(Uri.fromFile(imageFile)));
             if (isCamera) {     /** CAMERA **/
                 selectedImage = Uri.fromFile(imageFile);
@@ -115,7 +115,7 @@ public class ImagePicker {
 
     /**
      * Resize to avoid using too much memory loading big images (e.g.: 2560*1920)
-     **/
+     */
     private static Bitmap getImageResized(Context context, Uri selectedImage) {
         Bitmap bm = null;
         int[] sampleSizes = new int[]{5, 3, 2, 1};

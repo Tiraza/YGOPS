@@ -15,11 +15,13 @@ public class Profile extends RealmObject {
     private byte[] image;
     private RealmList<Deck> decks;
 
-    public Profile() {}
+    public Profile() {
+    }
 
     public String getUuid() {
         return uuid;
     }
+
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
@@ -27,6 +29,7 @@ public class Profile extends RealmObject {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -34,6 +37,7 @@ public class Profile extends RealmObject {
     public RealmList<Deck> getDecks() {
         return decks;
     }
+
     public void setDecks(RealmList<Deck> decks) {
         this.decks = decks;
     }
@@ -41,6 +45,7 @@ public class Profile extends RealmObject {
     public byte[] getImage() {
         return image;
     }
+
     public void setImage(byte[] image) {
         this.image = image;
     }

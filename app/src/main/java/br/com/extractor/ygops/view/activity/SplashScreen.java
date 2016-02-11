@@ -26,7 +26,7 @@ public class SplashScreen extends ParentActivity {
                 Profile profile = realm.where(Profile.class).findFirst();
 
                 Intent intent;
-                if(profile == null){
+                if (profile == null) {
                     intent = new Intent(SplashScreen.this, ProfileRegisterActivity.class);
                 } else {
                     intent = new Intent(SplashScreen.this, MainActivity.class);

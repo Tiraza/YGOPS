@@ -8,7 +8,7 @@ import io.realm.RealmObject;
  */
 public class RealmUtils {
 
-    public static <T extends RealmObject>  void insert(T object){
+    public static <T extends RealmObject> void insert(T object) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(object);
@@ -16,7 +16,7 @@ public class RealmUtils {
         realm.close();
     }
 
-    public static <T extends RealmObject>  T get(Class<T> tClass) {
+    public static <T extends RealmObject> T get(Class<T> tClass) {
         Realm realm = Realm.getDefaultInstance();
         T result = realm.where(tClass).findFirstAsync();
         realm.close();

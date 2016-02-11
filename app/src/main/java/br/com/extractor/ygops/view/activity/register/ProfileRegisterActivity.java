@@ -43,12 +43,12 @@ public class ProfileRegisterActivity extends ParentActivity {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(edtName.getText() != null && !"".equals(edtName.getText().toString())){
+                if (edtName.getText() != null && !"".equals(edtName.getText().toString())) {
                     Profile profile = new Profile();
                     profile.setUuid(UUID.randomUUID().toString());
                     profile.setNome(edtName.getText().toString());
 
-                    if(image != null){
+                    if (image != null) {
                         profile.setImage(image);
                     }
 

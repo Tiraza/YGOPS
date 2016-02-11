@@ -1,7 +1,6 @@
 package br.com.extractor.ygops.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ColorGenerator {
@@ -42,8 +41,10 @@ public class ColorGenerator {
         private int id;
         private int color;
 
-        public Color() {}
-        public Color( int id, int color) {
+        public Color() {
+        }
+
+        public Color(int id, int color) {
             this.color = color;
             this.id = id;
         }
@@ -51,6 +52,7 @@ public class ColorGenerator {
         public int getId() {
             return id;
         }
+
         public void setId(int id) {
             this.id = id;
         }
@@ -58,6 +60,7 @@ public class ColorGenerator {
         public int getColor() {
             return color;
         }
+
         public void setColor(int color) {
             this.color = color;
         }

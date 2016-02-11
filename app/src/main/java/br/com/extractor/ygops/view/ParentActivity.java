@@ -11,7 +11,7 @@ import io.realm.Realm;
 /**
  * Created by Muryllo Tiraza on 27/01/2016.
  */
-public abstract class ParentActivity  extends ActionBarActivity  {
+public abstract class ParentActivity extends ActionBarActivity {
 
     private Toast toast;
     protected Toolbar toolbar;
@@ -38,8 +38,8 @@ public abstract class ParentActivity  extends ActionBarActivity  {
         super.onResume();
     }
 
-    protected final <T> T getElementById(int id){
-        return (T)findViewById(id);
+    protected final <T> T getElementById(int id) {
+        return (T) findViewById(id);
     }
 
     protected final void makeToast(int idMensagem, int duracao) {

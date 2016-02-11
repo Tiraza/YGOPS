@@ -1,7 +1,6 @@
 package br.com.extractor.ygops.view.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.SpinnerAdapter;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.util.ColorGenerator;
 
@@ -41,8 +41,8 @@ public class ColorAdapter extends ArrayAdapter implements SpinnerAdapter {
         return colorGenerator.getList().size();
     }
 
-    private View getCustomView(int position, View convertView, ViewGroup parent){
-        if(convertView == null){
+    private View getCustomView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.adapter_color_list_item, parent, false);
         }

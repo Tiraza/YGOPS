@@ -24,7 +24,6 @@ import java.util.ArrayList;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
-import br.com.extractor.ygops.util.ImageHelper;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.fragment.ListDeckFragment;
 import br.com.extractor.ygops.view.fragment.ListMatchFragment;
@@ -54,7 +53,7 @@ public class MainActivity extends ParentActivity {
 
         ProfileDrawerItem profileDrawerItem = new ProfileDrawerItem();
         profileDrawerItem.withName(profile.getNome());
-        if(profile.getImage() != null){
+        if (profile.getImage() != null) {
             profileDrawerItem.withIcon(getDrawableFromByte(profile.getImage()));
         }
 
@@ -111,7 +110,7 @@ public class MainActivity extends ParentActivity {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
             fm.popBackStack();
         }
 
@@ -127,8 +126,8 @@ public class MainActivity extends ParentActivity {
         return new BitmapDrawable(getResources(), bitmap);
     }
 
-    public void toggleIconToolbar(boolean show){
-        if(getSupportActionBar() != null){
+    public void toggleIconToolbar(boolean show) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(show);
         }
     }

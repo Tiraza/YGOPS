@@ -22,6 +22,7 @@ public class Player extends RealmObject {
     public String getUuid() {
         return uuid;
     }
+
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
@@ -29,6 +30,7 @@ public class Player extends RealmObject {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -36,6 +38,7 @@ public class Player extends RealmObject {
     public RealmList<Deck> getDecks() {
         return decks;
     }
+
     public void setDecks(RealmList<Deck> decks) {
         this.decks = decks;
     }
@@ -43,6 +46,7 @@ public class Player extends RealmObject {
     public Integer getColor() {
         return color;
     }
+
     public void setColor(Integer color) {
         this.color = color;
     }

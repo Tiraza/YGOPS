@@ -2,7 +2,6 @@ package br.com.extractor.ygops.view.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,7 @@ import java.util.List;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Match;
-import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.model.Profile;
-import br.com.extractor.ygops.util.ColorGenerator;
 import io.realm.Realm;
 
 /**
@@ -54,7 +51,7 @@ public class MatchesAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         MatchHolder holder;
-        if(convertView == null){
+        if (convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView = layoutInflater.inflate(R.layout.adapter_match_list_item, null);
             holder = new MatchHolder(convertView);
@@ -69,7 +66,7 @@ public class MatchesAdapter extends BaseAdapter {
         holder.opponentName.setText(match.getPlayer().getNome());
         holder.opponentDeck.setText(match.getPlayerDeck().getNome());
 
-        if(match.getWinner()){
+        if (match.getWinner()) {
             holder.image.setImageDrawable(getDrawable(R.string.match_winner_hint, R.color.match_winner));
         } else {
             holder.image.setImageDrawable(getDrawable(R.string.match_loser_hint, R.color.match_loser));
@@ -78,7 +75,7 @@ public class MatchesAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private Drawable getDrawable(int text, int color){
+    private Drawable getDrawable(int text, int color) {
         TextDrawable drawable = TextDrawable.builder()
                 .beginConfig()
                 .bold()

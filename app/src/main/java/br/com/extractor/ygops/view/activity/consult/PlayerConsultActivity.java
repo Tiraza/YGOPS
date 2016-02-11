@@ -17,7 +17,7 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.model.Player;
-import br.com.extractor.ygops.util.ImageHelper;
+import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.util.MapUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import io.realm.RealmQuery;
@@ -49,7 +49,7 @@ public class PlayerConsultActivity extends ParentActivity {
         edtDeckName.setText(player.getNome());
 
         ImageView img = getElementById(R.id.image_view);
-        img.setImageDrawable(ImageHelper.getDrawableRealm(R.string.empty, player.getColor(), this));
+        img.setImageDrawable(ImageUtils.getDrawableRealm(R.string.empty, player.getColor(), this));
     }
 
     private void setupCardInfo(Player player) {
