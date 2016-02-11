@@ -77,17 +77,16 @@ public class HomeFragment extends RealmFragment {
         data.setValueTextColor(Color.WHITE);
 
         chart.setData(data);
-        chart.setTouchEnabled(false);
         chart.animateY(1400);
     }
 
     private SpannableString generateCenterSpannableText() {
-        SpannableString s = new SpannableString("Teste\nBr HUE");
-        s.setSpan(new ForegroundColorSpan(Color.rgb(240, 115, 126)), 0, 8, 0);
-        s.setSpan(new RelativeSizeSpan(2.2f), 0, 8, 0);
-        s.setSpan(new StyleSpan(Typeface.ITALIC), 9, s.length(), 0);
-        s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), 9, s.length(), 0);
-        s.setSpan(new RelativeSizeSpan(0.85f), 9, s.length(), 0);
+        SpannableString s = new SpannableString("Teste\n HUE");
+        s.setSpan(new ForegroundColorSpan(Color.rgb(240, 115, 126)), 0, 6, 0);
+        s.setSpan(new RelativeSizeSpan(2.2f), 0, 6, 0);
+        s.setSpan(new StyleSpan(Typeface.ITALIC), 7, s.length(), 0);
+        s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), 7, s.length(), 0);
+        s.setSpan(new RelativeSizeSpan(0.85f), 7, s.length(), 0);
         return s;
     }
 }
