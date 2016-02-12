@@ -95,6 +95,9 @@ public class PlayerConsultActivity extends ParentActivity {
                     value = sortedMap.entrySet().iterator().next();
                     txtDeck3.setText(value.getKey());
                     txtTotalDeck3.setText(value.getValue().toString());
+                } else {
+                    txtDeck3.setVisibility(View.GONE);
+                    txtTotalDeck3.setVisibility(View.GONE);
                 }
             } else {
                 txtDeck2.setVisibility(View.GONE);
