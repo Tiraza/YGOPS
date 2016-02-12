@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.clans.fab.FloatingActionMenu;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -34,12 +35,17 @@ public class HomeFragment extends RealmFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return onCreateView(inflater, container, R.layout.graph_piechart);
+        return onCreateView(inflater, container, R.layout.fragment_home);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        FloatingActionMenu fabMenu = getElementById(R.id.fab_menu);
+        fabMenu.setMenuButtonColorNormalResId(R.color.primary);
+        fabMenu.setMenuButtonColorPressedResId(R.color.accent);
+
         chart = getElementById(R.id.chart);
         setup(chart);
         chart.setCenterText(generateCenterSpannableText());
