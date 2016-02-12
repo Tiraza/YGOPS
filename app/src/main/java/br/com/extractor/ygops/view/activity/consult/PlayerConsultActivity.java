@@ -15,6 +15,7 @@ import java.util.Map;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
+import br.com.extractor.ygops.model.ItemCount;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.util.ImageUtils;
@@ -70,7 +71,7 @@ public class PlayerConsultActivity extends ParentActivity {
     }
 
     private void setupCardMoreUsedDecks(Player player) {
-        HashMap<String, Integer> sortedMap = getSortedValues(player);
+        List<ItemCount> sortedList = getSortedValues(player);
 
         TextView txtDeck1 = getElementById(R.id.txtDeck1);
         TextView txtTotalDeck1 = getElementById(R.id.txtTotalDeck1);
@@ -79,22 +80,22 @@ public class PlayerConsultActivity extends ParentActivity {
         TextView txtDeck3 = getElementById(R.id.txtDeck3);
         TextView txtTotalDeck3 = getElementById(R.id.txtTotalDeck3);
 
-        if (!sortedMap.isEmpty()) {
-            Map.Entry<String, Integer> value = sortedMap.entrySet().iterator().next();
-            txtDeck1.setText(value.getKey());
-            txtTotalDeck1.setText(value.getValue().toString());
-            sortedMap.remove(value.getKey());
+        if (!sortedList.isEmpty()) {
+            ItemCount item = sortedList.get(0);
+            txtDeck1.setText(item.getNome());
+            txtTotalDeck1.setText(item.getQuantidade().toString());
+            sortedList.remove(item);
 
-            if (!sortedMap.isEmpty()) {
-                value = sortedMap.entrySet().iterator().next();
-                txtDeck2.setText(value.getKey());
-                txtTotalDeck2.setText(value.getValue().toString());
-                sortedMap.remove(value.getKey());
+            if (!sortedList.isEmpty()) {
+                item = sortedList.get(0);
+                txtDeck2.setText(item.getNome());
+                txtTotalDeck2.setText(item.getQuantidade().toString());
+                sortedList.remove(item);
 
-                if (!sortedMap.isEmpty()) {
-                    value = sortedMap.entrySet().iterator().next();
-                    txtDeck3.setText(value.getKey());
-                    txtTotalDeck3.setText(value.getValue().toString());
+                if (!sortedList.isEmpty()) {
+                    item = sortedList.get(0);
+                    txtDeck3.setText(item.getNome());
+                    txtTotalDeck3.setText(item.getQuantidade().toString());
                 } else {
                     txtDeck3.setVisibility(View.GONE);
                     txtTotalDeck3.setVisibility(View.GONE);
@@ -111,7 +112,7 @@ public class PlayerConsultActivity extends ParentActivity {
         }
     }
 
-    public HashMap<String, Integer> getSortedValues(Player player) {
+    public List<ItemCount> getSortedValues(Player player) {
         List<Deck> decks = player.getDecks();
 
         HashMap<String, Integer> map = new HashMap<>();
