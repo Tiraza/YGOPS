@@ -14,6 +14,9 @@ import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.view.RealmFragment;
@@ -47,16 +50,15 @@ public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
         setHasOptionsMenu(true);
         activity.setTitle(R.string.matches);
 
-        final RealmResults<Match> matches = realm.where(Match.class).findAll();
-        matches.sort("date", Sort.ASCENDING);
+        final ArrayList<Match> matchesList = reverse(realm.where(Match.class).findAll());
 
-        adapter = new MatchesAdapter(matches, activity, realm);
+        adapter = new MatchesAdapter(matchesList, activity, realm);
         listView = getElementById(R.id.listView);
         listView.setAdapter(adapter);
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                deleteAdapter = new MatchesDeleteAdapter(matches, activity, realm, position, ListMatchFragment.this);
+                deleteAdapter = new MatchesDeleteAdapter(matchesList, activity, realm, position, ListMatchFragment.this);
                 listView.setAdapter(deleteAdapter);
                 menuDelete.setVisible(true);
                 return false;
@@ -79,7 +81,8 @@ public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == MATCH_REGISTER_CODE) {
-            adapter.notifyDataSetChanged();
+            adapter = new MatchesAdapter(reverse(realm.where(Match.class).findAll()), activity, realm);
+            listView.setAdapter(adapter);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -108,9 +111,7 @@ public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
             query.findAll().clear();
             realm.commitTransaction();
 
-            RealmResults<Match> matches = realm.where(Match.class).findAll();
-            matches.sort("date", Sort.ASCENDING);
-            adapter = new MatchesAdapter(matches, activity, realm);
+            adapter = new MatchesAdapter(reverse(realm.where(Match.class).findAll()), activity, realm);
             listView.setAdapter(adapter);
             menuDelete.setVisible(false);
         }
@@ -122,6 +123,14 @@ public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
     public void onDelete() {
         listView.setAdapter(adapter);
         menuDelete.setVisible(false);
+    }
+
+    private ArrayList<Match> reverse(RealmResults<Match> results){
+        ArrayList<Match> arrayList = new ArrayList<>();
+        for (int i = results.size(); i > Math.max(results.size() - 20, 0) ; i--) {
+            arrayList.add(results.get(i-1));
+        }
+        return arrayList;
     }
 
 }

@@ -34,6 +34,7 @@ import io.realm.Realm;
 public class MainActivity extends ParentActivity {
 
     private Drawer.Result drawerResult;
+    private FragmentManager fm;
 
     private final int HOME = 0;
     private final int PLAYERS = 1;
@@ -41,12 +42,26 @@ public class MainActivity extends ParentActivity {
     private final int MATCHES = 3;
     private final int CONFIGURATION = 5;
     private final int ABOUT = 6;
+    private boolean isClose = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_main);
+        fm = getSupportFragmentManager();
+
         setupNavigationDrawer();
-        replaceFragment(new HomeFragment());
+        replaceFragment(new HomeFragment(), true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerResult != null && drawerResult.isDrawerOpen()) {
+            drawerResult.closeDrawer();
+        } else if (!isClose && fm.getBackStackEntryCount() == 1) {
+            replaceFragment(new HomeFragment(), true);
+        } else {
+            MainActivity.this.finish();
+        }
     }
 
     private void setupNavigationDrawer() {
@@ -86,7 +101,7 @@ public class MainActivity extends ParentActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id, IDrawerItem iDrawerItem) {
                 switch (position) {
                     case HOME:
-                        replaceFragment(new HomeFragment());
+                        replaceFragment(new HomeFragment(), true);
                         break;
                     case PLAYERS:
                         replaceFragment(new ListPlayerFragment());
@@ -109,17 +124,22 @@ public class MainActivity extends ParentActivity {
         realm.close();
     }
 
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
+    private void replaceFragment(Fragment fragment){
+        replaceFragment(fragment, false);
+    }
 
+
+    private void replaceFragment(Fragment fragment, boolean close) {
+        isClose = close;
+
+        FragmentTransaction ft = fm.beginTransaction();
         for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
             fm.popBackStack();
         }
 
-        //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         ft.replace(R.id.fragmentContainer, fragment);
         ft.addToBackStack(null);
+        //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         ft.commit();
     }
 

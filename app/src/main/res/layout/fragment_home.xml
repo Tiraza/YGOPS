@@ -35,24 +35,24 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/fab_add"
-            fab:fab_label="Novo Deck" />
+            android:src="@drawable/ic_check"
+            fab:fab_label="@string/deck" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab22"
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/fab_add"
-            fab:fab_label="Novo Player" />
+            android:src="@drawable/ic_camera"
+            fab:fab_label="@string/player" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab32"
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/fab_add"
-            fab:fab_label="Nova Partida" />
+            android:src="@drawable/ic_delete"
+            fab:fab_label="@string/match" />
 
     </com.github.clans.fab.FloatingActionMenu>
 

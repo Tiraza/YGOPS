@@ -59,16 +59,20 @@ public class HomeFragment extends RealmFragment {
 
     private void setData() {
         RealmResults<Match> result = realm.allObjects(Match.class);
+        int totalMatches = result.size();
         int wins = result.where().equalTo("winner", true).findAll().size();
-        int losers = result.where().equalTo("winner", false).findAll().size();
+        int losses = result.where().equalTo("winner", false).findAll().size();
+
+        float winsPercent = (wins * 100.0f) / totalMatches;
+        float lossesPercent = (losses * 100.0f) / totalMatches;
 
         ArrayList<Entry> yVal = new ArrayList<>();
-        yVal.add(new Entry(wins, 0));
-        yVal.add(new Entry(losers, 1));
+        yVal.add(new Entry(winsPercent, 0));
+        yVal.add(new Entry(lossesPercent, 1));
 
         ArrayList<String> xVals = new ArrayList<>();
         xVals.add("Wins");
-        xVals.add("Losers");
+        xVals.add("Losses");
 
         PieDataSet dataSet = new PieDataSet(yVal, "");
         dataSet.setSliceSpace(2f);
