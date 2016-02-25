@@ -1,6 +1,5 @@
 package br.com.extractor.ygops.view.activity;
 
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,8 +11,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
+import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
@@ -33,7 +34,7 @@ import io.realm.Realm;
 
 public class MainActivity extends ParentActivity {
 
-    private Drawer.Result drawerResult;
+    private Drawer drawerResult;
     private FragmentManager fm;
 
     private final int HOME = 0;
@@ -59,6 +60,7 @@ public class MainActivity extends ParentActivity {
             drawerResult.closeDrawer();
         } else if (!isClose && fm.getBackStackEntryCount() == 1) {
             replaceFragment(new HomeFragment(), true);
+            drawerResult.setSelection(HOME);
         } else {
             MainActivity.this.finish();
         }
@@ -74,12 +76,13 @@ public class MainActivity extends ParentActivity {
             profileDrawerItem.withIcon(getDrawableFromByte(profile.getImage()));
         }
 
-        AccountHeader headerResult = new AccountHeader();
-        headerResult.withActivity(this);
-        headerResult.withCompactStyle(true);
-        headerResult.addProfiles(profileDrawerItem);
-        headerResult.withSelectionListEnabledForSingleProfile(false);
-        headerResult.withHeaderBackground(R.color.primary);
+        AccountHeader headerResult = new AccountHeaderBuilder()
+        .withActivity(this)
+        .withCompactStyle(true)
+        .addProfiles(profileDrawerItem)
+        .withSelectionListEnabledForSingleProfile(false)
+        .withHeaderBackground(R.color.primary)
+        .build();
 
         ArrayList<IDrawerItem> drawerItems = new ArrayList<>();
         drawerItems.add(new PrimaryDrawerItem().withName(R.string.home));
@@ -90,15 +93,14 @@ public class MainActivity extends ParentActivity {
         drawerItems.add(new SecondaryDrawerItem().withName(R.string.configuration));
         drawerItems.add(new SecondaryDrawerItem().withName(R.string.about));
 
-        Drawer drawer = new Drawer();
-        drawer.withActivity(this);
-        drawer.withToolbar(toolbar);
-        drawer.withActionBarDrawerToggleAnimated(true);
-        drawer.withAccountHeader(headerResult.build());
-        drawer.withDrawerItems(drawerItems);
-        drawer.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id, IDrawerItem iDrawerItem) {
+        drawerResult = new DrawerBuilder()
+        .withActivity(this)
+        .withToolbar(toolbar)
+        .withActionBarDrawerToggleAnimated(true)
+        .withAccountHeader(headerResult)
+        .withDrawerItems(drawerItems)
+        .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem iDrawerItem) {
                 switch (position) {
                     case HOME:
                         replaceFragment(new HomeFragment(), true);
@@ -117,10 +119,11 @@ public class MainActivity extends ParentActivity {
                     case ABOUT:
                         break;
                 }
+                return false;
             }
-        });
+        })
+        .build();
 
-        drawerResult = drawer.build();
         realm.close();
     }
 
@@ -151,6 +154,7 @@ public class MainActivity extends ParentActivity {
 
     public void toggleIconToolbar(boolean show) {
         if (getSupportActionBar() != null) {
+            drawerResult.getActionBarDrawerToggle().setDrawerIndicatorEnabled(!show);
             getSupportActionBar().setDisplayHomeAsUpEnabled(show);
         }
     }

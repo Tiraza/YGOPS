@@ -20,6 +20,7 @@ import java.util.Collections;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.view.RealmFragment;
+import br.com.extractor.ygops.view.activity.MainActivity;
 import br.com.extractor.ygops.view.activity.register.MatchRegisterActivity;
 import br.com.extractor.ygops.view.adapter.MatchesAdapter;
 import br.com.extractor.ygops.view.adapter.MatchesDeleteAdapter;
@@ -49,6 +50,7 @@ public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
         activity.setTitle(R.string.matches);
+        ((MainActivity)activity).toggleIconToolbar(true);
 
         final ArrayList<Match> matchesList = reverse(realm.where(Match.class).findAll());
 

@@ -1,5 +1,6 @@
 package br.com.extractor.ygops.view.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,7 +11,9 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
@@ -24,6 +27,10 @@ import java.util.ArrayList;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.view.RealmFragment;
+import br.com.extractor.ygops.view.activity.MainActivity;
+import br.com.extractor.ygops.view.activity.register.DeckRegisterActivity;
+import br.com.extractor.ygops.view.activity.register.MatchRegisterActivity;
+import br.com.extractor.ygops.view.activity.register.PlayerRegisterActivity;
 import io.realm.RealmResults;
 
 /**
@@ -31,6 +38,7 @@ import io.realm.RealmResults;
  */
 public class HomeFragment extends RealmFragment {
 
+    private FloatingActionMenu fabMenu;
     private PieChart chart;
 
     @Override
@@ -41,10 +49,8 @@ public class HomeFragment extends RealmFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        FloatingActionMenu fabMenu = getElementById(R.id.fab_menu);
-        fabMenu.setMenuButtonColorNormalResId(R.color.primary);
-        fabMenu.setMenuButtonColorPressedResId(R.color.accent);
+        ((MainActivity)activity).toggleIconToolbar(false);
+        setupActionMenu();
 
         chart = getElementById(R.id.chart);
         setup(chart);
@@ -55,6 +61,46 @@ public class HomeFragment extends RealmFragment {
     public void onResume() {
         super.onResume();
         setData();
+        fabMenu.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));
+    }
+
+    private void setupActionMenu(){
+        fabMenu = getElementById(R.id.fab_menu);
+        fabMenu.setMenuButtonColorNormalResId(R.color.primary);
+        fabMenu.setMenuButtonColorPressedResId(R.color.accent);
+
+        FloatingActionButton fabDeck = getElementById(R.id.fabDeck);
+        fabDeck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startRegisterActivity(DeckRegisterActivity.class);
+            }
+        });
+
+        FloatingActionButton fabPlayer = getElementById(R.id.fabPlayer);
+        fabPlayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startRegisterActivity(PlayerRegisterActivity.class);
+            }
+        });
+
+        FloatingActionButton fabMatch = getElementById(R.id.fabMatch);
+        fabMatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startRegisterActivity(MatchRegisterActivity.class);
+            }
+        });
+    }
+
+    private void startRegisterActivity(Class classe){
+        if(fabMenu.isOpened()) {
+            fabMenu.close(false);
+            Intent intent = new Intent(activity, classe);
+            startActivity(intent);
+            activity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        }
     }
 
     private void setData() {
@@ -71,8 +117,8 @@ public class HomeFragment extends RealmFragment {
         yVal.add(new Entry(lossesPercent, 1));
 
         ArrayList<String> xVals = new ArrayList<>();
-        xVals.add("Wins");
-        xVals.add("Losses");
+        xVals.add(getString(R.string.wins));
+        xVals.add(getString(R.string.losses));
 
         PieDataSet dataSet = new PieDataSet(yVal, "");
         dataSet.setSliceSpace(2f);
@@ -91,7 +137,7 @@ public class HomeFragment extends RealmFragment {
     }
 
     private SpannableString generateCenterSpannableText() {
-        SpannableString s = new SpannableString("Teste\n HUE");
+        SpannableString s = new SpannableString("         ");
         s.setSpan(new ForegroundColorSpan(Color.rgb(240, 115, 126)), 0, 6, 0);
         s.setSpan(new RelativeSizeSpan(2.2f), 0, 6, 0);
         s.setSpan(new StyleSpan(Typeface.ITALIC), 7, s.length(), 0);

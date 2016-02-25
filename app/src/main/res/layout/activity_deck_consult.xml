@@ -58,23 +58,14 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <br.com.extractor.ygops.view.widget.CustomTextInputLayout
+                        <EditText
+                            android:id="@+id/edtDeckName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_weight="10"
-                            app:errorEnabled="true">
-
-                            <EditText
-                                android:id="@+id/edtDeckName"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:enabled="false"
-                                android:hint="@string/deck_name"
-                                android:inputType="textCapSentences" />
-
-                        </br.com.extractor.ygops.view.widget.CustomTextInputLayout>
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:hint="@string/deck_name"
+                            android:inputType="textCapSentences" />
 
                         <ImageView
                             android:id="@+id/image_view"

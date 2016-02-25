@@ -31,7 +31,7 @@
         fab:menu_shadowColor="#444">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab12"
+            android:id="@+id/fabDeck"
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             fab:fab_label="@string/deck" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab22"
+            android:id="@+id/fabPlayer"
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             fab:fab_label="@string/player" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab32"
+            android:id="@+id/fabMatch"
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

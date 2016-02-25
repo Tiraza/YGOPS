@@ -19,6 +19,7 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.view.RealmFragment;
+import br.com.extractor.ygops.view.activity.MainActivity;
 import br.com.extractor.ygops.view.activity.consult.PlayerConsultActivity;
 import br.com.extractor.ygops.view.activity.register.PlayerRegisterActivity;
 import br.com.extractor.ygops.view.adapter.PlayersAdapter;
@@ -51,6 +52,7 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
         activity.setTitle(R.string.players);
+        ((MainActivity)activity).toggleIconToolbar(true);
 
         final RealmResults<Player> players = realm.where(Player.class).findAll();
         players.sort("nome", Sort.ASCENDING);
