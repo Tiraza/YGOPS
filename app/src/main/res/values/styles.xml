@@ -25,4 +25,13 @@
         <item name="fab_colorNormal">@color/primary</item>
         <item name="fab_colorPressed">@color/accent</item>
     </style>
+
+    <style name="button_calc" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
 </resources>

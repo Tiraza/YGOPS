@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.view.ParentActivity;
+import br.com.extractor.ygops.view.fragment.CalcFragment;
 import br.com.extractor.ygops.view.fragment.HomeFragment;
 import br.com.extractor.ygops.view.fragment.ListDeckFragment;
 import br.com.extractor.ygops.view.fragment.ListMatchFragment;
@@ -37,12 +38,14 @@ public class MainActivity extends ParentActivity {
     private Drawer drawerResult;
     private FragmentManager fm;
 
-    private final int HOME = 0;
-    private final int PLAYERS = 1;
-    private final int DECKS = 2;
-    private final int MATCHES = 3;
-    private final int CONFIGURATION = 5;
-    private final int ABOUT = 6;
+    private final int HOME = 1;
+    private final int PLAYERS = 2;
+    private final int DECKS = 3;
+    private final int MATCHES = 4;
+    private final int CALCULATOR = 5;
+    private final int CONFIGURATION = 7;
+    private final int ABOUT = 8;
+
     private boolean isClose = false;
 
     @Override
@@ -89,6 +92,7 @@ public class MainActivity extends ParentActivity {
         drawerItems.add(new PrimaryDrawerItem().withName(R.string.players));
         drawerItems.add(new PrimaryDrawerItem().withName(R.string.decks));
         drawerItems.add(new PrimaryDrawerItem().withName(R.string.matches));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.calculator));
         drawerItems.add(new DividerDrawerItem());
         drawerItems.add(new SecondaryDrawerItem().withName(R.string.configuration));
         drawerItems.add(new SecondaryDrawerItem().withName(R.string.about));
@@ -113,6 +117,9 @@ public class MainActivity extends ParentActivity {
                         break;
                     case MATCHES:
                         replaceFragment(new ListMatchFragment());
+                        break;
+                    case CALCULATOR:
+                        replaceFragment(new CalcFragment());
                         break;
                     case CONFIGURATION:
                         break;
