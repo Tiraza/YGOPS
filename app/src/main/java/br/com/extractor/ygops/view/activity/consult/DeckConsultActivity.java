@@ -1,6 +1,7 @@
 package br.com.extractor.ygops.view.activity.consult;
 
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ public class DeckConsultActivity extends ParentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_deck_consult);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

@@ -3,6 +3,7 @@ package br.com.extractor.ygops.view.activity.consult;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class PlayerConsultActivity extends ParentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_player_consult);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
