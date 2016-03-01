@@ -103,7 +103,8 @@ public class MainActivity extends ParentActivity {
         .withActionBarDrawerToggleAnimated(true)
         .withAccountHeader(headerResult)
         .withDrawerItems(drawerItems)
-        .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {            @Override
+        .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
             public boolean onItemClick(View view, int position, IDrawerItem iDrawerItem) {
                 switch (position) {
                     case HOME:
@@ -127,6 +128,13 @@ public class MainActivity extends ParentActivity {
                         break;
                 }
                 return false;
+            }
+        })
+        .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
+            @Override
+            public boolean onNavigationClickListener(View clickedView) {
+                onBackPressed();
+                return true;
             }
         })
         .build();
