@@ -66,7 +66,7 @@ public class ListDeckFragment extends RealmFragment implements DeleteAdapter {
                 deleteAdapter = new DecksDeleteAdapter(decks, activity, position, ListDeckFragment.this);
                 listView.setAdapter(deleteAdapter);
                 menuDelete.setVisible(true);
-                return false;
+                return true;
             }
         });
 

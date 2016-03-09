@@ -56,4 +56,6 @@
     <string name="player_consult">Consulta de Player</string>
     <string name="more_used_decks">Decks mais usados</string>
     <string name="calculator">Calculadora</string>
+    <string name="reset">Resetar</string>
+    <string name="clear">Limpar</string>
 </resources>

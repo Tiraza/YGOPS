@@ -88,11 +88,11 @@ public class MainActivity extends ParentActivity {
         .build();
 
         ArrayList<IDrawerItem> drawerItems = new ArrayList<>();
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.home));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.players));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.decks));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.matches));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.calculator));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.home).withIcon(R.drawable.ic_home_normal).withSelectedIcon(R.drawable.ic_home_pressed));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.players).withIcon(R.drawable.ic_players_normal).withSelectedIcon(R.drawable.ic_players_pressed));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.decks).withIcon(R.drawable.ic_deck_normal).withSelectedIcon(R.drawable.ic_deck_pressed));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.matches).withIcon(R.drawable.ic_match_normal).withSelectedIcon(R.drawable.ic_match_pressed));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.calculator).withIcon(R.drawable.ic_calc_normal).withSelectedIcon(R.drawable.ic_calc_pressed));
         drawerItems.add(new DividerDrawerItem());
         drawerItems.add(new SecondaryDrawerItem().withName(R.string.configuration));
         drawerItems.add(new SecondaryDrawerItem().withName(R.string.about));
@@ -169,8 +169,13 @@ public class MainActivity extends ParentActivity {
 
     public void toggleIconToolbar(boolean show) {
         if (getSupportActionBar() != null) {
-            drawerResult.getActionBarDrawerToggle().setDrawerIndicatorEnabled(!show);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(show);
+            if(show){
+                drawerResult.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            } else {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                drawerResult.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
+            }
         }
     }
 }

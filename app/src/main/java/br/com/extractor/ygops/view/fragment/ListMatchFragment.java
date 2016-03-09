@@ -63,7 +63,7 @@ public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
                 deleteAdapter = new MatchesDeleteAdapter(matchesList, activity, realm, position, ListMatchFragment.this);
                 listView.setAdapter(deleteAdapter);
                 menuDelete.setVisible(true);
-                return false;
+                return true;
             }
         });
 

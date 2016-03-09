@@ -67,7 +67,7 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
                 deleteAdapter = new PlayersDeleteAdapter(players, activity, position, ListPlayerFragment.this);
                 listView.setAdapter(deleteAdapter);
                 menuDelete.setVisible(true);
-                return false;
+                return true;
             }
         });
 
