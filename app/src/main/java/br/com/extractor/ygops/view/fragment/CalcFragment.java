@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import br.com.extractor.ygops.R;
@@ -135,47 +136,63 @@ public class CalcFragment extends ParentFragment implements View.OnClickListener
     }
 
     private void setupCalcButtons(){
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in);
+
         Button btn_1 = getElementById(R.id.btn_1);
         btn_1.setOnClickListener(this);
+        btn_1.startAnimation(animation);
 
         Button btn_2 = getElementById(R.id.btn_2);
         btn_2.setOnClickListener(this);
+        btn_2.startAnimation(animation);
 
         Button btn_3 = getElementById(R.id.btn_3);
         btn_3.setOnClickListener(this);
+        btn_3.startAnimation(animation);
 
         Button btn_4 = getElementById(R.id.btn_4);
         btn_4.setOnClickListener(this);
+        btn_4.startAnimation(animation);
 
         Button btn_5 = getElementById(R.id.btn_5);
         btn_5.setOnClickListener(this);
+        btn_5.startAnimation(animation);
 
         Button btn_6 = getElementById(R.id.btn_6);
         btn_6.setOnClickListener(this);
+        btn_6.startAnimation(animation);
 
         Button btn_7 = getElementById(R.id.btn_7);
         btn_7.setOnClickListener(this);
+        btn_7.startAnimation(animation);
 
         Button btn_8 = getElementById(R.id.btn_8);
         btn_8.setOnClickListener(this);
+        btn_8.startAnimation(animation);
 
         Button btn_9 = getElementById(R.id.btn_9);
         btn_9.setOnClickListener(this);
+        btn_9.startAnimation(animation);
 
         Button btn_0 = getElementById(R.id.btn_0);
         btn_0.setOnClickListener(this);
+        btn_0.startAnimation(animation);
 
         Button btn_00 = getElementById(R.id.btn_00);
         btn_00.setOnClickListener(this);
+        btn_00.startAnimation(animation);
 
         Button btn_000 = getElementById(R.id.btn_000);
         btn_000.setOnClickListener(this);
+        btn_000.startAnimation(animation);
 
         Button btnClear = getElementById(R.id.btnClear);
         btnClear.setOnClickListener(this);
+        btnClear.startAnimation(animation);
 
         Button btnReset = getElementById(R.id.btnReset);
         btnReset.setOnClickListener(this);
+        btnReset.startAnimation(animation);
     }
 
     private void setValue(String value) {

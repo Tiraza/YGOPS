@@ -164,6 +164,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/llNumbers"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
