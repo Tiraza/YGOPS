@@ -43,7 +43,7 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_camera"
+            android:src="@drawable/ic_player_add"
             fab:fab_label="@string/player" />
 
         <com.github.clans.fab.FloatingActionButton
