@@ -30,6 +30,7 @@ public class ProfileRegisterActivity extends ParentActivity {
         onCreate(savedInstanceState, R.layout.activity_profile_register);
 
         ImageButton btnImage = getElementById(R.id.btnImage);
+        btnImage.setColorFilter(getResources().getColor(R.color.primary));
         btnImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

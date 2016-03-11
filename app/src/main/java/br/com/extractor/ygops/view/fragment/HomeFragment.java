@@ -50,6 +50,7 @@ public class HomeFragment extends RealmFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((MainActivity)activity).toggleIconToolbar(false);
+        activity.setTitle(R.string.home);
         setupActionMenu();
 
         chart = getElementById(R.id.chart);

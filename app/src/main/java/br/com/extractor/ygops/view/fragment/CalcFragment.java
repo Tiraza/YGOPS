@@ -102,6 +102,9 @@ public class CalcFragment extends ParentFragment implements View.OnClickListener
             case R.id.btnOponnentRemove:
                 removeValue(txtLifeOponnent);
                 break;
+            case R.id.btnContentRemove:
+                contentRemove();
+                break;
         }
     }
 
@@ -133,6 +136,12 @@ public class CalcFragment extends ParentFragment implements View.OnClickListener
         btnOponnentRemove.setColorFilter(getResources().getColor(R.color.match_loser));
         btnOponnentRemove.startAnimation(animation);
         btnOponnentRemove.setOnClickListener(this);
+
+        ImageButton btnContentRemove = getElementById(R.id.btnContentRemove);
+        btnContentRemove.setColorFilter(getResources().getColor(R.color.primary));
+        btnContentRemove.startAnimation(animation);
+        btnContentRemove.setOnClickListener(this);
+
     }
 
     private void setupCalcButtons(){
@@ -227,20 +236,30 @@ public class CalcFragment extends ParentFragment implements View.OnClickListener
             Integer val1 = Integer.valueOf(txtValue.getText().toString());
             Integer val2 = Integer.valueOf(txt.getText().toString());
             Integer result = val2 - val1;
-            txt.setText(getStringResult(result));
 
             if(result < 0){
                 txt.setText("0000");
+            } else {
+                txt.setText(getStringResult(result));
             }
 
             txtValue.setText("");
         }
     }
 
+    private void contentRemove(){
+        String value = txtValue.getText().toString();
+        if(value.length() > 0) {
+            txtValue.setText(value.substring(0, value.length() - 1));
+        }
+    }
+
     private String getStringResult(Integer value){
         String valueResult = "" + value;
-        while (valueResult.length() != 4){
-            valueResult = "0" + valueResult;
+        if(valueResult.length() < 4) {
+            while (valueResult.length() != 4) {
+                valueResult = "0" + valueResult;
+            }
         }
         return valueResult;
     }

@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -20,6 +19,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.ArrayList;
 
@@ -80,12 +80,24 @@ public class MainActivity extends ParentActivity {
         }
 
         AccountHeader headerResult = new AccountHeaderBuilder()
-        .withActivity(this)
-        .withCompactStyle(true)
-        .addProfiles(profileDrawerItem)
-        .withSelectionListEnabledForSingleProfile(false)
-        .withHeaderBackground(R.color.primary)
-        .build();
+                .withActivity(this)
+                .withCompactStyle(true)
+                .addProfiles(profileDrawerItem)
+                .withSelectionListEnabledForSingleProfile(false)
+                .withHeaderBackground(R.color.primary)
+                .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener() {
+                    @Override
+                    public boolean onProfileImageClick(View view, IProfile iProfile, boolean b) {
+                        //TODO Editar o perfil
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onProfileImageLongClick(View view, IProfile iProfile, boolean b) {
+                        return true;
+                    }
+                })
+                .build();
 
         ArrayList<IDrawerItem> drawerItems = new ArrayList<>();
         drawerItems.add(new PrimaryDrawerItem().withName(R.string.home).withIcon(R.drawable.ic_home_normal).withSelectedIcon(R.drawable.ic_home_pressed));
@@ -98,51 +110,51 @@ public class MainActivity extends ParentActivity {
         drawerItems.add(new SecondaryDrawerItem().withName(R.string.about));
 
         drawerResult = new DrawerBuilder()
-        .withActivity(this)
-        .withToolbar(toolbar)
-        .withActionBarDrawerToggleAnimated(true)
-        .withAccountHeader(headerResult)
-        .withDrawerItems(drawerItems)
-        .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-            @Override
-            public boolean onItemClick(View view, int position, IDrawerItem iDrawerItem) {
-                switch (position) {
-                    case HOME:
-                        replaceFragment(new HomeFragment(), true);
-                        break;
-                    case PLAYERS:
-                        replaceFragment(new ListPlayerFragment());
-                        break;
-                    case DECKS:
-                        replaceFragment(new ListDeckFragment());
-                        break;
-                    case MATCHES:
-                        replaceFragment(new ListMatchFragment());
-                        break;
-                    case CALCULATOR:
-                        replaceFragment(new CalcFragment());
-                        break;
-                    case CONFIGURATION:
-                        break;
-                    case ABOUT:
-                        break;
-                }
-                return false;
-            }
-        })
-        .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
-            @Override
-            public boolean onNavigationClickListener(View clickedView) {
-                onBackPressed();
-                return true;
-            }
-        })
-        .build();
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withActionBarDrawerToggleAnimated(true)
+                .withAccountHeader(headerResult)
+                .withDrawerItems(drawerItems)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem iDrawerItem) {
+                        switch (position) {
+                            case HOME:
+                                replaceFragment(new HomeFragment(), true);
+                                break;
+                            case PLAYERS:
+                                replaceFragment(new ListPlayerFragment());
+                                break;
+                            case DECKS:
+                                replaceFragment(new ListDeckFragment());
+                                break;
+                            case MATCHES:
+                                replaceFragment(new ListMatchFragment());
+                                break;
+                            case CALCULATOR:
+                                replaceFragment(new CalcFragment());
+                                break;
+                            case CONFIGURATION:
+                                break;
+                            case ABOUT:
+                                break;
+                        }
+                        return false;
+                    }
+                })
+                .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
+                    @Override
+                    public boolean onNavigationClickListener(View clickedView) {
+                        onBackPressed();
+                        return true;
+                    }
+                })
+                .build();
 
         realm.close();
     }
 
-    private void replaceFragment(Fragment fragment){
+    private void replaceFragment(Fragment fragment) {
         replaceFragment(fragment, false);
     }
 
@@ -169,7 +181,7 @@ public class MainActivity extends ParentActivity {
 
     public void toggleIconToolbar(boolean show) {
         if (getSupportActionBar() != null) {
-            if(show){
+            if (show) {
                 drawerResult.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             } else {

@@ -159,6 +159,14 @@
                 android:layout_weight="1"
                 android:text="@string/clear"
                 android:textColor="?attr/colorPrimary" />
+
+            <ImageButton
+                android:id="@+id/btnContentRemove"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackground"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_content_backspace" />
         </LinearLayout>
 
     </LinearLayout>
