@@ -14,6 +14,7 @@ import android.widget.TextView;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.view.ParentFragment;
 import br.com.extractor.ygops.view.activity.MainActivity;
+import br.com.extractor.ygops.view.dialog.DicePicker;
 
 /**
  * Created by Muryllo Tiraza on 29/02/2016.
@@ -105,6 +106,9 @@ public class CalcFragment extends ParentFragment implements View.OnClickListener
             case R.id.btnContentRemove:
                 contentRemove();
                 break;
+            case R.id.btnDice:
+                new DicePicker(activity).show();
+                break;
         }
     }
 
@@ -142,6 +146,9 @@ public class CalcFragment extends ParentFragment implements View.OnClickListener
         btnContentRemove.startAnimation(animation);
         btnContentRemove.setOnClickListener(this);
 
+        ImageButton btnDice = getElementById(R.id.btnDice);
+        btnDice.startAnimation(animation);
+        btnDice.setOnClickListener(this);
     }
 
     private void setupCalcButtons(){

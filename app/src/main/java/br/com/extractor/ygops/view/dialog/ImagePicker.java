@@ -21,10 +21,6 @@ import java.util.List;
 
 import br.com.extractor.ygops.R;
 
-
-/**
- * Created by Muryllo Tiraza on 01/02/2016.
- */
 public class ImagePicker {
 
     private static final int DEFAULT_MIN_WIDTH_QUALITY = 400;
@@ -38,8 +34,7 @@ public class ImagePicker {
 
         List<Intent> intentList = new ArrayList<>();
 
-        Intent pickIntent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePhotoIntent.putExtra("return-data", true);
         takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(getTempFile(context)));
@@ -47,8 +42,7 @@ public class ImagePicker {
         intentList = addIntentsToList(context, intentList, takePhotoIntent);
 
         if (intentList.size() > 0) {
-            chooserIntent = Intent.createChooser(intentList.remove(intentList.size() - 1),
-                    context.getString(R.string.pick_a_image));
+            chooserIntent = Intent.createChooser(intentList.remove(intentList.size() - 1), context.getString(R.string.pick_a_image));
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentList.toArray(new Parcelable[]{}));
         }
 
@@ -66,16 +60,12 @@ public class ImagePicker {
         return list;
     }
 
-
-    public static Bitmap getImageFromResult(Context context, int resultCode,
-                                            Intent imageReturnedIntent) {
+    public static Bitmap getImageFromResult(Context context, int resultCode, Intent imageReturnedIntent) {
         Bitmap bm = null;
         File imageFile = getTempFile(context);
         if (resultCode == Activity.RESULT_OK) {
             Uri selectedImage;
-            boolean isCamera = (imageReturnedIntent == null ||
-                    imageReturnedIntent.getData() == null ||
-                    imageReturnedIntent.getData().equals(Uri.fromFile(imageFile)));
+            boolean isCamera = (imageReturnedIntent == null || imageReturnedIntent.getData() == null || imageReturnedIntent.getData().equals(Uri.fromFile(imageFile)));
             if (isCamera) {     /** CAMERA **/
                 selectedImage = Uri.fromFile(imageFile);
             } else {            /** ALBUM **/
@@ -88,7 +78,6 @@ public class ImagePicker {
         }
         return bm;
     }
-
 
     private static File getTempFile(Context context) {
         File imageFile = new File(context.getExternalCacheDir(), TEMP_IMAGE_NAME);
@@ -107,15 +96,14 @@ public class ImagePicker {
             e.printStackTrace();
         }
 
-        Bitmap actuallyUsableBitmap = BitmapFactory.decodeFileDescriptor(
-                fileDescriptor.getFileDescriptor(), null, options);
+        Bitmap actuallyUsableBitmap = null;
+        if (fileDescriptor != null && fileDescriptor.getFileDescriptor() != null) {
+            actuallyUsableBitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor.getFileDescriptor(), null, options);
+        }
 
         return actuallyUsableBitmap;
     }
 
-    /**
-     * Resize to avoid using too much memory loading big images (e.g.: 2560*1920)
-     */
     private static Bitmap getImageResized(Context context, Uri selectedImage) {
         Bitmap bm = null;
         int[] sampleSizes = new int[]{5, 3, 2, 1};
@@ -126,7 +114,6 @@ public class ImagePicker {
         } while (bm.getWidth() < minWidthQuality && i < sampleSizes.length);
         return bm;
     }
-
 
     private static int getRotation(Context context, Uri imageUri, boolean isCamera) {
         int rotation;
@@ -144,9 +131,7 @@ public class ImagePicker {
 
             context.getContentResolver().notifyChange(imageFile, null);
             ExifInterface exif = new ExifInterface(imageFile.getPath());
-            int orientation = exif.getAttributeInt(
-                    ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL);
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
             switch (orientation) {
                 case ExifInterface.ORIENTATION_ROTATE_270:
@@ -175,7 +160,6 @@ public class ImagePicker {
         int orientationColumnIndex = cursor.getColumnIndex(columns[0]);
         return cursor.getInt(orientationColumnIndex);
     }
-
 
     private static Bitmap rotate(Bitmap bm, int rotation) {
         if (rotation != 0) {

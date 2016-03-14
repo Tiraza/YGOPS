@@ -161,6 +161,13 @@
                 android:textColor="?attr/colorPrimary" />
 
             <ImageButton
+                android:id="@+id/btnDice"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackground"
+                android:src="@drawable/ic_dice_6" />
+
+            <ImageButton
                 android:id="@+id/btnContentRemove"
                 android:layout_width="48dp"
                 android:layout_height="48dp"

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -34,11 +35,13 @@ import io.realm.Sort;
  */
 public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
 
-    private static int MATCH_REGISTER_CODE = 1;
     private MatchesAdapter adapter;
     private MatchesDeleteAdapter deleteAdapter;
     private MenuItem menuDelete;
     private ListView listView;
+    private FloatingActionButton fab;
+
+    private static int MATCH_REGISTER_CODE = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,32 +55,8 @@ public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
         activity.setTitle(R.string.matches);
         ((MainActivity)activity).toggleIconToolbar(true);
 
-        final ArrayList<Match> matchesList = reverse(realm.where(Match.class).findAll());
-
-        adapter = new MatchesAdapter(matchesList, activity, realm);
-        listView = getElementById(R.id.listView);
-        listView.setAdapter(adapter);
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                deleteAdapter = new MatchesDeleteAdapter(matchesList, activity, realm, position, ListMatchFragment.this);
-                listView.setAdapter(deleteAdapter);
-                menuDelete.setVisible(true);
-                return true;
-            }
-        });
-
-
-        FloatingActionButton fab = getElementById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, MatchRegisterActivity.class);
-                startActivityForResult(intent, MATCH_REGISTER_CODE);
-                activity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            }
-        });
-        fab.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));
+        setupFab();
+        setupListView();
     }
 
     @Override
@@ -127,6 +106,54 @@ public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
         menuDelete.setVisible(false);
     }
 
+    private void setupFab(){
+        fab = getElementById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, MatchRegisterActivity.class);
+                startActivityForResult(intent, MATCH_REGISTER_CODE);
+                activity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            }
+        });
+        fab.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));
+    }
+
+    private void setupListView(){
+        final ArrayList<Match> matchesList = reverse(realm.where(Match.class).findAll());
+
+        adapter = new MatchesAdapter(matchesList, activity, realm);
+        listView = getElementById(R.id.listView);
+        listView.setAdapter(adapter);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                deleteAdapter = new MatchesDeleteAdapter(matchesList, activity, realm, position, ListMatchFragment.this);
+                listView.setAdapter(deleteAdapter);
+                menuDelete.setVisible(true);
+                return true;
+            }
+        });
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int mLastFirstVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {}
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (mLastFirstVisibleItem < firstVisibleItem) {
+                    fab.hide(true);
+                }
+                if (mLastFirstVisibleItem > firstVisibleItem) {
+                    fab.show(true);
+                }
+                mLastFirstVisibleItem = firstVisibleItem;
+            }
+        });
+    }
+
     private ArrayList<Match> reverse(RealmResults<Match> results){
         ArrayList<Match> arrayList = new ArrayList<>();
         for (int i = results.size(); i > Math.max(results.size() - 20, 0) ; i--) {
@@ -134,5 +161,4 @@ public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
         }
         return arrayList;
     }
-
 }

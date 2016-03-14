@@ -1,9 +1,5 @@
 package br.com.extractor.ygops.view.activity;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,7 +21,9 @@ import java.util.ArrayList;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
+import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.view.ParentActivity;
+import br.com.extractor.ygops.view.dialog.DicePicker;
 import br.com.extractor.ygops.view.fragment.CalcFragment;
 import br.com.extractor.ygops.view.fragment.HomeFragment;
 import br.com.extractor.ygops.view.fragment.ListDeckFragment;
@@ -76,7 +74,7 @@ public class MainActivity extends ParentActivity {
         ProfileDrawerItem profileDrawerItem = new ProfileDrawerItem();
         profileDrawerItem.withName(profile.getNome());
         if (profile.getImage() != null) {
-            profileDrawerItem.withIcon(getDrawableFromByte(profile.getImage()));
+            profileDrawerItem.withIcon(ImageUtils.getRoundedCornerBitmap(profile.getImage()));
         }
 
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -94,7 +92,7 @@ public class MainActivity extends ParentActivity {
 
                     @Override
                     public boolean onProfileImageLongClick(View view, IProfile iProfile, boolean b) {
-                        return true;
+                        return false;
                     }
                 })
                 .build();
@@ -158,7 +156,6 @@ public class MainActivity extends ParentActivity {
         replaceFragment(fragment, false);
     }
 
-
     private void replaceFragment(Fragment fragment, boolean close) {
         isClose = close;
 
@@ -169,14 +166,7 @@ public class MainActivity extends ParentActivity {
 
         ft.replace(R.id.fragmentContainer, fragment);
         ft.addToBackStack(null);
-        //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         ft.commit();
-    }
-
-    private Drawable getDrawableFromByte(byte[] bytes) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        bitmap = Bitmap.createScaledBitmap(bitmap, 120, 120, true);
-        return new BitmapDrawable(getResources(), bitmap);
     }
 
     public void toggleIconToolbar(boolean show) {

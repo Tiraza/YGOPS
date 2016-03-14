@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -34,11 +35,11 @@ import io.realm.Sort;
  */
 public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
 
-
     private PlayersDeleteAdapter deleteAdapter;
     private MenuItem menuDelete;
     private ListView listView;
     private PlayersAdapter adapter;
+    private FloatingActionButton fab;
 
     private static int PLAYER_REGISTER_CODE = 1;
 
@@ -54,44 +55,8 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
         activity.setTitle(R.string.players);
         ((MainActivity)activity).toggleIconToolbar(true);
 
-        final RealmResults<Player> players = realm.where(Player.class).findAll();
-        players.sort("nome", Sort.ASCENDING);
-
-        adapter = new PlayersAdapter(players, activity);
-
-        listView = getElementById(R.id.listView);
-        listView.setAdapter(adapter);
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                deleteAdapter = new PlayersDeleteAdapter(players, activity, position, ListPlayerFragment.this);
-                listView.setAdapter(deleteAdapter);
-                menuDelete.setVisible(true);
-                return true;
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Player player = adapter.getItem(position);
-                Bundle bundle = new Bundle();
-                bundle.putString("playerUuid", player.getUuid());
-                Intent intent = new Intent(activity, PlayerConsultActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-
-        FloatingActionButton fab = getElementById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, PlayerRegisterActivity.class);
-                startActivityForResult(intent, PLAYER_REGISTER_CODE);
-            }
-        });
-        fab.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));
+        setupFab();
+        setupListView();
     }
 
     @Override
@@ -152,5 +117,66 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
     public void onDelete() {
         listView.setAdapter(adapter);
         menuDelete.setVisible(false);
+    }
+
+    private void setupFab(){
+        fab = getElementById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, PlayerRegisterActivity.class);
+                startActivityForResult(intent, PLAYER_REGISTER_CODE);
+            }
+        });
+        fab.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));
+    }
+
+    private void setupListView(){
+        final RealmResults<Player> players = realm.where(Player.class).findAll();
+        players.sort("nome", Sort.ASCENDING);
+
+        adapter = new PlayersAdapter(players, activity);
+
+        listView = getElementById(R.id.listView);
+        listView.setAdapter(adapter);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                deleteAdapter = new PlayersDeleteAdapter(players, activity, position, ListPlayerFragment.this);
+                listView.setAdapter(deleteAdapter);
+                menuDelete.setVisible(true);
+                return true;
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Player player = adapter.getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("playerUuid", player.getUuid());
+                Intent intent = new Intent(activity, PlayerConsultActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int mLastFirstVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {}
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (mLastFirstVisibleItem < firstVisibleItem) {
+                    fab.hide(true);
+                }
+                if (mLastFirstVisibleItem > firstVisibleItem) {
+                    fab.show(true);
+                }
+                mLastFirstVisibleItem = firstVisibleItem;
+            }
+        });
     }
 }
