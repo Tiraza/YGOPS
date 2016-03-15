@@ -32,9 +32,9 @@ public class ProfileEditActivity extends ParentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        onCreate(savedInstanceState, R.layout.activity_profile_edit);
+        setTitle(getString(R.string.profile));
         displayHomeEnabled();
-        setContentView(R.layout.activity_profile_edit);
 
         txtName = getElementById(R.id.txtName);
         imgProfile = getElementById(R.id.imgProfile);

@@ -1,17 +1,10 @@
 package br.com.extractor.ygops.view;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
-
-import com.github.mikephil.charting.charts.BarLineChartBase;
-import com.github.mikephil.charting.charts.Chart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import br.com.extractor.ygops.R;
 import io.realm.Realm;
@@ -64,10 +57,10 @@ public abstract class ParentActivity extends ActionBarActivity {
         toast.show();
     }
 
-    protected final void displayHomeEnabled(){
+    protected final void displayHomeEnabled() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if(toolbar != null){
+        if (toolbar != null) {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
