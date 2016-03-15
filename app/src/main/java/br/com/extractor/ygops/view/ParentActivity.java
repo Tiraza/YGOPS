@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarLineChartBase;
@@ -63,32 +64,16 @@ public abstract class ParentActivity extends ActionBarActivity {
         toast.show();
     }
 
-    protected void setup(Chart<?> chart) {
-        chart.setDescription("");
-        chart.setNoDataTextDescription("You need to provide data for the chart.");
-        chart.setTouchEnabled(true);
+    protected final void displayHomeEnabled(){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (chart instanceof BarLineChartBase) {
-
-            BarLineChartBase mChart = (BarLineChartBase) chart;
-            mChart.setDrawGridBackground(false);
-            mChart.setDragEnabled(true);
-            mChart.setScaleEnabled(true);
-            mChart.setPinchZoom(false);
-
-            YAxis leftAxis = mChart.getAxisLeft();
-            leftAxis.removeAllLimitLines();
-            leftAxis.setStartAtZero(false);
-            leftAxis.setTextSize(8f);
-            leftAxis.setTextColor(Color.DKGRAY);
-            leftAxis.setValueFormatter(new PercentFormatter());
-
-            XAxis xAxis = mChart.getXAxis();
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setTextSize(8f);
-            xAxis.setTextColor(Color.DKGRAY);
-
-            mChart.getAxisRight().setEnabled(false);
+        if(toolbar != null){
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
         }
     }
 }

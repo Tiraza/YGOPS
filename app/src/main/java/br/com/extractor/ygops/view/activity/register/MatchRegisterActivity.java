@@ -39,6 +39,7 @@ public class MatchRegisterActivity extends ParentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_match_register);
+        displayHomeEnabled();
 
         setupSwitch();
         setupButtons();

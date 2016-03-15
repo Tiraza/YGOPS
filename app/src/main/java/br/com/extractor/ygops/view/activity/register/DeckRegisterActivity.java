@@ -20,6 +20,7 @@ public class DeckRegisterActivity extends ParentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_deck_register);
+        displayHomeEnabled();
         setTitle(getString(R.string.decks));
 
         ColorAdapter adapter = new ColorAdapter(this);

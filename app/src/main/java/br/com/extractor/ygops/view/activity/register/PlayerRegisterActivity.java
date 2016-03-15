@@ -20,6 +20,7 @@ public class PlayerRegisterActivity extends ParentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_player_register);
+        displayHomeEnabled();
         setTitle(getString(R.string.players));
 
         ColorAdapter adapter = new ColorAdapter(this);
