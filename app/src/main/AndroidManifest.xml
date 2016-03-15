@@ -12,10 +12,10 @@
         <activity
             android:name=".view.activity.SplashScreen"
             android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

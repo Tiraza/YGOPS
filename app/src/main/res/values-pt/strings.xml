@@ -58,4 +58,5 @@
     <string name="calculator">Calculadora</string>
     <string name="reset">Resetar</string>
     <string name="clear">Limpar</string>
+    <string name="wins_losses">Vitórias / Derrotas</string>
 </resources>

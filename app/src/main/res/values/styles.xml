@@ -9,6 +9,10 @@
         <item name="android:divider">@color/divider</item>
     </style>
 
+    <style name="SplashTheme" parent="MaterialDrawerTheme.Light.DarkToolbar">
+        <item name="android:windowBackground">@drawable/splash_animation</item>
+    </style>
+
     <style name="MenuLabelsStyle">
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">#FFFFFF</item>

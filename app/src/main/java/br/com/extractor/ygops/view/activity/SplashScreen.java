@@ -3,8 +3,8 @@ package br.com.extractor.ygops.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.WindowManager;
 
-import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.activity.register.ProfileRegisterActivity;
@@ -15,7 +15,7 @@ public class SplashScreen extends ParentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         int SPLASH_DISPLAY_LENGTH = 1500;
 

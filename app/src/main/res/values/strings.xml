@@ -72,4 +72,5 @@
     <string name="calculator">Calculator</string>
     <string name="reset">Reset</string>
     <string name="clear">Clear</string>
+    <string name="wins_losses">Wins / Losses</string>
 </resources>

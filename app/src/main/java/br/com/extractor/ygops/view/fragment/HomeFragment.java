@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -21,6 +22,8 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -52,6 +55,9 @@ public class HomeFragment extends RealmFragment {
         ((MainActivity)activity).toggleIconToolbar(false);
         activity.setTitle(R.string.home);
         setupActionMenu();
+
+        TextView txtGraphName = getElementById(R.id.txtGraphName);
+        txtGraphName.setText(R.string.wins_losses);
 
         chart = getElementById(R.id.chart);
         setup(chart);
