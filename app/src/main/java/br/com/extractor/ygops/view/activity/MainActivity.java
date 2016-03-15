@@ -1,5 +1,6 @@
 package br.com.extractor.ygops.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,6 +24,7 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.view.ParentActivity;
+import br.com.extractor.ygops.view.activity.edit.ProfileEditActivity;
 import br.com.extractor.ygops.view.dialog.DicePicker;
 import br.com.extractor.ygops.view.fragment.CalcFragment;
 import br.com.extractor.ygops.view.fragment.HomeFragment;
@@ -34,6 +36,8 @@ import io.realm.Realm;
 public class MainActivity extends ParentActivity {
 
     private Drawer drawerResult;
+    private AccountHeader headerResult;
+    private ProfileDrawerItem profileDrawerItem;
     private FragmentManager fm;
 
     private final int HOME = 1;
@@ -45,6 +49,7 @@ public class MainActivity extends ParentActivity {
     private final int ABOUT = 8;
 
     private boolean isClose = false;
+    private static final Integer PROFILE_EDIT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,17 +72,33 @@ public class MainActivity extends ParentActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == PROFILE_EDIT) {
+            Profile profile = realm.where(Profile.class).findFirst();
+
+            profileDrawerItem.withName(profile.getNome());
+            if (profile.getImage() != null) {
+                profileDrawerItem.withIcon(ImageUtils.getRoundedCornerBitmap(profile.getImage()));
+            }
+
+            headerResult.updateProfile(profileDrawerItem);
+        }
+    }
+
     private void setupNavigationDrawer() {
         Realm realm = Realm.getDefaultInstance();
         Profile profile = realm.where(Profile.class).findFirst();
 
-        ProfileDrawerItem profileDrawerItem = new ProfileDrawerItem();
+        profileDrawerItem = new ProfileDrawerItem();
         profileDrawerItem.withName(profile.getNome());
         if (profile.getImage() != null) {
             profileDrawerItem.withIcon(ImageUtils.getRoundedCornerBitmap(profile.getImage()));
         }
 
-        AccountHeader headerResult = new AccountHeaderBuilder()
+        headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withCompactStyle(true)
                 .addProfiles(profileDrawerItem)
@@ -86,7 +107,7 @@ public class MainActivity extends ParentActivity {
                 .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener() {
                     @Override
                     public boolean onProfileImageClick(View view, IProfile iProfile, boolean b) {
-                        //TODO Editar o perfil
+                        startActivityForResult(new Intent(MainActivity.this, ProfileEditActivity.class), PROFILE_EDIT);
                         return false;
                     }
 

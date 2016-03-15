@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.UUID;
+
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.util.RealmUtils;
@@ -31,6 +33,7 @@ public class DeckRegisterActivity extends ParentActivity {
                 EditText edtDeckName = getElementById(R.id.edtDeckName);
                 if (edtDeckName.getText() != null && !"".equals(edtDeckName.getText().toString())) {
                     Deck deck = new Deck();
+                    deck.setUuid(UUID.randomUUID().toString());
                     deck.setNome(edtDeckName.getText().toString());
                     deck.setColor(spnColor.getSelectedItemPosition());
 

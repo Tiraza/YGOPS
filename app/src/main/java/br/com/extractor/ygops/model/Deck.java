@@ -9,10 +9,18 @@ import io.realm.annotations.PrimaryKey;
 public class Deck extends RealmObject {
 
     @PrimaryKey
+    private String uuid;
     private String nome;
     private Integer color;
 
     public Deck() {
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getNome() {

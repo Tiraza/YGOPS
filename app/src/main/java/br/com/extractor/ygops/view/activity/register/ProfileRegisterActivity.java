@@ -67,7 +67,7 @@ public class ProfileRegisterActivity extends ParentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ImagePicker.IMAGE_PICKER_ID) {
+        if (requestCode == ImagePicker.IMAGE_PICKER_ID && resultCode != 0) {
             Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
