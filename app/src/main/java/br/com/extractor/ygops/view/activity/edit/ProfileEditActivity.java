@@ -33,6 +33,7 @@ public class ProfileEditActivity extends ParentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        displayHomeEnabled();
         setContentView(R.layout.activity_profile_edit);
 
         txtName = getElementById(R.id.txtName);
