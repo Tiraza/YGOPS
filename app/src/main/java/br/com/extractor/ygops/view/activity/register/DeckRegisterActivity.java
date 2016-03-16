@@ -38,7 +38,7 @@ public class DeckRegisterActivity extends ParentActivity {
                     deck.setNome(edtDeckName.getText().toString());
                     deck.setColor(spnColor.getSelectedItemPosition());
 
-                    makeToast(R.string.successfully_included, Toast.LENGTH_LONG);
+                    makeToast(R.string.successfully_included, Toast.LENGTH_SHORT);
                     RealmUtils.getInstance().insert(deck);
                     finish();
                 } else {

@@ -127,14 +127,14 @@ public class ListDeckFragment extends RealmFragment implements DeleteAdapter {
             public void onClick(View view) {
                 Intent intent = new Intent(activity, DeckRegisterActivity.class);
                 startActivityForResult(intent, DECK_REGISTER_CODE);
-                activity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
             }
         });
         fab.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));
     }
 
     private void setupListView() {
-        final RealmResults<Deck> decks = realm.where(Deck.class).findAll();
+        RealmResults<Deck> decks = realm.where(Deck.class).findAll();
         decks.sort("nome", Sort.ASCENDING);
         adapter = new DecksAdapter(decks, activity);
 
@@ -143,6 +143,7 @@ public class ListDeckFragment extends RealmFragment implements DeleteAdapter {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                RealmResults<Deck> decks = realm.where(Deck.class).findAll();
                 deleteAdapter = new DecksDeleteAdapter(decks, activity, position, ListDeckFragment.this);
                 listView.setAdapter(deleteAdapter);
                 menuDelete.setVisible(true);

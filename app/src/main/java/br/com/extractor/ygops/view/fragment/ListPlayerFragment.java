@@ -132,7 +132,7 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
     }
 
     private void setupListView(){
-        final RealmResults<Player> players = realm.where(Player.class).findAll();
+        RealmResults<Player> players = realm.where(Player.class).findAll();
         players.sort("nome", Sort.ASCENDING);
 
         adapter = new PlayersAdapter(players, activity);
@@ -142,6 +142,7 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                RealmResults<Player> players = realm.where(Player.class).findAll();
                 deleteAdapter = new PlayersDeleteAdapter(players, activity, position, ListPlayerFragment.this);
                 listView.setAdapter(deleteAdapter);
                 menuDelete.setVisible(true);

@@ -77,7 +77,7 @@ public class MatchRegisterActivity extends ParentActivity {
                     match.setPlayerDeck(opponentDeck);
                     match.setWinner(isWinner);
 
-                    makeToast(R.string.successfully_included, Toast.LENGTH_LONG);
+                    makeToast(R.string.successfully_included, Toast.LENGTH_SHORT);
                     RealmUtils.getInstance().insert(match);
                     MatchRegisterActivity.this.finish();
                 }

@@ -120,7 +120,7 @@ public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
     }
 
     private void setupListView(){
-        final ArrayList<Match> matchesList = reverse(realm.where(Match.class).findAll());
+        ArrayList<Match> matchesList = reverse(realm.where(Match.class).findAll());
 
         adapter = new MatchesAdapter(matchesList, activity, realm);
         listView = getElementById(R.id.listView);
@@ -128,6 +128,7 @@ public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                ArrayList<Match> matchesList = reverse(realm.where(Match.class).findAll());
                 deleteAdapter = new MatchesDeleteAdapter(matchesList, activity, realm, position, ListMatchFragment.this);
                 listView.setAdapter(deleteAdapter);
                 menuDelete.setVisible(true);

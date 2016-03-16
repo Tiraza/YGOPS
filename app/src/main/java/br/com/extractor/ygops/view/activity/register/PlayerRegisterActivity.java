@@ -38,7 +38,7 @@ public class PlayerRegisterActivity extends ParentActivity {
                     player.setNome(edtPlayerName.getText().toString());
                     player.setColor(spnColor.getSelectedItemPosition());
 
-                    makeToast(R.string.successfully_included, Toast.LENGTH_LONG);
+                    makeToast(R.string.successfully_included, Toast.LENGTH_SHORT);
                     RealmUtils.getInstance().insert(player);
                     finish();
                 } else {
