@@ -25,7 +25,6 @@ import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.activity.edit.ProfileEditActivity;
-import br.com.extractor.ygops.view.dialog.DicePicker;
 import br.com.extractor.ygops.view.fragment.CalcFragment;
 import br.com.extractor.ygops.view.fragment.HomeFragment;
 import br.com.extractor.ygops.view.fragment.ListDeckFragment;
@@ -76,12 +75,12 @@ public class MainActivity extends ParentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PROFILE_EDIT) {
+        if (requestCode == PROFILE_EDIT) {
             Profile profile = realm.where(Profile.class).findFirst();
 
             profileDrawerItem.withName(profile.getNome());
             if (profile.getImage() != null) {
-                profileDrawerItem.withIcon(ImageUtils.getRoundedCornerBitmap(profile.getImage()));
+                profileDrawerItem.withIcon(ImageUtils.getInstance().getRoundedCornerBitmap(profile.getImage()));
             }
 
             headerResult.updateProfile(profileDrawerItem);
@@ -89,13 +88,12 @@ public class MainActivity extends ParentActivity {
     }
 
     private void setupNavigationDrawer() {
-        Realm realm = Realm.getDefaultInstance();
         Profile profile = realm.where(Profile.class).findFirst();
 
         profileDrawerItem = new ProfileDrawerItem();
         profileDrawerItem.withName(profile.getNome());
         if (profile.getImage() != null) {
-            profileDrawerItem.withIcon(ImageUtils.getRoundedCornerBitmap(profile.getImage()));
+            profileDrawerItem.withIcon(ImageUtils.getInstance().getRoundedCornerBitmap(profile.getImage()));
         }
 
         headerResult = new AccountHeaderBuilder()
@@ -169,8 +167,6 @@ public class MainActivity extends ParentActivity {
                     }
                 })
                 .build();
-
-        realm.close();
     }
 
     private void replaceFragment(Fragment fragment) {

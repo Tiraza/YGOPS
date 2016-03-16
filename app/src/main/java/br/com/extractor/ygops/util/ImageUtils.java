@@ -2,15 +2,10 @@ package br.com.extractor.ygops.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -20,7 +15,19 @@ import com.amulyakhare.textdrawable.TextDrawable;
  */
 public class ImageUtils {
 
-    public static Bitmap getRoundedCornerBitmap(byte[] bytes) {
+    private static ImageUtils INSTANCE = new ImageUtils();
+
+    public ImageUtils() {
+    }
+
+    public static ImageUtils getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ImageUtils();
+        }
+        return INSTANCE;
+    }
+
+    public Bitmap getRoundedCornerBitmap(byte[] bytes) {
         Bitmap source = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
         int size = Math.min(source.getWidth(), source.getHeight());
@@ -47,21 +54,21 @@ public class ImageUtils {
         return bitmap;
     }
 
-    public static Drawable getDrawable(int text, int color, Context context) {
-        TextDrawable drawable = TextDrawable.builder()
-                .beginConfig()
-                .bold()
-                .endConfig()
-                .buildRound(context.getResources().getString(text), context.getResources().getColor(color));
-        return drawable;
-    }
-
-    public static Drawable getDrawableRealm(int text, int color, Context context) {
+    public Drawable getDrawableRealm(int text, int color, Context context) {
         TextDrawable drawable = TextDrawable.builder()
                 .beginConfig()
                 .bold()
                 .endConfig()
                 .buildRound(context.getResources().getString(text), new ColorGenerator().getColor(color));
+        return drawable;
+    }
+
+    public Drawable getDrawable(String text, int color) {
+        TextDrawable drawable = TextDrawable.builder()
+                .beginConfig()
+                .bold()
+                .endConfig()
+                .buildRound(text, color);
         return drawable;
     }
 

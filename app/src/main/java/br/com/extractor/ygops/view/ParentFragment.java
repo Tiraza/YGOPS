@@ -2,7 +2,6 @@ package br.com.extractor.ygops.view;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,10 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.ChartData;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+import br.com.extractor.ygops.application.YgoPS;
 
 /**
  * Created by Muryllo Tiraza on 27/01/2016.
@@ -29,6 +32,15 @@ public abstract class ParentFragment extends Fragment {
         view = inflater.inflate(layoutId, container, false);
         activity = getActivity();
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        YgoPS application = (YgoPS) activity.getApplication();
+        Tracker mTracker = application.getDefaultTracker();
+        mTracker.setScreenName(getClass().getName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     protected final <T> T getElementById(int id) {

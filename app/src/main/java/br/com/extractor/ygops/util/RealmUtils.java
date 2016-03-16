@@ -6,9 +6,20 @@ import io.realm.RealmObject;
 /**
  * Created by Muryllo Tiraza on 29/01/2016.
  */
-public class RealmUtils {
+public final class RealmUtils {
 
-    public static <T extends RealmObject> void insert(T object) {
+    private static RealmUtils INSTANCE = new RealmUtils();
+
+    private RealmUtils() {}
+
+    public static RealmUtils getInstance() {
+        if(INSTANCE == null){
+            INSTANCE = new RealmUtils();
+        }
+        return INSTANCE;
+    }
+
+    public <T extends RealmObject> void insert(T object) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(object);
@@ -16,7 +27,7 @@ public class RealmUtils {
         realm.close();
     }
 
-    public static <T extends RealmObject> T get(Class<T> tClass) {
+    public <T extends RealmObject> T get(Class<T> tClass) {
         Realm realm = Realm.getDefaultInstance();
         T result = realm.where(tClass).findFirstAsync();
         realm.close();

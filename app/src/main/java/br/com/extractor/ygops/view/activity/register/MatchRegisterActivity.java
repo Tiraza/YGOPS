@@ -62,6 +62,7 @@ public class MatchRegisterActivity extends ParentActivity {
             @Override
             public void onClick(View view) {
                 if (validaCampos()) {
+                    //TODO REFACTOR
                     realm.beginTransaction();
                     Player opponent = listPlayer.get(spnPlayer.getSelectedItemPosition() - 1);
                     Deck opponentDeck = listDeck.get(spnDeck2.getSelectedItemPosition() - 1);
@@ -77,7 +78,7 @@ public class MatchRegisterActivity extends ParentActivity {
                     match.setWinner(isWinner);
 
                     makeToast(R.string.successfully_included, Toast.LENGTH_LONG);
-                    RealmUtils.insert(match);
+                    RealmUtils.getInstance().insert(match);
                     MatchRegisterActivity.this.finish();
                 }
             }

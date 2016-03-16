@@ -2,11 +2,11 @@ package br.com.extractor.ygops.view.activity.edit;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -17,7 +17,6 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.view.ParentActivity;
-import br.com.extractor.ygops.view.activity.MainActivity;
 import br.com.extractor.ygops.view.dialog.ImagePicker;
 import io.realm.Realm;
 
@@ -51,13 +50,14 @@ public class ProfileEditActivity extends ParentActivity {
             @Override
             public void onClick(View view) {
                 String name = txtName.getText().toString();
-                if("".equals(name)){
+                if ("".equals(name)) {
                     txtName.setError(getResources().getString(R.string.field_required));
                 } else {
+                    //TODO REFACTOR
                     realm.beginTransaction();
                     profile.setNome(name);
 
-                    if(image != null){
+                    if (image != null) {
                         profile.setImage(image);
                     }
 
@@ -74,7 +74,7 @@ public class ProfileEditActivity extends ParentActivity {
         profile = realm.where(Profile.class).findFirst();
 
         if (profile.getImage() != null) {
-            imgProfile.setImageBitmap(ImageUtils.getRoundedCornerBitmap(profile.getImage()));
+            imgProfile.setImageBitmap(ImageUtils.getInstance().getRoundedCornerBitmap(profile.getImage()));
         }
 
         txtName.setText(profile.getNome());
@@ -82,14 +82,26 @@ public class ProfileEditActivity extends ParentActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, final int resultCode, final Intent data) {
         if (requestCode == ImagePicker.IMAGE_PICKER_ID && resultCode != 0) {
-            Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            image = stream.toByteArray();
+            new AsyncTask<Void, Void, Void>() {
+                private Bitmap roundedImage;
 
-            imgProfile.setImageBitmap(ImageUtils.getRoundedCornerBitmap(image));
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    Bitmap bitmap = ImagePicker.getImageFromResult(ProfileEditActivity.this, resultCode, data);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    image = stream.toByteArray();
+                    roundedImage = ImageUtils.getInstance().getRoundedCornerBitmap(image);
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    imgProfile.setImageBitmap(roundedImage);
+                }
+            }.execute();
         }
     }
 }

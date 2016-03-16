@@ -33,6 +33,7 @@ public class PlayerConsultActivity extends ParentActivity {
     public void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_player_consult);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        displayHomeEnabled();
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -52,7 +53,7 @@ public class PlayerConsultActivity extends ParentActivity {
         edtDeckName.setText(player.getNome());
 
         ImageView img = getElementById(R.id.image_view);
-        img.setImageDrawable(ImageUtils.getDrawableRealm(R.string.empty, player.getColor(), this));
+        img.setImageDrawable(ImageUtils.getInstance().getDrawableRealm(R.string.empty, player.getColor(), this));
     }
 
     private void setupCardInfo(Player player) {

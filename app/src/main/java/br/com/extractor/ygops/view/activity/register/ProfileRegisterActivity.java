@@ -2,6 +2,7 @@ package br.com.extractor.ygops.view.activity.register;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
+import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.activity.MainActivity;
@@ -53,7 +55,7 @@ public class ProfileRegisterActivity extends ParentActivity {
                         profile.setImage(image);
                     }
 
-                    RealmUtils.insert(profile);
+                    RealmUtils.getInstance().insert(profile);
 
                     Intent intent = new Intent(ProfileRegisterActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -66,12 +68,18 @@ public class ProfileRegisterActivity extends ParentActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, final int resultCode, final Intent data) {
         if (requestCode == ImagePicker.IMAGE_PICKER_ID && resultCode != 0) {
-            Bitmap bitmap = ImagePicker.getImageFromResult(this, resultCode, data);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            image = stream.toByteArray();
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    Bitmap bitmap = ImagePicker.getImageFromResult(ProfileRegisterActivity.this, resultCode, data);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    image = stream.toByteArray();
+                    return null;
+                }
+            }.execute();
         }
     }
 }

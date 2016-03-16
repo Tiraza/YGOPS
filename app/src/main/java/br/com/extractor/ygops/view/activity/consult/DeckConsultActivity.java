@@ -22,6 +22,7 @@ public class DeckConsultActivity extends ParentActivity {
     public void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_deck_consult);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        displayHomeEnabled();
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -40,7 +41,7 @@ public class DeckConsultActivity extends ParentActivity {
         edtDeckName.setText(deck.getNome());
 
         ImageView img = getElementById(R.id.image_view);
-        img.setImageDrawable(ImageUtils.getDrawableRealm(R.string.empty, deck.getColor(), this));
+        img.setImageDrawable(ImageUtils.getInstance().getDrawableRealm(R.string.empty, deck.getColor(), this));
     }
 
     private void setupCardInfo(Deck deck) {

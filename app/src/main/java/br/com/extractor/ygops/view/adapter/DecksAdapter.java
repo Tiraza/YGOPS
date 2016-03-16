@@ -8,13 +8,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-
 import java.util.List;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.util.ColorGenerator;
+import br.com.extractor.ygops.util.ImageUtils;
 
 /**
  * Created by Muryllo Tiraza on 29/01/2016.
@@ -23,10 +22,12 @@ public class DecksAdapter extends BaseAdapter {
 
     private List<Deck> decks;
     private Context context;
+    private ColorGenerator colorGenerator;
 
     public DecksAdapter(List<Deck> decks, Context context) {
         this.decks = decks;
         this.context = context;
+        this.colorGenerator = new ColorGenerator();
     }
 
     @Override
@@ -56,14 +57,8 @@ public class DecksAdapter extends BaseAdapter {
         TextView txtDeck = (TextView) view.findViewById(R.id.txtName);
         txtDeck.setText(deck.getNome());
 
-        TextDrawable drawable = TextDrawable.builder()
-                .beginConfig()
-                .bold()
-                .endConfig()
-                .buildRound(deck.getNome().substring(0, 1).toUpperCase(), new ColorGenerator().getColor(deck.getColor()));
-
         ImageView img = (ImageView) view.findViewById(R.id.image_view);
-        img.setImageDrawable(drawable);
+        img.setImageDrawable(ImageUtils.getInstance().getDrawable(deck.getNome().substring(0, 1).toUpperCase(), colorGenerator.getColor(deck.getColor())));
 
         return view;
     }

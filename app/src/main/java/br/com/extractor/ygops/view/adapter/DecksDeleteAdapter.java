@@ -17,6 +17,7 @@ import java.util.List;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.util.ColorGenerator;
+import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
 
 /**
@@ -27,10 +28,12 @@ public class DecksDeleteAdapter extends BaseAdapter {
     private List<DeckSelector> deckSelectorList;
     private Context context;
     private DeleteAdapter deleteAdapter;
+    private ColorGenerator colorGenerator;
 
     public DecksDeleteAdapter(List<Deck> decks, Context context, Integer position, DeleteAdapter deleteAdapter) {
         this.context = context;
         this.deleteAdapter = deleteAdapter;
+        this.colorGenerator = new ColorGenerator();
 
         deckSelectorList = new ArrayList<>();
         for (Deck deck : decks) {
@@ -92,23 +95,13 @@ public class DecksDeleteAdapter extends BaseAdapter {
         holder.txtNome.setText(deck.getNome());
 
         if (deckSelector.getIsSelect()) {
-            TextDrawable drawable = TextDrawable.builder()
-                    .beginConfig()
-                    .bold()
-                    .endConfig()
-                    .buildRound("", context.getResources().getColor(R.color.accent));
-
-            holder.imageView.setImageDrawable(drawable);
+            holder.imageView.setImageDrawable(
+                    ImageUtils.getInstance().getDrawable("", context.getResources().getColor(R.color.accent)));
             holder.checkIcon.setVisibility(View.VISIBLE);
             holder.view.setBackgroundColor(context.getResources().getColor(R.color.selected));
         } else {
-            TextDrawable drawable = TextDrawable.builder()
-                    .beginConfig()
-                    .bold()
-                    .endConfig()
-                    .buildRound(deck.getNome().substring(0, 1).toUpperCase(), new ColorGenerator().getColor(deck.getColor()));
-
-            holder.imageView.setImageDrawable(drawable);
+            holder.imageView.setImageDrawable(
+                    ImageUtils.getInstance().getDrawable(deck.getNome().substring(0, 1).toUpperCase(), colorGenerator.getColor(deck.getColor())));
             holder.checkIcon.setVisibility(View.GONE);
             holder.view.setBackgroundColor(Color.TRANSPARENT);
         }

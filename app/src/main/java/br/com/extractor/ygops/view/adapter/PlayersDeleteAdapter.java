@@ -17,6 +17,7 @@ import java.util.List;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.util.ColorGenerator;
+import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
 
 /**
@@ -27,10 +28,12 @@ public class PlayersDeleteAdapter extends BaseAdapter {
     private List<PlayerSelector> playerSelectorList;
     private Context context;
     private DeleteAdapter deleteAdapter;
+    private ColorGenerator colorGenerator;
 
     public PlayersDeleteAdapter(List<Player> players, Context context, Integer position, DeleteAdapter deleteAdapter) {
         this.context = context;
         this.deleteAdapter = deleteAdapter;
+        this.colorGenerator = new ColorGenerator();
 
         playerSelectorList = new ArrayList<>();
         for (Player player : players) {
@@ -92,23 +95,13 @@ public class PlayersDeleteAdapter extends BaseAdapter {
         holder.txtNome.setText(player.getNome());
 
         if (playerSelector.getIsSelect()) {
-            TextDrawable drawable = TextDrawable.builder()
-                    .beginConfig()
-                    .bold()
-                    .endConfig()
-                    .buildRound("", context.getResources().getColor(R.color.accent));
-
-            holder.imageView.setImageDrawable(drawable);
+            holder.imageView.setImageDrawable(
+                    ImageUtils.getInstance().getDrawable("", context.getResources().getColor(R.color.accent)));
             holder.checkIcon.setVisibility(View.VISIBLE);
             holder.view.setBackgroundColor(context.getResources().getColor(R.color.selected));
         } else {
-            TextDrawable drawable = TextDrawable.builder()
-                    .beginConfig()
-                    .bold()
-                    .endConfig()
-                    .buildRound(player.getNome().substring(0, 1).toUpperCase(), new ColorGenerator().getColor(player.getColor()));
-
-            holder.imageView.setImageDrawable(drawable);
+            holder.imageView.setImageDrawable(
+                    ImageUtils.getInstance().getDrawable(player.getNome().substring(0, 1).toUpperCase(), colorGenerator.getColor(player.getColor())));
             holder.checkIcon.setVisibility(View.GONE);
             holder.view.setBackgroundColor(Color.TRANSPARENT);
         }

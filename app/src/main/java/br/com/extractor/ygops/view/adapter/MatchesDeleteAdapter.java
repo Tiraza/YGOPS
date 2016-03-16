@@ -2,7 +2,6 @@ package br.com.extractor.ygops.view.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +9,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.model.Profile;
+import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
 import io.realm.Realm;
 
@@ -100,15 +98,21 @@ public class MatchesDeleteAdapter extends BaseAdapter {
 
         if (matchSelector.getIsSelect()) {
             holder.icon.setVisibility(View.VISIBLE);
-            holder.image.setImageDrawable(getDrawable(R.string.empty, R.color.accent));
             holder.row.setBackgroundColor(context.getResources().getColor(R.color.selected));
+            holder.image.setImageDrawable(ImageUtils.getInstance().getDrawable("", context.getResources().getColor(R.color.accent)));
         } else {
             holder.icon.setVisibility(View.GONE);
             holder.row.setBackgroundColor(Color.TRANSPARENT);
             if (match.getWinner()) {
-                holder.image.setImageDrawable(getDrawable(R.string.match_winner_hint, R.color.match_winner));
+                holder.image.setImageDrawable(
+                        ImageUtils.getInstance().getDrawable(
+                                context.getResources().getString(R.string.match_winner_hint),
+                                context.getResources().getColor(R.color.match_winner)));
             } else {
-                holder.image.setImageDrawable(getDrawable(R.string.match_loser_hint, R.color.match_loser));
+                holder.image.setImageDrawable(
+                        ImageUtils.getInstance().getDrawable(
+                                context.getResources().getString(R.string.match_loser_hint),
+                                context.getResources().getColor(R.color.match_loser)));
             }
         }
     }
@@ -121,16 +125,6 @@ public class MatchesDeleteAdapter extends BaseAdapter {
             }
         }
         return matches;
-    }
-
-    private Drawable getDrawable(int text, int color) {
-        TextDrawable drawable = TextDrawable.builder()
-                .beginConfig()
-                .bold()
-                .endConfig()
-                .buildRound(context.getResources().getString(text), context.getResources().getColor(color));
-
-        return drawable;
     }
 
     public class MatchHolder {
