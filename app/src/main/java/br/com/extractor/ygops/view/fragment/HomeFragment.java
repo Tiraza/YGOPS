@@ -23,17 +23,17 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Match;
+import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.view.RealmFragment;
 import br.com.extractor.ygops.view.activity.MainActivity;
 import br.com.extractor.ygops.view.activity.register.DeckRegisterActivity;
 import br.com.extractor.ygops.view.activity.register.MatchRegisterActivity;
 import br.com.extractor.ygops.view.activity.register.PlayerRegisterActivity;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 /**
@@ -52,12 +52,11 @@ public class HomeFragment extends RealmFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((MainActivity)activity).toggleIconToolbar(false);
+        ((MainActivity) activity).toggleIconToolbar(false);
         activity.setTitle(R.string.home);
-        setupActionMenu();
 
-        TextView txtGraphName = getElementById(R.id.txtGraphName);
-        txtGraphName.setText(R.string.wins_losses);
+        setupActionMenu();
+        setupCardInfo();
 
         chart = getElementById(R.id.chart);
         setup(chart);
@@ -71,7 +70,7 @@ public class HomeFragment extends RealmFragment {
         fabMenu.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));
     }
 
-    private void setupActionMenu(){
+    private void setupActionMenu() {
         fabMenu = getElementById(R.id.fab_menu);
         fabMenu.setMenuButtonColorNormalResId(R.color.primary);
         fabMenu.setMenuButtonColorPressedResId(R.color.accent);
@@ -101,8 +100,24 @@ public class HomeFragment extends RealmFragment {
         });
     }
 
-    private void startRegisterActivity(Class classe){
-        if(fabMenu.isOpened()) {
+    private void setupCardInfo() {
+        RealmQuery<Match> query = realm.where(Match.class);
+
+        int total = query.findAll().size();
+        TextView txtTotal = getElementById(R.id.txtTotal);
+        txtTotal.setText("" + total);
+
+        int wins = query.findAll().where().equalTo("winner", true).findAll().size();
+        TextView txtWins = getElementById(R.id.txtWins);
+        txtWins.setText("" + wins);
+
+        Integer losses = total - wins;
+        TextView txtLosses = getElementById(R.id.txtLosses);
+        txtLosses.setText(losses.toString());
+    }
+
+    private void startRegisterActivity(Class classe) {
+        if (fabMenu.isOpened()) {
             fabMenu.close(false);
             Intent intent = new Intent(activity, classe);
             startActivity(intent);
@@ -111,6 +126,9 @@ public class HomeFragment extends RealmFragment {
     }
 
     private void setData() {
+        TextView txtGraphName = getElementById(R.id.txtGraphName);
+        txtGraphName.setText(R.string.wins_losses);
+
         RealmResults<Match> result = realm.allObjects(Match.class);
         int totalMatches = result.size();
         int wins = result.where().equalTo("winner", true).findAll().size();
@@ -120,18 +138,24 @@ public class HomeFragment extends RealmFragment {
         float lossesPercent = (losses * 100.0f) / totalMatches;
 
         ArrayList<Entry> yVal = new ArrayList<>();
-        yVal.add(new Entry(winsPercent, 0));
-        yVal.add(new Entry(lossesPercent, 1));
-
         ArrayList<String> xVals = new ArrayList<>();
-        xVals.add(getString(R.string.wins));
-        xVals.add(getString(R.string.losses));
+        ArrayList<Integer> colors = new ArrayList<>();
+
+        if(winsPercent != 0){
+            yVal.add(new Entry(winsPercent, 0));
+            xVals.add(getString(R.string.wins));
+            colors.add(getResources().getColor(R.color.match_winner));
+        }
+
+        if(lossesPercent != 0){
+            yVal.add(new Entry(lossesPercent, 1));
+            xVals.add(getString(R.string.losses));
+            colors.add(getResources().getColor(R.color.match_loser));
+        }
 
         PieDataSet dataSet = new PieDataSet(yVal, "");
         dataSet.setSliceSpace(2f);
         dataSet.setSelectionShift(5f);
-
-        int[] colors = {getResources().getColor(R.color.match_winner), getResources().getColor(R.color.match_loser)};
         dataSet.setColors(colors);
 
         PieData data = new PieData(xVals, dataSet);
