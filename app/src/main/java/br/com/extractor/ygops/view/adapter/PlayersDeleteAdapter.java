@@ -19,6 +19,8 @@ import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Muryllo Tiraza on 05/02/2016.
@@ -62,6 +64,7 @@ public class PlayersDeleteAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View view, ViewGroup viewGroup) {
         final ViewHolder holder;
+
         if (view == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             view = layoutInflater.inflate(R.layout.adapter_delete_list_item, null);
@@ -117,18 +120,15 @@ public class PlayersDeleteAdapter extends BaseAdapter {
         return decks;
     }
 
-    private static class ViewHolder {
-
-        private View view;
-        private ImageView imageView;
-        private TextView txtNome;
-        private ImageView checkIcon;
+    static class ViewHolder {
+        View view;
+        @Bind(R.id.txtDeck) TextView txtNome;
+        @Bind(R.id.check_icon)ImageView checkIcon;
+        @Bind(R.id.image_view) ImageView imageView;
 
         private ViewHolder(View view) {
             this.view = view;
-            imageView = (ImageView) view.findViewById(R.id.image_view);
-            txtNome = (TextView) view.findViewById(R.id.txtDeck);
-            checkIcon = (ImageView) view.findViewById(R.id.check_icon);
+            ButterKnife.bind(this, view);
         }
     }
 

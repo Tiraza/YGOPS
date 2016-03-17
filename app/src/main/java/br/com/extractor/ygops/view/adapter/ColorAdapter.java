@@ -12,6 +12,9 @@ import com.amulyakhare.textdrawable.TextDrawable;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.util.ColorGenerator;
+import br.com.extractor.ygops.util.ImageUtils;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Muryllo Tiraza on 04/02/2016.
@@ -41,21 +44,27 @@ public class ColorAdapter extends ArrayAdapter implements SpinnerAdapter {
         return colorGenerator.getList().size();
     }
 
-    private View getCustomView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
+    private View getCustomView(int position, View view, ViewGroup parent) {
+        ViewHolder holder;
+
+        if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.adapter_color_list_item, parent, false);
+            view = inflater.inflate(R.layout.adapter_color_list_item, parent, false);
+            holder = new ViewHolder(view);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
         }
 
-        TextDrawable drawable = TextDrawable.builder()
-                .beginConfig()
-                .bold()
-                .endConfig()
-                .buildRound("", colorGenerator.getColor(position));
+        holder.imgColor.setImageDrawable(ImageUtils.getInstance().getDrawable("", colorGenerator.getColor(position)));
+        return view;
+    }
 
-        ImageView img = (ImageView) convertView.findViewById(R.id.imgColor);
-        img.setImageDrawable(drawable);
+    static class ViewHolder {
+        @Bind(R.id.imgColor) ImageView imgColor;
 
-        return convertView;
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

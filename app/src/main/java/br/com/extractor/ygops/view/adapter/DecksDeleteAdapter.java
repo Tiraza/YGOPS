@@ -19,6 +19,8 @@ import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Muryllo Tiraza on 05/02/2016.
@@ -95,13 +97,11 @@ public class DecksDeleteAdapter extends BaseAdapter {
         holder.txtNome.setText(deck.getNome());
 
         if (deckSelector.getIsSelect()) {
-            holder.imageView.setImageDrawable(
-                    ImageUtils.getInstance().getDrawable("", context.getResources().getColor(R.color.accent)));
+            holder.imageView.setImageDrawable(ImageUtils.getInstance().getDrawable("", context.getResources().getColor(R.color.accent)));
             holder.checkIcon.setVisibility(View.VISIBLE);
             holder.view.setBackgroundColor(context.getResources().getColor(R.color.selected));
         } else {
-            holder.imageView.setImageDrawable(
-                    ImageUtils.getInstance().getDrawable(deck.getNome().substring(0, 1).toUpperCase(), colorGenerator.getColor(deck.getColor())));
+            holder.imageView.setImageDrawable(ImageUtils.getInstance().getDrawable(deck.getNome().substring(0, 1).toUpperCase(), colorGenerator.getColor(deck.getColor())));
             holder.checkIcon.setVisibility(View.GONE);
             holder.view.setBackgroundColor(Color.TRANSPARENT);
         }
@@ -117,18 +117,15 @@ public class DecksDeleteAdapter extends BaseAdapter {
         return decks;
     }
 
-    private static class ViewHolder {
-
-        private View view;
-        private ImageView imageView;
-        private TextView txtNome;
-        private ImageView checkIcon;
+    static class ViewHolder {
+        View view;
+        @Bind(R.id.txtDeck) TextView txtNome;
+        @Bind(R.id.image_view) ImageView imageView;
+        @Bind(R.id.check_icon) ImageView checkIcon;
 
         private ViewHolder(View view) {
             this.view = view;
-            imageView = (ImageView) view.findViewById(R.id.image_view);
-            txtNome = (TextView) view.findViewById(R.id.txtDeck);
-            checkIcon = (ImageView) view.findViewById(R.id.check_icon);
+            ButterKnife.bind(this, view);
         }
     }
 

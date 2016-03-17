@@ -1,6 +1,7 @@
 package br.com.extractor.ygops.application;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -14,6 +15,7 @@ import io.realm.RealmConfiguration;
 public class YgoPS extends Application {
 
     private static Tracker mTracker;
+    private static Context mContext;
     private static final String ANALYTICS_ID = "UA-45287204-4";
 
     @Override
@@ -25,6 +27,12 @@ public class YgoPS extends Application {
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
+
+        mContext = getApplicationContext();
+    }
+
+    public static Context getDefaultContext() {
+        return mContext;
     }
 
     synchronized public Tracker getDefaultTracker() {

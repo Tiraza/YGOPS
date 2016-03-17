@@ -17,6 +17,8 @@ import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 
 /**
@@ -127,24 +129,18 @@ public class MatchesDeleteAdapter extends BaseAdapter {
         return matches;
     }
 
-    public class MatchHolder {
-
-        public View row;
-        public ImageView image;
-        public ImageView icon;
-        public TextView myName;
-        public TextView myDeck;
-        public TextView opponentName;
-        public TextView opponentDeck;
+    static class MatchHolder {
+        View row;
+        @Bind(R.id.check_icon) ImageView icon;
+        @Bind(R.id.image_view) ImageView image;
+        @Bind(R.id.txtPlayer1) TextView myName;
+        @Bind(R.id.txtDeck1) TextView myDeck;
+        @Bind(R.id.txtPlayer2) TextView opponentName;
+        @Bind(R.id.txtDeck2) TextView opponentDeck;
 
         public MatchHolder(View view) {
             row = view;
-            image = (ImageView) row.findViewById(R.id.image_view);
-            icon = (ImageView) row.findViewById(R.id.check_icon);
-            myName = (TextView) row.findViewById(R.id.txtPlayer1);
-            myDeck = (TextView) row.findViewById(R.id.txtDeck1);
-            opponentName = (TextView) row.findViewById(R.id.txtPlayer2);
-            opponentDeck = (TextView) row.findViewById(R.id.txtDeck2);
+            ButterKnife.bind(this, view);
         }
     }
 

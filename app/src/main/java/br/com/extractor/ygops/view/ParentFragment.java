@@ -34,15 +34,6 @@ public abstract class ParentFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        YgoPS application = (YgoPS) activity.getApplication();
-        Tracker mTracker = application.getDefaultTracker();
-        mTracker.setScreenName(getClass().getName());
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-    }
-
     protected final <T> T getElementById(int id) {
         return (T) view.findViewById(id);
     }
@@ -88,12 +79,5 @@ public abstract class ParentFragment extends Fragment {
 
             mChart.getAxisRight().setEnabled(false);
         }
-    }
-
-    protected void styleData(ChartData data) {
-        //data.setValueTypeface(mTf);
-        data.setValueTextSize(8f);
-        data.setValueTextColor(Color.DKGRAY);
-        data.setValueFormatter(new PercentFormatter());
     }
 }

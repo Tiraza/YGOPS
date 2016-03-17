@@ -14,6 +14,8 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.ImageUtils;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Muryllo Tiraza on 02/02/2016.
@@ -47,19 +49,29 @@ public class PlayersAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
+        ViewHolder holder;
+
         if (view == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             view = layoutInflater.inflate(R.layout.adapter_list_item, null);
+            holder = new ViewHolder(view);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
         }
 
         Player player = getItem(position);
-
-        TextView txtDeck = (TextView) view.findViewById(R.id.txtName);
-        txtDeck.setText(player.getNome());
-
-        ImageView img = (ImageView) view.findViewById(R.id.image_view);
-        img.setImageDrawable(ImageUtils.getInstance().getDrawable(player.getNome().substring(0, 1).toUpperCase(), colorGenerator.getColor(player.getColor())));
-
+        holder.txtPlayer.setText(player.getNome());
+        holder.imgPlayer.setImageDrawable(ImageUtils.getInstance().getDrawable(player.getNome().substring(0, 1).toUpperCase(), colorGenerator.getColor(player.getColor())));
         return view;
+    }
+
+    static class ViewHolder {
+        @Bind(R.id.txtName) TextView txtPlayer;
+        @Bind(R.id.image_view) ImageView imgPlayer;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }
