@@ -11,6 +11,8 @@ import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.view.ParentActivity;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.realm.RealmQuery;
 
 /**
@@ -18,11 +20,24 @@ import io.realm.RealmQuery;
  */
 public class DeckConsultActivity extends ParentActivity {
 
+    @Bind(R.id.edtDeckName)
+    EditText edtDeckName;
+    @Bind(R.id.image_view)
+    ImageView img;
+    @Bind(R.id.txtTotal)
+    TextView txtTotal;
+    @Bind(R.id.txtWins)
+    TextView txtWins;
+    @Bind(R.id.txtLosses)
+    TextView txtLosses;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_deck_consult);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         displayHomeEnabled();
+
+        ButterKnife.bind(this);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -37,10 +52,7 @@ public class DeckConsultActivity extends ParentActivity {
     }
 
     private void setupCardDeck(Deck deck) {
-        EditText edtDeckName = getElementById(R.id.edtDeckName);
         edtDeckName.setText(deck.getNome());
-
-        ImageView img = getElementById(R.id.image_view);
         img.setImageDrawable(ImageUtils.getInstance().getDrawableRealm(R.string.empty, deck.getColor(), this));
     }
 
@@ -49,15 +61,12 @@ public class DeckConsultActivity extends ParentActivity {
         query.equalTo("deck.nome", deck.getNome()).or().equalTo("playerDeck.nome", deck.getNome());
 
         int total = query.findAll().size();
-        TextView txtTotal = getElementById(R.id.txtTotal);
         txtTotal.setText("" + total);
 
         int wins = query.findAll().where().equalTo("winner", true).findAll().size();
-        TextView txtWins = getElementById(R.id.txtWins);
         txtWins.setText("" + wins);
 
         Integer losses = total - wins;
-        TextView txtLosses = getElementById(R.id.txtLosses);
         txtLosses.setText(losses.toString());
     }
 }

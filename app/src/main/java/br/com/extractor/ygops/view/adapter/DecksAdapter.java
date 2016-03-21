@@ -16,18 +16,22 @@ import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.ImageUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmResults;
 
 /**
  * Created by Muryllo Tiraza on 29/01/2016.
  */
-public class DecksAdapter extends BaseAdapter {
+public class DecksAdapter extends RealmBaseAdapter {
 
-    private List<Deck> decks;
+    private RealmResults<Deck> decks;
     private Context context;
     private ColorGenerator colorGenerator;
 
-    public DecksAdapter(List<Deck> decks, Context context) {
-        this.decks = decks;
+    public DecksAdapter(Context context, RealmResults realmResults, boolean automaticUpdate) {
+        super(context, realmResults, automaticUpdate);
+
+        this.decks = realmResults;
         this.context = context;
         this.colorGenerator = new ColorGenerator();
     }

@@ -26,6 +26,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
+        android:elevation="4dp"
         android:src="@drawable/fab_add"
         fab:menu_animationDelayPerItem="0"
         fab:menu_labels_hideAnimation="@anim/jump_to_down"

@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
@@ -21,7 +20,10 @@ import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.util.MapUtils;
+import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.realm.RealmQuery;
 
 /**
@@ -29,30 +31,52 @@ import io.realm.RealmQuery;
  */
 public class PlayerConsultActivity extends ParentActivity {
 
+    @Bind(R.id.image_view)
+    ImageView img;
+    @Bind(R.id.edtPlayerName)
+    EditText edtDeckName;
+
+    @Bind(R.id.txtWins)
+    TextView txtWins;
+    @Bind(R.id.txtTotal)
+    TextView txtTotal;
+    @Bind(R.id.txtLosses)
+    TextView txtLosses;
+
+    @Bind(R.id.txtDeck1)
+    TextView txtDeck1;
+    @Bind(R.id.txtTotalDeck1)
+    TextView txtTotalDeck1;
+    @Bind(R.id.txtDeck2)
+    TextView txtDeck2;
+    @Bind(R.id.txtTotalDeck2)
+    TextView txtTotalDeck2;
+    @Bind(R.id.txtDeck3)
+    TextView txtDeck3;
+    @Bind(R.id.txtTotalDeck3)
+    TextView txtTotalDeck3;
+    @Bind(R.id.cv_more_used_decks)
+    CardView cardView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_player_consult);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         displayHomeEnabled();
+        ButterKnife.bind(this);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String playerUuid = bundle.getString("playerUuid");
-            RealmQuery<Player> query = realm.where(Player.class);
-            query.equalTo("uuid", playerUuid);
-
-            Player player = query.findFirst();
-            setupCardDeck(player);
+            Player player = RealmUtils.getInstance().get(Player.class, playerUuid);
+            setupPlayerInfo(player);
             setupCardInfo(player);
             setupCardMoreUsedDecks(player);
         }
     }
 
-    private void setupCardDeck(Player player) {
-        EditText edtDeckName = getElementById(R.id.edtPlayerName);
+    private void setupPlayerInfo(Player player) {
         edtDeckName.setText(player.getNome());
-
-        ImageView img = getElementById(R.id.image_view);
         img.setImageDrawable(ImageUtils.getInstance().getDrawableRealm(R.string.empty, player.getColor(), this));
     }
 
@@ -61,27 +85,17 @@ public class PlayerConsultActivity extends ParentActivity {
         query.equalTo("player.uuid", player.getUuid());
 
         int total = query.findAll().size();
-        TextView txtTotal = getElementById(R.id.txtTotal);
         txtTotal.setText("" + total);
 
         int wins = query.findAll().where().equalTo("winner", false).findAll().size();
-        TextView txtWins = getElementById(R.id.txtWins);
         txtWins.setText("" + wins);
 
         Integer losses = total - wins;
-        TextView txtLosses = getElementById(R.id.txtLosses);
         txtLosses.setText(losses.toString());
     }
 
     private void setupCardMoreUsedDecks(Player player) {
         List<ItemCount> sortedList = getSortedValues(player);
-
-        TextView txtDeck1 = getElementById(R.id.txtDeck1);
-        TextView txtTotalDeck1 = getElementById(R.id.txtTotalDeck1);
-        TextView txtDeck2 = getElementById(R.id.txtDeck2);
-        TextView txtTotalDeck2 = getElementById(R.id.txtTotalDeck2);
-        TextView txtDeck3 = getElementById(R.id.txtDeck3);
-        TextView txtTotalDeck3 = getElementById(R.id.txtTotalDeck3);
 
         if (!sortedList.isEmpty()) {
             ItemCount item = sortedList.get(0);
@@ -110,7 +124,6 @@ public class PlayerConsultActivity extends ParentActivity {
                 txtTotalDeck3.setVisibility(View.GONE);
             }
         } else {
-            CardView cardView = getElementById(R.id.cv_more_used_decks);
             cardView.setVisibility(View.GONE);
         }
     }

@@ -102,7 +102,7 @@ public class ListDeckFragment extends RealmFragment implements DeleteAdapter {
 
                 RealmResults<Deck> decks = realm.where(Deck.class).findAll();
                 decks.sort("nome", Sort.ASCENDING);
-                adapter = new DecksAdapter(decks, activity);
+                adapter = new DecksAdapter(activity, decks, true);
                 listView.setAdapter(adapter);
                 menuDelete.setVisible(false);
             } else {
@@ -136,7 +136,7 @@ public class ListDeckFragment extends RealmFragment implements DeleteAdapter {
     private void setupListView() {
         RealmResults<Deck> decks = realm.where(Deck.class).findAll();
         decks.sort("nome", Sort.ASCENDING);
-        adapter = new DecksAdapter(decks, activity);
+        adapter = new DecksAdapter(activity, decks, true);
 
         listView = getElementById(R.id.listView);
         listView.setAdapter(adapter);

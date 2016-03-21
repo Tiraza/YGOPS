@@ -16,27 +16,31 @@ import java.io.ByteArrayOutputStream;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.util.ImageUtils;
+import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.dialog.ImagePicker;
-import io.realm.Realm;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class ProfileEditActivity extends ParentActivity {
 
-    private TextView txtName;
-    private ImageButton imgProfile;
-    private FloatingActionButton fab;
+    @Bind(R.id.txtName)
+    TextView txtName;
+    @Bind(R.id.imgProfile)
+    ImageButton imgProfile;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
 
     private Profile profile;
     private byte[] image = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        onCreate(savedInstanceState, R.layout.activity_profile_edit);
+        super.onCreate(savedInstanceState, R.layout.activity_profile_edit);
         setTitle(getString(R.string.profile));
         displayHomeEnabled();
+        ButterKnife.bind(this);
 
-        txtName = getElementById(R.id.txtName);
-        imgProfile = getElementById(R.id.imgProfile);
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +49,6 @@ public class ProfileEditActivity extends ParentActivity {
             }
         });
 
-        fab = getElementById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,15 +56,15 @@ public class ProfileEditActivity extends ParentActivity {
                 if ("".equals(name)) {
                     txtName.setError(getResources().getString(R.string.field_required));
                 } else {
-                    //TODO REFACTOR
-                    realm.beginTransaction();
-                    profile.setNome(name);
-
+                    Profile update = new Profile();
+                    update.setUuid(profile.getUuid());
+                    update.setNome(name);
+                    update.setDecks(profile.getDecks());
                     if (image != null) {
-                        profile.setImage(image);
+                        update.setImage(image);
                     }
 
-                    realm.commitTransaction();
+                    RealmUtils.getInstance().update(update);
 
                     Intent returnIntent = new Intent();
                     setResult(0, returnIntent);
@@ -70,9 +73,7 @@ public class ProfileEditActivity extends ParentActivity {
             }
         });
 
-        realm = Realm.getDefaultInstance();
-        profile = realm.where(Profile.class).findFirst();
-
+        profile = RealmUtils.getInstance().get(Profile.class);
         if (profile.getImage() != null) {
             imgProfile.setImageBitmap(ImageUtils.getInstance().getRoundedCornerBitmap(profile.getImage()));
         }
@@ -86,6 +87,11 @@ public class ProfileEditActivity extends ParentActivity {
         if (requestCode == ImagePicker.IMAGE_PICKER_ID && resultCode != 0) {
             new AsyncTask<Void, Void, Void>() {
                 private Bitmap roundedImage;
+
+                @Override
+                protected void onPreExecute() {
+                    imgProfile.setImageBitmap(null);
+                }
 
                 @Override
                 protected Void doInBackground(Void... voids) {
