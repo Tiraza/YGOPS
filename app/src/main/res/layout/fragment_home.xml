@@ -4,22 +4,20 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <LinearLayout
+    <include
+        android:id="@+id/graph_wins"
+        layout="@layout/graph_piechart" />
+
+    <include
+        android:id="@+id/info_decks"
+        layout="@layout/consult_details"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
-
-        <include
-            layout="@layout/graph_piechart"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-        <include
-            layout="@layout/consult_details"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/graph_wins"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp" />
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab_menu"

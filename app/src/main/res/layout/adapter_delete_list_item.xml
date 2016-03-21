@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="8dp" />
 
-        <ImageView
-            android:id="@+id/image_view"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="8dp" />
-
-        <ImageView
-            android:id="@+id/check_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_check" />
-
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/check_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_check" />
 
     <TextView
         android:id="@+id/txtDeck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_toEndOf="@+id/image_view"
+        android:layout_toRightOf="@+id/image_view"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-</LinearLayout>
+</RelativeLayout>

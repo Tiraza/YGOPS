@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:gravity="center_vertical">
 
     <ImageView
         android:id="@+id/image_view"
@@ -11,56 +10,46 @@
         android:layout_height="40dp"
         android:layout_margin="8dp" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/txtPlayer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_weight="40"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txtPlayer1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/txtDeck1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-    </LinearLayout>
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/image_view"
+        android:layout_toRightOf="@+id/image_view"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_margin="4dp"
-        android:layout_weight="20"
-        android:gravity="center" />
-
-    <LinearLayout
+        android:id="@+id/txtDeck1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_weight="40"
+        android:layout_below="@+id/txtPlayer1"
+        android:layout_toEndOf="@+id/image_view"
+        android:layout_toRightOf="@+id/image_view"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/txtPlayer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/txtPlayer1"
+        android:layout_toRightOf="@+id/txtPlayer1"
         android:gravity="end"
-        android:orientation="vertical">
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/txtPlayer2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+    <TextView
+        android:id="@+id/txtDeck2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtPlayer2"
+        android:layout_toEndOf="@+id/txtPlayer1"
+        android:layout_toRightOf="@+id/txtPlayer1"
+        android:gravity="end"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <TextView
-            android:id="@+id/txtDeck2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

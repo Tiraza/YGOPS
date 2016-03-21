@@ -38,7 +38,7 @@
         card_view:cardCornerRadius="4dp"
         card_view:elevation="4dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_margin="8dp"
@@ -47,71 +47,62 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/deck_register"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="?attr/colorAccent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+            <Spinner
+                android:id="@+id/spnColor"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/txtTitle"
+                android:spinnerMode="dropdown" />
 
-                <br.com.extractor.ygops.view.widget.CustomTextInputLayout
+            <br.com.extractor.ygops.view.widget.CustomTextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTitle"
+                android:layout_toLeftOf="@+id/spnColor"
+                android:layout_toStartOf="@+id/spnColor">
+
+                <EditText
+                    android:id="@+id/edtDeckName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_weight="10"
-                    app:errorEnabled="true">
+                    android:hint="@string/deck_name"
+                    android:inputType="textCapSentences" />
 
-                    <EditText
-                        android:id="@+id/edtDeckName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/deck_name"
-                        android:inputType="textCapSentences" />
+            </br.com.extractor.ygops.view.widget.CustomTextInputLayout>
 
-                </br.com.extractor.ygops.view.widget.CustomTextInputLayout>
+            <Button
+                android:id="@+id/btnCancel"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_below="@+id/spnColor"
+                android:layout_marginRight="8dp"
+                android:layout_toLeftOf="@+id/btnDone"
+                android:layout_toStartOf="@+id/btnDone"
+                android:text="@string/flat_cancel"
+                android:textColor="?attr/colorAccent" />
 
-                <Spinner
-                    android:id="@+id/spnColor"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:spinnerMode="dropdown" />
+            <Button
+                android:id="@+id/btnDone"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/spnColor"
+                android:text="@string/flat_ok"
+                android:textColor="?attr/colorAccent" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnCancel"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:layout_marginRight="8dp"
-                    android:text="@string/flat_cancel"
-                    android:textColor="?attr/colorAccent" />
-
-                <Button
-                    android:id="@+id/btnDone"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:text="@string/flat_ok"
-                    android:textColor="?attr/colorAccent" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 
