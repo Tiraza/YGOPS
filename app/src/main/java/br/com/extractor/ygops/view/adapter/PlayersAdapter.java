@@ -4,11 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.List;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Player;
@@ -16,17 +13,21 @@ import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.ImageUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmResults;
 
 /**
  * Created by Muryllo Tiraza on 02/02/2016.
  */
-public class PlayersAdapter extends BaseAdapter {
+public class PlayersAdapter extends RealmBaseAdapter {
 
-    private List<Player> players;
     private Context context;
+    private RealmResults<Player> players;
     private ColorGenerator colorGenerator;
 
-    public PlayersAdapter(List<Player> players, Context context) {
+    public PlayersAdapter(RealmResults<Player> players, Context context) {
+        super(context, players, true);
+
         this.players = players;
         this.context = context;
         this.colorGenerator = new ColorGenerator();
@@ -48,12 +49,12 @@ public class PlayersAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(int position, View view, ViewGroup root) {
         ViewHolder holder;
 
         if (view == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            view = layoutInflater.inflate(R.layout.adapter_list_item, null);
+            view = layoutInflater.inflate(R.layout.adapter_list_item, root, false);
             holder = new ViewHolder(view);
             view.setTag(holder);
         } else {

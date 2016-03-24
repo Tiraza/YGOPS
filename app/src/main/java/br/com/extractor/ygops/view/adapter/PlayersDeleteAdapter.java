@@ -2,14 +2,12 @@ package br.com.extractor.ygops.view.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.amulyakhare.textdrawable.TextDrawable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,42 +16,43 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.ImageUtils;
-import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
+import br.com.extractor.ygops.view.interfaces.OnDeleteRealm;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmResults;
 
 /**
  * Created by Muryllo Tiraza on 05/02/2016.
  */
-public class PlayersDeleteAdapter extends BaseAdapter {
+public class PlayersDeleteAdapter extends RealmBaseAdapter {
 
-    private List<PlayerSelector> playerSelectorList;
     private Context context;
-    private DeleteAdapter deleteAdapter;
+    private OnDeleteRealm deleteAdapter;
     private ColorGenerator colorGenerator;
+    private List<String> positionsSelected;
+    private RealmResults<Player> players;
 
-    public PlayersDeleteAdapter(List<Player> players, Context context, Integer position, DeleteAdapter deleteAdapter) {
+    public PlayersDeleteAdapter(RealmResults<Player> players, Context context, OnDeleteRealm deleteAdapter, String uuid) {
+        super(context, players, true);
+
+        this.players = players;
         this.context = context;
         this.deleteAdapter = deleteAdapter;
         this.colorGenerator = new ColorGenerator();
 
-        playerSelectorList = new ArrayList<>();
-        for (Player player : players) {
-            playerSelectorList.add(new PlayerSelector(player));
-        }
-
-        PlayerSelector deckSelector = playerSelectorList.get(position);
-        deckSelector.setIsSelect(true);
+        positionsSelected = new ArrayList<>();
+        positionsSelected.add(uuid);
     }
 
     @Override
     public int getCount() {
-        return playerSelectorList.size();
+        return players.size();
     }
 
     @Override
-    public PlayerSelector getItem(int position) {
-        return playerSelectorList.get(position);
+    public Player getItem(int position) {
+        return players.get(position);
     }
 
     @Override
@@ -62,30 +61,36 @@ public class PlayersDeleteAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View view, ViewGroup viewGroup) {
+    public View getView(final int position, View view, ViewGroup root) {
         final ViewHolder holder;
+        final Player player = getItem(position);
 
         if (view == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            view = layoutInflater.inflate(R.layout.adapter_delete_list_item, null);
+            view = layoutInflater.inflate(R.layout.adapter_delete_list_item, root, false);
             holder = new ViewHolder(view);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
 
-        updateCheckedState(holder, getItem(position));
+        updateCheckedState(holder, player);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlayerSelector deckSelector = getItem(position);
-                deckSelector.setIsSelect(!deckSelector.getIsSelect());
+                String uuid = player.getUuid();
 
-                if (getSelectedItens().size() == 0) {
+                if(positionsSelected.contains(uuid)){
+                    positionsSelected.remove(uuid);
+                } else {
+                    positionsSelected.add(uuid);
+                }
+
+                if (positionsSelected.size() == 0) {
                     deleteAdapter.onDelete();
                 } else {
-                    updateCheckedState(holder, deckSelector);
+                    updateCheckedState(holder, player);
                 }
             }
         });
@@ -93,15 +98,13 @@ public class PlayersDeleteAdapter extends BaseAdapter {
         return view;
     }
 
-    private void updateCheckedState(ViewHolder holder, PlayerSelector playerSelector) {
-        Player player = playerSelector.getPlayer();
+    private void updateCheckedState(ViewHolder holder, Player player) {
         holder.txtNome.setText(player.getNome());
 
-        if (playerSelector.getIsSelect()) {
-            holder.imageView.setImageDrawable(
-                    ImageUtils.getInstance().getDrawable("", context.getResources().getColor(R.color.accent)));
+        if (positionsSelected.contains(player.getUuid())) {
+            holder.imageView.setImageDrawable(ImageUtils.getInstance().getDrawable("", ContextCompat.getColor(context, R.color.accent)));
             holder.checkIcon.setVisibility(View.VISIBLE);
-            holder.view.setBackgroundColor(context.getResources().getColor(R.color.selected));
+            holder.view.setBackgroundColor(ContextCompat.getColor(context, R.color.selected));
         } else {
             holder.imageView.setImageDrawable(
                     ImageUtils.getInstance().getDrawable(player.getNome().substring(0, 1).toUpperCase(), colorGenerator.getColor(player.getColor())));
@@ -110,52 +113,19 @@ public class PlayersDeleteAdapter extends BaseAdapter {
         }
     }
 
-    public List<Player> getSelectedItens() {
-        List<Player> decks = new ArrayList<>();
-        for (PlayerSelector playerSelector : playerSelectorList) {
-            if (playerSelector.getIsSelect()) {
-                decks.add(playerSelector.getPlayer());
-            }
-        }
-        return decks;
+    public List<String> getSelectedItens() {
+        return positionsSelected;
     }
 
     static class ViewHolder {
         View view;
         @Bind(R.id.txtDeck) TextView txtNome;
-        @Bind(R.id.check_icon)ImageView checkIcon;
+        @Bind(R.id.check_icon) ImageView checkIcon;
         @Bind(R.id.image_view) ImageView imageView;
 
         private ViewHolder(View view) {
             this.view = view;
             ButterKnife.bind(this, view);
-        }
-    }
-
-    public class PlayerSelector {
-
-        private Boolean isSelect;
-        private Player player;
-
-        public PlayerSelector(Player player) {
-            this.isSelect = false;
-            this.player = player;
-        }
-
-        public Boolean getIsSelect() {
-            return isSelect;
-        }
-
-        public void setIsSelect(Boolean isSelect) {
-            this.isSelect = isSelect;
-        }
-
-        public Player getPlayer() {
-            return player;
-        }
-
-        public void setPlayer(Player player) {
-            this.player = player;
         }
     }
 }

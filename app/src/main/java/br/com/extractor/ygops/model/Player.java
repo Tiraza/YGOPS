@@ -2,6 +2,7 @@ package br.com.extractor.ygops.model;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -15,6 +16,9 @@ public class Player extends RealmObject {
     private Integer color;
     private RealmList<Deck> decks;
 
+    @Ignore
+    private Boolean isSelected;
+
     public Player() {
         decks = new RealmList<>();
     }
@@ -22,7 +26,6 @@ public class Player extends RealmObject {
     public String getUuid() {
         return uuid;
     }
-
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
@@ -30,7 +33,6 @@ public class Player extends RealmObject {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -38,7 +40,6 @@ public class Player extends RealmObject {
     public RealmList<Deck> getDecks() {
         return decks;
     }
-
     public void setDecks(RealmList<Deck> decks) {
         this.decks = decks;
     }
@@ -46,8 +47,14 @@ public class Player extends RealmObject {
     public Integer getColor() {
         return color;
     }
-
     public void setColor(Integer color) {
         this.color = color;
+    }
+
+    public Boolean getIsSelected() {
+        return isSelected;
+    }
+    public void setIsSelected(Boolean isSelected) {
+        this.isSelected = isSelected;
     }
 }

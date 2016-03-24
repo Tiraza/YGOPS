@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.WindowManager;
 
 import br.com.extractor.ygops.model.Profile;
+import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.activity.register.ProfileRegisterActivity;
 import io.realm.Realm;
@@ -22,8 +23,7 @@ public class SplashScreen extends ParentActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Realm realm = Realm.getDefaultInstance();
-                Profile profile = realm.where(Profile.class).findFirst();
+                Profile profile = Realm.getDefaultInstance().where(Profile.class).findFirst();
 
                 Intent intent;
                 if (profile == null) {

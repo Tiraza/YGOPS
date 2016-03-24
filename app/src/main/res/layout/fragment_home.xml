@@ -9,11 +9,23 @@
         layout="@layout/graph_piechart" />
 
     <include
+        android:id="@+id/used_decks"
+        layout="@layout/more_used_decks"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/graph_wins"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp" />
+
+    <include
         android:id="@+id/info_decks"
         layout="@layout/consult_details"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/graph_wins"
+        android:layout_below="@+id/used_decks"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"

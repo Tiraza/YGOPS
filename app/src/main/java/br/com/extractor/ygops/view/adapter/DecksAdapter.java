@@ -4,11 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.List;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
@@ -24,11 +21,11 @@ import io.realm.RealmResults;
  */
 public class DecksAdapter extends RealmBaseAdapter {
 
-    private RealmResults<Deck> decks;
     private Context context;
+    private RealmResults<Deck> decks;
     private ColorGenerator colorGenerator;
 
-    public DecksAdapter(Context context, RealmResults realmResults, boolean automaticUpdate) {
+    public DecksAdapter(Context context, RealmResults<Deck> realmResults, boolean automaticUpdate) {
         super(context, realmResults, automaticUpdate);
 
         this.decks = realmResults;
@@ -52,12 +49,12 @@ public class DecksAdapter extends RealmBaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(int position, View view, ViewGroup root) {
         ViewHolder holder;
 
         if (view == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            view = layoutInflater.inflate(R.layout.adapter_list_item, null);
+            view = layoutInflater.inflate(R.layout.adapter_list_item, root, false);
             holder = new ViewHolder(view);
             view.setTag(holder);
         } else {
@@ -70,9 +67,9 @@ public class DecksAdapter extends RealmBaseAdapter {
         return view;
     }
 
-    static class ViewHolder{
+    static class ViewHolder {
         @Bind(R.id.txtName) TextView txtDeck;
-        @Bind(R.id.image_view)ImageView imgDeck;
+        @Bind(R.id.image_view) ImageView imgDeck;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

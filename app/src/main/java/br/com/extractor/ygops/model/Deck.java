@@ -1,6 +1,7 @@
 package br.com.extractor.ygops.model;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -26,7 +27,6 @@ public class Deck extends RealmObject {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -34,8 +34,8 @@ public class Deck extends RealmObject {
     public Integer getColor() {
         return color;
     }
-
     public void setColor(Integer color) {
         this.color = color;
     }
+
 }

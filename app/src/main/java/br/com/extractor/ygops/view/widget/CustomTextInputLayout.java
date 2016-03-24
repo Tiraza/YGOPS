@@ -39,7 +39,12 @@ public class CustomTextInputLayout extends TextInputLayout {
 
         if (!mIsHintSet && ViewCompat.isLaidOut(this)) {
             setHint(null);
-            CharSequence currentEditTextHint = getEditText().getHint();
+            CharSequence currentEditTextHint = null;
+
+            if(getEditText() != null) {
+                currentEditTextHint = getEditText().getHint();
+            }
+
             if (currentEditTextHint != null && currentEditTextHint.length() > 0) {
                 mHint = currentEditTextHint;
             }
@@ -47,5 +52,4 @@ public class CustomTextInputLayout extends TextInputLayout {
             mIsHintSet = true;
         }
     }
-
 }

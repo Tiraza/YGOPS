@@ -2,14 +2,12 @@ package br.com.extractor.ygops.view.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.amulyakhare.textdrawable.TextDrawable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,42 +16,43 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.ImageUtils;
-import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
+import br.com.extractor.ygops.view.interfaces.OnDeleteRealm;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.RealmBaseAdapter;
+import io.realm.RealmResults;
 
 /**
  * Created by Muryllo Tiraza on 05/02/2016.
  */
-public class DecksDeleteAdapter extends BaseAdapter {
+public class DecksDeleteAdapter extends RealmBaseAdapter {
 
-    private List<DeckSelector> deckSelectorList;
     private Context context;
-    private DeleteAdapter deleteAdapter;
+    private RealmResults<Deck> decks;
+    private List<String> positionsSelected;
+    private OnDeleteRealm deleteRealm;
     private ColorGenerator colorGenerator;
 
-    public DecksDeleteAdapter(List<Deck> decks, Context context, Integer position, DeleteAdapter deleteAdapter) {
+    public DecksDeleteAdapter(RealmResults<Deck> decks, Context context, OnDeleteRealm deleteAdapter, String uuid) {
+        super(context, decks, true);
+
+        this.decks = decks;
         this.context = context;
-        this.deleteAdapter = deleteAdapter;
+        this.deleteRealm = deleteAdapter;
         this.colorGenerator = new ColorGenerator();
 
-        deckSelectorList = new ArrayList<>();
-        for (Deck deck : decks) {
-            deckSelectorList.add(new DeckSelector(deck));
-        }
-
-        DeckSelector deckSelector = deckSelectorList.get(position);
-        deckSelector.setIsSelect(true);
+        positionsSelected = new ArrayList<>();
+        positionsSelected.add(uuid);
     }
 
     @Override
     public int getCount() {
-        return deckSelectorList.size();
+        return decks.size();
     }
 
     @Override
-    public DeckSelector getItem(int position) {
-        return deckSelectorList.get(position);
+    public Deck getItem(int position) {
+        return decks.get(position);
     }
 
     @Override
@@ -62,29 +61,36 @@ public class DecksDeleteAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View view, ViewGroup viewGroup) {
+    public View getView(final int position, View view, ViewGroup root) {
         final ViewHolder holder;
+        final Deck deck = getItem(position);
+
         if (view == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            view = layoutInflater.inflate(R.layout.adapter_delete_list_item, null);
+            view = layoutInflater.inflate(R.layout.adapter_delete_list_item, root, false);
             holder = new ViewHolder(view);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
 
-        updateCheckedState(holder, getItem(position));
+        updateCheckedState(holder, deck);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DeckSelector deckSelector = getItem(position);
-                deckSelector.setIsSelect(!deckSelector.getIsSelect());
+                String uuid = deck.getUuid();
 
-                if (getSelectedItens().size() == 0) {
-                    deleteAdapter.onDelete();
+                if(positionsSelected.contains(uuid)){
+                    positionsSelected.remove(uuid);
                 } else {
-                    updateCheckedState(holder, deckSelector);
+                    positionsSelected.add(uuid);
+                }
+
+                if (positionsSelected.size() == 0) {
+                    deleteRealm.onDelete();
+                } else {
+                    updateCheckedState(holder, deck);
                 }
             }
         });
@@ -92,14 +98,13 @@ public class DecksDeleteAdapter extends BaseAdapter {
         return view;
     }
 
-    private void updateCheckedState(ViewHolder holder, DeckSelector deckSelector) {
-        Deck deck = deckSelector.getDeck();
+    private void updateCheckedState(ViewHolder holder, Deck deck) {
         holder.txtNome.setText(deck.getNome());
 
-        if (deckSelector.getIsSelect()) {
-            holder.imageView.setImageDrawable(ImageUtils.getInstance().getDrawable("", context.getResources().getColor(R.color.accent)));
+        if (positionsSelected.contains(deck.getUuid())) {
+            holder.imageView.setImageDrawable(ImageUtils.getInstance().getDrawable("", ContextCompat.getColor(context, R.color.accent)));
             holder.checkIcon.setVisibility(View.VISIBLE);
-            holder.view.setBackgroundColor(context.getResources().getColor(R.color.selected));
+            holder.view.setBackgroundColor(ContextCompat.getColor(context, R.color.selected));
         } else {
             holder.imageView.setImageDrawable(ImageUtils.getInstance().getDrawable(deck.getNome().substring(0, 1).toUpperCase(), colorGenerator.getColor(deck.getColor())));
             holder.checkIcon.setVisibility(View.GONE);
@@ -107,14 +112,8 @@ public class DecksDeleteAdapter extends BaseAdapter {
         }
     }
 
-    public List<Deck> getSelectedItens() {
-        List<Deck> decks = new ArrayList<>();
-        for (DeckSelector deckSelector : deckSelectorList) {
-            if (deckSelector.getIsSelect()) {
-                decks.add(deckSelector.getDeck());
-            }
-        }
-        return decks;
+    public List<String> getSelectedItens() {
+        return positionsSelected;
     }
 
     static class ViewHolder {
@@ -126,33 +125,6 @@ public class DecksDeleteAdapter extends BaseAdapter {
         private ViewHolder(View view) {
             this.view = view;
             ButterKnife.bind(this, view);
-        }
-    }
-
-    public class DeckSelector {
-
-        private Boolean isSelect;
-        private Deck deck;
-
-        public DeckSelector(Deck deck) {
-            this.isSelect = false;
-            this.deck = deck;
-        }
-
-        public Boolean getIsSelect() {
-            return isSelect;
-        }
-
-        public void setIsSelect(Boolean isSelect) {
-            this.isSelect = isSelect;
-        }
-
-        public Deck getDeck() {
-            return deck;
-        }
-
-        public void setDeck(Deck deck) {
-            this.deck = deck;
         }
     }
 }

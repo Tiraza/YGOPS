@@ -9,8 +9,6 @@ import android.widget.ImageView;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-
 import java.util.List;
 
 import br.com.extractor.ygops.R;
@@ -73,8 +71,10 @@ public class CustomSpinnerAdapter extends ArrayAdapter implements SpinnerAdapter
     }
 
     static class ViewHolder {
-        @Bind(R.id.txtName) TextView txtName;
-        @Bind(R.id.image_view) ImageView img;
+        @Bind(R.id.txtName)
+        TextView txtName;
+        @Bind(R.id.image_view)
+        ImageView img;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

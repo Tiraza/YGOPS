@@ -14,6 +14,7 @@ import io.realm.RealmConfiguration;
  */
 public class YgoPS extends Application {
 
+    private static Realm mRealm;
     private static Tracker mTracker;
     private static Context mContext;
     private static final String ANALYTICS_ID = "UA-45287204-4";
@@ -29,6 +30,11 @@ public class YgoPS extends Application {
         Realm.setDefaultConfiguration(realmConfiguration);
 
         mContext = getApplicationContext();
+        mRealm = Realm.getDefaultInstance();
+    }
+
+    public static Realm getDefaultRealm(){
+        return mRealm;
     }
 
     public static Context getDefaultContext() {

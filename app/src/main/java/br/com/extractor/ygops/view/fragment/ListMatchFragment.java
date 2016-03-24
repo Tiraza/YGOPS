@@ -16,7 +16,6 @@ import android.widget.ListView;
 import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Match;
@@ -25,15 +24,14 @@ import br.com.extractor.ygops.view.activity.MainActivity;
 import br.com.extractor.ygops.view.activity.register.MatchRegisterActivity;
 import br.com.extractor.ygops.view.adapter.MatchesAdapter;
 import br.com.extractor.ygops.view.adapter.MatchesDeleteAdapter;
-import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
+import br.com.extractor.ygops.view.interfaces.OnDeleteRealm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import io.realm.Sort;
 
 /**
  * Created by Muryllo Tiraza on 05/02/2016.
  */
-public class ListMatchFragment extends RealmFragment implements DeleteAdapter {
+public class ListMatchFragment extends RealmFragment implements OnDeleteRealm {
 
     private MatchesAdapter adapter;
     private MatchesDeleteAdapter deleteAdapter;

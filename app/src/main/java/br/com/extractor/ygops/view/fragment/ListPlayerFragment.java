@@ -12,34 +12,35 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 
 import br.com.extractor.ygops.R;
-import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.model.Player;
+import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.RealmFragment;
 import br.com.extractor.ygops.view.activity.MainActivity;
 import br.com.extractor.ygops.view.activity.consult.PlayerConsultActivity;
 import br.com.extractor.ygops.view.activity.register.PlayerRegisterActivity;
 import br.com.extractor.ygops.view.adapter.PlayersAdapter;
 import br.com.extractor.ygops.view.adapter.PlayersDeleteAdapter;
-import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
-import io.realm.RealmQuery;
+import br.com.extractor.ygops.view.interfaces.OnDeleteRealm;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
 /**
  * Created by Muryllo Tiraza on 02/02/2016.
  */
-public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
+public class ListPlayerFragment extends RealmFragment implements OnDeleteRealm {
 
-    private PlayersDeleteAdapter deleteAdapter;
+    @Bind(R.id.listView) ListView listView;
+    @Bind(R.id.fab) FloatingActionButton fab;
+
     private MenuItem menuDelete;
-    private ListView listView;
     private PlayersAdapter adapter;
-    private FloatingActionButton fab;
+    private PlayersDeleteAdapter deleteAdapter;
 
     private static int PLAYER_REGISTER_CODE = 1;
 
@@ -53,19 +54,11 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
         activity.setTitle(R.string.players);
-        ((MainActivity)activity).toggleIconToolbar(true);
+        ((MainActivity) activity).toggleIconToolbar(true);
+        ButterKnife.bind(this, view);
 
         setupFab();
         setupListView();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == PLAYER_REGISTER_CODE) {
-            adapter.notifyDataSetChanged();
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
     }
 
     @Override
@@ -80,34 +73,11 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuDelete) {
-            RealmQuery<Match> queryMatch = realm.where(Match.class);
-            queryMatch.equalTo("player.nome", "");
-
-            for (Player player : deleteAdapter.getSelectedItens()) {
-                queryMatch.or().equalTo("player.nome", player.getNome());
+            for (String uuid : deleteAdapter.getSelectedItens()) {
+                RealmUtils.getInstance().removePlayerForUuid(uuid);
             }
 
-            if (queryMatch.findAll().isEmpty()) {
-                realm.beginTransaction();
-                RealmQuery<Player> query = realm.where(Player.class);
-                query.equalTo("nome", "");
-
-                for (Player player : deleteAdapter.getSelectedItens()) {
-                    query.or().equalTo("nome", player.getNome());
-                }
-
-                query.findAll().clear();
-                realm.commitTransaction();
-
-                RealmResults<Player> players = realm.where(Player.class).findAll();
-                players.sort("nome", Sort.ASCENDING);
-                adapter = new PlayersAdapter(players, activity);
-                listView.setAdapter(adapter);
-                menuDelete.setVisible(false);
-            } else {
-                makeToast(R.string.record_already_used, Toast.LENGTH_LONG);
-                onDelete();
-            }
+            listView.setAdapter(adapter);
         }
 
         return super.onOptionsItemSelected(item);
@@ -119,8 +89,7 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
         menuDelete.setVisible(false);
     }
 
-    private void setupFab(){
-        fab = getElementById(R.id.fab);
+    private void setupFab() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,19 +100,17 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
         fab.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));
     }
 
-    private void setupListView(){
-        RealmResults<Player> players = realm.where(Player.class).findAll();
+    private void setupListView() {
+        final RealmResults<Player> players = RealmUtils.getInstance().getAll(Player.class);
         players.sort("nome", Sort.ASCENDING);
 
         adapter = new PlayersAdapter(players, activity);
 
-        listView = getElementById(R.id.listView);
         listView.setAdapter(adapter);
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                RealmResults<Player> players = realm.where(Player.class).findAll();
-                deleteAdapter = new PlayersDeleteAdapter(players, activity, position, ListPlayerFragment.this);
+                deleteAdapter = new PlayersDeleteAdapter(players, activity, ListPlayerFragment.this, players.get(position).getUuid());
                 listView.setAdapter(deleteAdapter);
                 menuDelete.setVisible(true);
                 return true;
@@ -166,7 +133,8 @@ public class ListPlayerFragment extends RealmFragment implements DeleteAdapter {
             private int mLastFirstVisibleItem;
 
             @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {}
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+            }
 
             @Override
             public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {

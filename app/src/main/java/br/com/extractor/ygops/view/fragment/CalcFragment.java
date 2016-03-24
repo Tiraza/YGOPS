@@ -21,7 +21,6 @@ import br.com.extractor.ygops.view.dialog.DicePicker;
  */
 public class CalcFragment extends ParentFragment implements View.OnClickListener{
 
-
     private TextView txtValue;
     private TextView txtLifePlayer;
     private TextView txtLifeOponnent;

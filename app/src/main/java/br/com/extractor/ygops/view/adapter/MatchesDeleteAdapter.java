@@ -2,6 +2,7 @@ package br.com.extractor.ygops.view.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.util.ImageUtils;
-import br.com.extractor.ygops.view.interfaces.DeleteAdapter;
+import br.com.extractor.ygops.view.interfaces.OnDeleteRealm;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.realm.Realm;
@@ -29,9 +30,9 @@ public class MatchesDeleteAdapter extends BaseAdapter {
     private List<MatchSelector> matchesSelector;
     private Context context;
     private Profile profile;
-    private DeleteAdapter deleteAdapter;
+    private OnDeleteRealm deleteAdapter;
 
-    public MatchesDeleteAdapter(List<Match> matches, Context context, Realm realm, int position, DeleteAdapter deleteAdapter) {
+    public MatchesDeleteAdapter(List<Match> matches, Context context, Realm realm, int position, OnDeleteRealm deleteAdapter) {
         this.context = context;
         this.deleteAdapter = deleteAdapter;
         profile = realm.where(Profile.class).findFirst();
@@ -61,11 +62,11 @@ public class MatchesDeleteAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup root) {
         final MatchHolder holder;
         if (convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            convertView = layoutInflater.inflate(R.layout.adapter_match_delete_item_list, null);
+            convertView = layoutInflater.inflate(R.layout.adapter_match_delete_item_list, root, false);
             holder = new MatchHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -100,21 +101,19 @@ public class MatchesDeleteAdapter extends BaseAdapter {
 
         if (matchSelector.getIsSelect()) {
             holder.icon.setVisibility(View.VISIBLE);
-            holder.row.setBackgroundColor(context.getResources().getColor(R.color.selected));
-            holder.image.setImageDrawable(ImageUtils.getInstance().getDrawable("", context.getResources().getColor(R.color.accent)));
+            holder.row.setBackgroundColor(ContextCompat.getColor(context, R.color.selected));
+            holder.image.setImageDrawable(ImageUtils.getInstance().getDrawable("", ContextCompat.getColor(context, R.color.accent)));
         } else {
             holder.icon.setVisibility(View.GONE);
             holder.row.setBackgroundColor(Color.TRANSPARENT);
             if (match.getWinner()) {
                 holder.image.setImageDrawable(
                         ImageUtils.getInstance().getDrawable(
-                                context.getResources().getString(R.string.match_winner_hint),
-                                context.getResources().getColor(R.color.match_winner)));
+                                context.getResources().getString(R.string.match_winner_hint), ContextCompat.getColor(context, R.color.match_winner)));
             } else {
                 holder.image.setImageDrawable(
                         ImageUtils.getInstance().getDrawable(
-                                context.getResources().getString(R.string.match_loser_hint),
-                                context.getResources().getColor(R.color.match_loser)));
+                                context.getResources().getString(R.string.match_loser_hint), ContextCompat.getColor(context, R.color.match_loser)));
             }
         }
     }
@@ -131,12 +130,18 @@ public class MatchesDeleteAdapter extends BaseAdapter {
 
     static class MatchHolder {
         View row;
-        @Bind(R.id.check_icon) ImageView icon;
-        @Bind(R.id.image_view) ImageView image;
-        @Bind(R.id.txtPlayer1) TextView myName;
-        @Bind(R.id.txtDeck1) TextView myDeck;
-        @Bind(R.id.txtPlayer2) TextView opponentName;
-        @Bind(R.id.txtDeck2) TextView opponentDeck;
+        @Bind(R.id.check_icon)
+        ImageView icon;
+        @Bind(R.id.image_view)
+        ImageView image;
+        @Bind(R.id.txtPlayer1)
+        TextView myName;
+        @Bind(R.id.txtDeck1)
+        TextView myDeck;
+        @Bind(R.id.txtPlayer2)
+        TextView opponentName;
+        @Bind(R.id.txtDeck2)
+        TextView opponentDeck;
 
         public MatchHolder(View view) {
             row = view;

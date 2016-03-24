@@ -10,9 +10,11 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.util.ImageUtils;
+import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 import io.realm.RealmQuery;
 
 /**
@@ -42,10 +44,7 @@ public class DeckConsultActivity extends ParentActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String deckName = bundle.getString("deckName");
-            RealmQuery<Deck> query = realm.where(Deck.class);
-            query.equalTo("nome", deckName);
-
-            Deck deck = query.findFirst();
+            Deck deck = RealmUtils.getInstance().getForName(Deck.class, deckName);
             setupCardDeck(deck);
             setupCardInfo(deck);
         }
@@ -57,6 +56,8 @@ public class DeckConsultActivity extends ParentActivity {
     }
 
     private void setupCardInfo(Deck deck) {
+        Realm realm = Realm.getDefaultInstance();
+
         RealmQuery<Match> query = realm.where(Match.class);
         query.equalTo("deck.nome", deck.getNome()).or().equalTo("playerDeck.nome", deck.getNome());
 
@@ -68,5 +69,7 @@ public class DeckConsultActivity extends ParentActivity {
 
         Integer losses = total - wins;
         txtLosses.setText(losses.toString());
+
+        realm.close();
     }
 }

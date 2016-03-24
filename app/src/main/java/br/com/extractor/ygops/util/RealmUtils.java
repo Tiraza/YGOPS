@@ -1,7 +1,12 @@
 package br.com.extractor.ygops.util;
 
+import br.com.extractor.ygops.application.YgoPS;
+import br.com.extractor.ygops.model.Deck;
+import br.com.extractor.ygops.model.Match;
+import br.com.extractor.ygops.model.Player;
 import io.realm.Realm;
 import io.realm.RealmObject;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 /**
@@ -9,55 +14,78 @@ import io.realm.RealmResults;
  */
 public final class RealmUtils {
 
+    private Realm realm;
     private static RealmUtils INSTANCE = new RealmUtils();
 
-    private RealmUtils() {}
+    private RealmUtils() {
+        if (realm == null) {
+            realm = YgoPS.getDefaultRealm();
+        }
+    }
 
     public static RealmUtils getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new RealmUtils();
         }
+
         return INSTANCE;
     }
 
     public <T extends RealmObject> T get(Class<T> tClass) {
-        Realm realm = Realm.getDefaultInstance();
-        T result = realm.where(tClass).findFirstAsync();
+        T result = realm.where(tClass).findFirst();
         result.load();
-        realm.close();
         return result;
     }
 
-    public <T extends RealmObject> T get(Class<T> tClass, String uuid) {
-        Realm realm = Realm.getDefaultInstance();
+    public <T extends RealmObject> T getForUuid(Class<T> tClass, String uuid) {
         T result = realm.where(tClass).equalTo("uuid", uuid).findFirstAsync();
         result.load();
-        realm.close();
+        return result;
+    }
+
+    public <T extends RealmObject> T getForName(Class<T> tClass, String nome) {
+        T result = realm.where(tClass).equalTo("nome", nome).findFirstAsync();
+        result.load();
         return result;
     }
 
     public <T extends RealmObject> RealmResults<T> getAll(Class<T> tClass) {
-        Realm realm = Realm.getDefaultInstance();
         RealmResults<T> results = realm.where(tClass).findAllAsync();
         results.load();
-        realm.close();
         return results;
     }
 
     public <T extends RealmObject> void insert(final T object) {
-        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(object);
         realm.commitTransaction();
-        realm.close();
     }
 
     public <T extends RealmObject> void update(final T object) {
-        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(object);
         realm.commitTransaction();
-        realm.close();
     }
 
+    public void removeDeckForUuid(String uuid) {
+        RealmQuery<Match> query = realm.where(Match.class);
+        query.equalTo("deck.uuid", uuid).or().equalTo("playerDeck.uuid", uuid);
+
+        if (query.findAll().isEmpty()) {
+            realm.beginTransaction();
+            realm.where(Deck.class).equalTo("uuid", uuid).findAll().clear();
+            realm.commitTransaction();
+        }
+    }
+
+    public void removePlayerForUuid(String uuid){
+        RealmQuery<Match> query = realm.where(Match.class);
+        query.equalTo("player.uuid", uuid);
+
+        if (query.findAll().isEmpty()) {
+            realm.beginTransaction();
+            realm.where(Player.class).equalTo("uuid", uuid).findAll().clear();
+            realm.commitTransaction();
+        }
+    }
 }

@@ -14,46 +14,24 @@ import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.adapter.ColorAdapter;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DeckRegisterActivity extends ParentActivity {
+
+    @Bind(R.id.spnColor) Spinner spnColor;
+    @Bind(R.id.edtDeckName) EditText edtDeckName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_deck_register);
         displayHomeEnabled();
         setTitle(getString(R.string.decks));
+        ButterKnife.bind(this);
 
         ColorAdapter adapter = new ColorAdapter(this);
-        final Spinner spnColor = getElementById(R.id.spnColor);
         spnColor.setAdapter(adapter);
-
-        Button btnDone = getElementById(R.id.btnDone);
-        btnDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText edtDeckName = getElementById(R.id.edtDeckName);
-                if (edtDeckName.getText() != null && !"".equals(edtDeckName.getText().toString())) {
-                    Deck deck = new Deck();
-                    deck.setUuid(UUID.randomUUID().toString());
-                    deck.setNome(edtDeckName.getText().toString());
-                    deck.setColor(spnColor.getSelectedItemPosition());
-
-                    makeToast(R.string.successfully_included, Toast.LENGTH_SHORT);
-                    RealmUtils.getInstance().insert(deck);
-                    finish();
-                } else {
-                    edtDeckName.setError(getString(R.string.field_required));
-                }
-            }
-        });
-
-        Button btnCancel = getElementById(R.id.btnCancel);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
     }
 
     @Override
@@ -66,5 +44,26 @@ public class DeckRegisterActivity extends ParentActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    @OnClick(R.id.btnDone)
+    public void done(){
+        if (edtDeckName.getText() != null && !"".equals(edtDeckName.getText().toString())) {
+            Deck deck = new Deck();
+            deck.setUuid(UUID.randomUUID().toString());
+            deck.setNome(edtDeckName.getText().toString());
+            deck.setColor(spnColor.getSelectedItemPosition());
+
+            makeToast(R.string.successfully_included, Toast.LENGTH_SHORT);
+            RealmUtils.getInstance().insert(deck);
+            finish();
+        } else {
+            edtDeckName.setError(getString(R.string.field_required));
+        }
+    }
+
+    @OnClick(R.id.btnCancel)
+    public void cancel(){
+        finish();
     }
 }

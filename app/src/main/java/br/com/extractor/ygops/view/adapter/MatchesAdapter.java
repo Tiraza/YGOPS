@@ -1,15 +1,13 @@
 package br.com.extractor.ygops.view.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.amulyakhare.textdrawable.TextDrawable;
 
 import java.util.List;
 
@@ -52,11 +50,11 @@ public class MatchesAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup root) {
         MatchHolder holder;
         if (convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            convertView = layoutInflater.inflate(R.layout.adapter_match_list_item, null);
+            convertView = layoutInflater.inflate(R.layout.adapter_match_list_item, root, false);
             holder = new MatchHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -71,10 +69,10 @@ public class MatchesAdapter extends BaseAdapter {
 
         if (match.getWinner()) {
             holder.image.setImageDrawable(
-                    ImageUtils.getInstance().getDrawable( context.getResources().getString(R.string.match_winner_hint),context.getResources().getColor(R.color.match_winner)));
+                    ImageUtils.getInstance().getDrawable(context.getResources().getString(R.string.match_winner_hint), ContextCompat.getColor(context, R.color.match_winner)));
         } else {
             holder.image.setImageDrawable(
-                    ImageUtils.getInstance().getDrawable(context.getResources().getString(R.string.match_loser_hint),context.getResources().getColor(R.color.match_loser)));
+                    ImageUtils.getInstance().getDrawable(context.getResources().getString(R.string.match_loser_hint), ContextCompat.getColor(context, R.color.match_loser)));
         }
 
         return convertView;
@@ -82,11 +80,16 @@ public class MatchesAdapter extends BaseAdapter {
 
     static class MatchHolder {
         View row;
-        @Bind(R.id.image_view) ImageView image;
-        @Bind(R.id.txtPlayer1) TextView myName;
-        @Bind(R.id.txtDeck1) TextView myDeck;
-        @Bind(R.id.txtPlayer2) TextView opponentName;
-        @Bind(R.id.txtDeck2) TextView opponentDeck;
+        @Bind(R.id.image_view)
+        ImageView image;
+        @Bind(R.id.txtPlayer1)
+        TextView myName;
+        @Bind(R.id.txtDeck1)
+        TextView myDeck;
+        @Bind(R.id.txtPlayer2)
+        TextView opponentName;
+        @Bind(R.id.txtDeck2)
+        TextView opponentDeck;
 
         public MatchHolder(View view) {
             row = view;

@@ -24,6 +24,7 @@ import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 import io.realm.RealmQuery;
 
 /**
@@ -31,32 +32,20 @@ import io.realm.RealmQuery;
  */
 public class PlayerConsultActivity extends ParentActivity {
 
-    @Bind(R.id.image_view)
-    ImageView img;
-    @Bind(R.id.edtPlayerName)
-    EditText edtDeckName;
+    @Bind(R.id.image_view) ImageView img;
+    @Bind(R.id.edtPlayerName) EditText edtDeckName;
 
-    @Bind(R.id.txtWins)
-    TextView txtWins;
-    @Bind(R.id.txtTotal)
-    TextView txtTotal;
-    @Bind(R.id.txtLosses)
-    TextView txtLosses;
+    @Bind(R.id.txtWins) TextView txtWins;
+    @Bind(R.id.txtTotal) TextView txtTotal;
+    @Bind(R.id.txtLosses) TextView txtLosses;
 
-    @Bind(R.id.txtDeck1)
-    TextView txtDeck1;
-    @Bind(R.id.txtTotalDeck1)
-    TextView txtTotalDeck1;
-    @Bind(R.id.txtDeck2)
-    TextView txtDeck2;
-    @Bind(R.id.txtTotalDeck2)
-    TextView txtTotalDeck2;
-    @Bind(R.id.txtDeck3)
-    TextView txtDeck3;
-    @Bind(R.id.txtTotalDeck3)
-    TextView txtTotalDeck3;
-    @Bind(R.id.cv_more_used_decks)
-    CardView cardView;
+    @Bind(R.id.txtDeck1) TextView txtDeck1;
+    @Bind(R.id.txtTotalDeck1) TextView txtTotalDeck1;
+    @Bind(R.id.txtDeck2) TextView txtDeck2;
+    @Bind(R.id.txtTotalDeck2) TextView txtTotalDeck2;
+    @Bind(R.id.txtDeck3) TextView txtDeck3;
+    @Bind(R.id.txtTotalDeck3) TextView txtTotalDeck3;
+    @Bind(R.id.cv_more_used_decks) CardView cardView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +57,10 @@ public class PlayerConsultActivity extends ParentActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String playerUuid = bundle.getString("playerUuid");
-            Player player = RealmUtils.getInstance().get(Player.class, playerUuid);
+
+            Player player = RealmUtils.getInstance().getForUuid(Player.class, playerUuid);
+            player.load();
+
             setupPlayerInfo(player);
             setupCardInfo(player);
             setupCardMoreUsedDecks(player);
@@ -81,6 +73,8 @@ public class PlayerConsultActivity extends ParentActivity {
     }
 
     private void setupCardInfo(Player player) {
+        Realm realm = Realm.getDefaultInstance();
+
         RealmQuery<Match> query = realm.where(Match.class);
         query.equalTo("player.uuid", player.getUuid());
 
@@ -92,6 +86,8 @@ public class PlayerConsultActivity extends ParentActivity {
 
         Integer losses = total - wins;
         txtLosses.setText(losses.toString());
+
+        realm.close();
     }
 
     private void setupCardMoreUsedDecks(Player player) {

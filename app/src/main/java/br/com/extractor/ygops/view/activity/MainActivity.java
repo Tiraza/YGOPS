@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.util.ImageUtils;
+import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.activity.edit.ProfileEditActivity;
 import br.com.extractor.ygops.view.fragment.CalcFragment;
@@ -30,7 +31,6 @@ import br.com.extractor.ygops.view.fragment.HomeFragment;
 import br.com.extractor.ygops.view.fragment.ListDeckFragment;
 import br.com.extractor.ygops.view.fragment.ListMatchFragment;
 import br.com.extractor.ygops.view.fragment.ListPlayerFragment;
-import io.realm.Realm;
 
 public class MainActivity extends ParentActivity {
 
@@ -76,7 +76,7 @@ public class MainActivity extends ParentActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PROFILE_EDIT) {
-            Profile profile = realm.where(Profile.class).findFirst();
+            Profile profile = RealmUtils.getInstance().get(Profile.class);
 
             profileDrawerItem.withName(profile.getNome());
             if (profile.getImage() != null) {
@@ -88,7 +88,7 @@ public class MainActivity extends ParentActivity {
     }
 
     private void setupNavigationDrawer() {
-        Profile profile = realm.where(Profile.class).findFirst();
+        Profile profile = RealmUtils.getInstance().get(Profile.class);
 
         profileDrawerItem = new ProfileDrawerItem();
         profileDrawerItem.withName(profile.getNome());

@@ -23,76 +23,75 @@ import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.adapter.CustomSpinnerAdapter;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
 public class MatchRegisterActivity extends ParentActivity {
 
-    private Spinner spnDeck1;
-    private Spinner spnDeck2;
-    private Spinner spnPlayer;
-    private Boolean isWinner = false;
+    @Bind(R.id.spnDeck1) Spinner spnDeck1;
+    @Bind(R.id.spnDeck2) Spinner spnDeck2;
+    @Bind(R.id.spnPlayer) Spinner spnPlayer;
+    @Bind(R.id.swtWinner) Switch swtWinner;
+    @Bind(R.id.txtDuelist) TextView txtDuelist;
 
-    private RealmResults<Player> listPlayer;
+    private Boolean isWinner = false;
     private RealmResults<Deck> listDeck;
+    private RealmResults<Player> listPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_match_register);
         displayHomeEnabled();
+        ButterKnife.bind(this);
 
         setupSwitch();
-        setupButtons();
         setupInfoProfile();
         setupSpinnerDeck();
         setupSpinnerPlayers();
     }
 
-    private void setupButtons() {
-        Button btnCancelar = getElementById(R.id.btnCancel);
-        btnCancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MatchRegisterActivity.this.finish();
-            }
-        });
+    @OnClick(R.id.btnDone)
+    public void done(){
+        if (validaCampos()) {
+            Realm realm = Realm.getDefaultInstance();
 
-        Button btnDone = getElementById(R.id.btnDone);
-        btnDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validaCampos()) {
-                    //TODO REFACTOR
-                    realm.beginTransaction();
-                    Player opponent = listPlayer.get(spnPlayer.getSelectedItemPosition() - 1);
-                    Deck opponentDeck = listDeck.get(spnDeck2.getSelectedItemPosition() - 1);
-                    opponent.getDecks().add(opponentDeck);
-                    realm.commitTransaction();
+            realm.beginTransaction();
+            Player opponent = listPlayer.get(spnPlayer.getSelectedItemPosition() - 1);
+            Deck opponentDeck = listDeck.get(spnDeck2.getSelectedItemPosition() - 1);
+            realm.commitTransaction();
 
-                    Match match = new Match();
-                    match.setDate(new Date());
-                    match.setUuid(UUID.randomUUID().toString());
-                    match.setDeck(listDeck.get(spnDeck1.getSelectedItemPosition() - 1));
-                    match.setPlayer(opponent);
-                    match.setPlayerDeck(opponentDeck);
-                    match.setWinner(isWinner);
+            realm.close();
 
-                    makeToast(R.string.successfully_included, Toast.LENGTH_SHORT);
-                    RealmUtils.getInstance().insert(match);
-                    MatchRegisterActivity.this.finish();
-                }
-            }
-        });
+            Match match = new Match();
+            match.setDate(new Date());
+            match.setUuid(UUID.randomUUID().toString());
+            match.setDeck(listDeck.get(spnDeck1.getSelectedItemPosition() - 1));
+            match.setPlayer(opponent);
+            match.setPlayerDeck(opponentDeck);
+            match.setWinner(isWinner);
+
+            makeToast(R.string.successfully_included, Toast.LENGTH_SHORT);
+            RealmUtils.getInstance().insert(match);
+            MatchRegisterActivity.this.finish();
+        }
+    }
+
+    @OnClick(R.id.btnCancel)
+    public void cancel(){
+        finish();
     }
 
     private void setupInfoProfile() {
-        Profile profile = realm.where(Profile.class).findFirst();
-        TextView txtDuelist = getElementById(R.id.txtDuelist);
+        Profile profile = RealmUtils.getInstance().get(Profile.class);
         txtDuelist.setText(profile.getNome());
     }
 
     private void setupSpinnerPlayers() {
-        listPlayer = realm.where(Player.class).findAll();
+        listPlayer = RealmUtils.getInstance().getAll(Player.class);
         listPlayer.sort("nome", Sort.ASCENDING);
 
         List<ItemAdapter> itens = new ArrayList<>();
@@ -105,12 +104,11 @@ public class MatchRegisterActivity extends ParentActivity {
         }
 
         CustomSpinnerAdapter adapterPlayer = new CustomSpinnerAdapter(this, itens);
-        spnPlayer = getElementById(R.id.spnPlayer);
         spnPlayer.setAdapter(adapterPlayer);
     }
 
     private void setupSpinnerDeck() {
-        listDeck = realm.where(Deck.class).findAll();
+        listDeck = RealmUtils.getInstance().getAll(Deck.class);
         listDeck.sort("nome", Sort.ASCENDING);
 
         ArrayList<ItemAdapter> itens = new ArrayList<>();
@@ -123,16 +121,13 @@ public class MatchRegisterActivity extends ParentActivity {
         }
 
         CustomSpinnerAdapter adapterDeck1 = new CustomSpinnerAdapter(this, itens);
-        spnDeck1 = getElementById(R.id.spnDeck1);
         spnDeck1.setAdapter(adapterDeck1);
 
         CustomSpinnerAdapter adapterDeck2 = new CustomSpinnerAdapter(this, itens);
-        spnDeck2 = getElementById(R.id.spnDeck2);
         spnDeck2.setAdapter(adapterDeck2);
     }
 
     private void setupSwitch() {
-        Switch swtWinner = getElementById(R.id.swtWinner);
         swtWinner.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton button, boolean isChecked) {

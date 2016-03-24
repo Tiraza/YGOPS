@@ -8,8 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.SpinnerAdapter;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.ImageUtils;
@@ -61,7 +59,8 @@ public class ColorAdapter extends ArrayAdapter implements SpinnerAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.imgColor) ImageView imgColor;
+        @Bind(R.id.imgColor)
+        ImageView imgColor;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

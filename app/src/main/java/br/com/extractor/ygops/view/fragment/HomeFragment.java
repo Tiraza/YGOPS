@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
@@ -27,12 +28,14 @@ import java.util.ArrayList;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Match;
-import br.com.extractor.ygops.model.Player;
+import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.RealmFragment;
 import br.com.extractor.ygops.view.activity.MainActivity;
 import br.com.extractor.ygops.view.activity.register.DeckRegisterActivity;
 import br.com.extractor.ygops.view.activity.register.MatchRegisterActivity;
 import br.com.extractor.ygops.view.activity.register.PlayerRegisterActivity;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
@@ -41,8 +44,15 @@ import io.realm.RealmResults;
  */
 public class HomeFragment extends RealmFragment {
 
-    private FloatingActionMenu fabMenu;
-    private PieChart chart;
+    @Bind(R.id.chart) PieChart chart;
+    @Bind(R.id.txtWins) TextView txtWins;
+    @Bind(R.id.txtTotal) TextView txtTotal;
+    @Bind(R.id.txtLosses) TextView txtLosses;
+    @Bind(R.id.txtGraphName) TextView txtGraphName;
+    @Bind(R.id.fab_menu) FloatingActionMenu fabMenu;
+    @Bind(R.id.fabDeck) FloatingActionButton fabDeck;
+    @Bind(R.id.fabMatch) FloatingActionButton fabMatch;
+    @Bind(R.id.fabPlayer) FloatingActionButton fabPlayer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,28 +64,26 @@ public class HomeFragment extends RealmFragment {
         super.onViewCreated(view, savedInstanceState);
         ((MainActivity) activity).toggleIconToolbar(false);
         activity.setTitle(R.string.home);
+        ButterKnife.bind(this, view);
 
         setupActionMenu();
         setupCardInfo();
 
-        chart = getElementById(R.id.chart);
         setup(chart);
         chart.setCenterText(generateCenterSpannableText());
+        fabMenu.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));
     }
 
     @Override
     public void onResume() {
         super.onResume();
         setData();
-        fabMenu.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in));
     }
 
     private void setupActionMenu() {
-        fabMenu = getElementById(R.id.fab_menu);
         fabMenu.setMenuButtonColorNormalResId(R.color.primary);
         fabMenu.setMenuButtonColorPressedResId(R.color.accent);
 
-        FloatingActionButton fabDeck = getElementById(R.id.fabDeck);
         fabDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,7 +91,6 @@ public class HomeFragment extends RealmFragment {
             }
         });
 
-        FloatingActionButton fabPlayer = getElementById(R.id.fabPlayer);
         fabPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +98,6 @@ public class HomeFragment extends RealmFragment {
             }
         });
 
-        FloatingActionButton fabMatch = getElementById(R.id.fabMatch);
         fabMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,18 +107,15 @@ public class HomeFragment extends RealmFragment {
     }
 
     private void setupCardInfo() {
-        RealmQuery<Match> query = realm.where(Match.class);
+        RealmResults<Match> results = RealmUtils.getInstance().getAll(Match.class);
 
-        int total = query.findAll().size();
-        TextView txtTotal = getElementById(R.id.txtTotal);
+        int total = results.size();
         txtTotal.setText("" + total);
 
-        int wins = query.findAll().where().equalTo("winner", true).findAll().size();
-        TextView txtWins = getElementById(R.id.txtWins);
+        int wins = results.where().equalTo("winner", true).findAll().size();
         txtWins.setText("" + wins);
 
         Integer losses = total - wins;
-        TextView txtLosses = getElementById(R.id.txtLosses);
         txtLosses.setText(losses.toString());
     }
 
@@ -126,10 +129,9 @@ public class HomeFragment extends RealmFragment {
     }
 
     private void setData() {
-        TextView txtGraphName = getElementById(R.id.txtGraphName);
         txtGraphName.setText(R.string.wins_losses);
 
-        RealmResults<Match> result = realm.allObjects(Match.class);
+        RealmResults<Match> result = RealmUtils.getInstance().getAll(Match.class);
         int totalMatches = result.size();
         int wins = result.where().equalTo("winner", true).findAll().size();
         int losses = result.where().equalTo("winner", false).findAll().size();
@@ -141,16 +143,16 @@ public class HomeFragment extends RealmFragment {
         ArrayList<String> xVals = new ArrayList<>();
         ArrayList<Integer> colors = new ArrayList<>();
 
-        if(winsPercent != 0){
+        if (winsPercent != 0) {
             yVal.add(new Entry(winsPercent, 0));
             xVals.add(getString(R.string.wins));
-            colors.add(getResources().getColor(R.color.match_winner));
+            colors.add(ContextCompat.getColor(activity, R.color.match_winner));
         }
 
-        if(lossesPercent != 0){
+        if (lossesPercent != 0) {
             yVal.add(new Entry(lossesPercent, 1));
             xVals.add(getString(R.string.losses));
-            colors.add(getResources().getColor(R.color.match_loser));
+            colors.add(ContextCompat.getColor(activity, R.color.match_loser));
         }
 
         PieDataSet dataSet = new PieDataSet(yVal, "");
@@ -164,7 +166,7 @@ public class HomeFragment extends RealmFragment {
         data.setValueTextColor(Color.WHITE);
 
         chart.setData(data);
-        chart.animateY(1400);
+        chart.animateY(1000);
     }
 
     private SpannableString generateCenterSpannableText() {

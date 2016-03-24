@@ -2,6 +2,7 @@ package br.com.extractor.ygops.view;
 
 import android.content.Context;
 
+import br.com.extractor.ygops.application.YgoPS;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
@@ -15,7 +16,7 @@ public abstract class RealmFragment extends ParentFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        realm = Realm.getDefaultInstance();
+        realm = YgoPS.getDefaultRealm();
     }
 
     @Override
