@@ -1,40 +1,76 @@
 package br.com.extractor.ygops.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.WindowManager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
-import br.com.extractor.ygops.model.Profile;
-import br.com.extractor.ygops.util.RealmUtils;
+import java.util.Random;
+
+import br.com.extractor.ygops.R;
+import br.com.extractor.ygops.util.ColorGenerator;
+import br.com.extractor.ygops.util.SplashView;
 import br.com.extractor.ygops.view.ParentActivity;
-import br.com.extractor.ygops.view.activity.register.ProfileRegisterActivity;
-import io.realm.Realm;
 
 public class SplashScreen extends ParentActivity {
+
+    private SplashView mSplashView;
+    private ViewGroup mMainView;
+    private View mContentView;
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        int SPLASH_DISPLAY_LENGTH = 1500;
+        mMainView = new FrameLayout(getApplicationContext());
 
-        new Handler().postDelayed(new Runnable() {
+        // create the splash view
+        mSplashView = new SplashView(getApplicationContext());
+        mSplashView.setRemoveFromParentOnEnd(true);
+        mSplashView.setSplashBackgroundColor(getResources().getColor(R.color.primary_dark));
+        mSplashView.setRotationRadius(getResources().getDimensionPixelOffset(R.dimen.splash_rotation_radius));
+        mSplashView.setCircleRadius(getResources().getDimensionPixelSize(R.dimen.splash_circle_radius));
+        mSplashView.setRotationDuration(getResources().getInteger(R.integer.splash_rotation_duration));
+        mSplashView.setSplashDuration(getResources().getInteger(R.integer.splash_duration));
+        mSplashView.setCircleColors(new ColorGenerator().getColors());
+
+        // add splash view to the parent view
+        mMainView.addView(mSplashView);
+        setContentView(mMainView);
+
+        startLoadingData();
+    }
+
+    private void startLoadingData() {
+        Random random = new Random();
+        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Profile profile = Realm.getDefaultInstance().where(Profile.class).findFirst();
-
-                Intent intent;
-                if (profile == null) {
-                    intent = new Intent(SplashScreen.this, ProfileRegisterActivity.class);
-                } else {
-                    intent = new Intent(SplashScreen.this, MainActivity.class);
-                }
-
-                SplashScreen.this.startActivity(intent);
-                SplashScreen.this.finish();
+                onLoadingDataEnded();
             }
-        }, SPLASH_DISPLAY_LENGTH);
+        }, 1000 + random.nextInt(2000));
     }
+
+    private void onLoadingDataEnded() {
+        mSplashView.splashAndDisappear(new SplashView.ISplashListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onUpdate(float completionFraction) {
+
+            }
+
+            @Override
+            public void onEnd() {
+
+            }
+        });
+    }
+
+
 }

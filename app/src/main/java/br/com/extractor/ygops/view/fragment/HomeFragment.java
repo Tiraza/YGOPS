@@ -62,7 +62,6 @@ public class HomeFragment extends RealmFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((MainActivity) activity).toggleIconToolbar(false);
         activity.setTitle(R.string.home);
         ButterKnife.bind(this, view);
 

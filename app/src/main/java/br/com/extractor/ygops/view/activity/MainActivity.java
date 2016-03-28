@@ -2,10 +2,14 @@ package br.com.extractor.ygops.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -22,8 +26,10 @@ import java.util.ArrayList;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
+import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.util.RealmUtils;
+import br.com.extractor.ygops.util.SplashView;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.activity.edit.ProfileEditActivity;
 import br.com.extractor.ygops.view.fragment.CalcFragment;
@@ -34,10 +40,10 @@ import br.com.extractor.ygops.view.fragment.ListPlayerFragment;
 
 public class MainActivity extends ParentActivity {
 
-    private Drawer drawerResult;
-    private AccountHeader headerResult;
-    private ProfileDrawerItem profileDrawerItem;
     private FragmentManager fm;
+    private ViewGroup mMainView;
+    private SplashView mSplashView;
+    private Handler mHandler = new Handler();
 
     private final int HOME = 1;
     private final int PLAYERS = 2;
@@ -50,13 +56,41 @@ public class MainActivity extends ParentActivity {
     private boolean isClose = false;
     private static final Integer PROFILE_EDIT = 1;
 
+    private Drawer drawerResult;
+    private AccountHeader headerResult;
+    private ProfileDrawerItem profileDrawerItem;
+    private static ArrayList<IDrawerItem> drawerItems = new ArrayList<>();
+
+    static {
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.home).withIcon(R.drawable.ic_home_normal).withSelectedIcon(R.drawable.ic_home_pressed));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.players).withIcon(R.drawable.ic_players_normal).withSelectedIcon(R.drawable.ic_players_pressed));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.decks).withIcon(R.drawable.ic_deck_normal).withSelectedIcon(R.drawable.ic_deck_pressed));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.matches).withIcon(R.drawable.ic_match_normal).withSelectedIcon(R.drawable.ic_match_pressed));
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.calculator).withIcon(R.drawable.ic_calc_normal).withSelectedIcon(R.drawable.ic_calc_pressed));
+        drawerItems.add(new DividerDrawerItem());
+        drawerItems.add(new SecondaryDrawerItem().withName(R.string.configuration));
+        drawerItems.add(new SecondaryDrawerItem().withName(R.string.about));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         onCreate(savedInstanceState, R.layout.activity_main);
         fm = getSupportFragmentManager();
 
         setupNavigationDrawer();
-        replaceFragment(new HomeFragment(), true);
+
+        mMainView = (FrameLayout) findViewById(R.id.splashContainer);
+        mSplashView = new SplashView(this);
+        mSplashView.setRemoveFromParentOnEnd(true);
+        mSplashView.setSplashBackgroundColor(ContextCompat.getColor(this, R.color.primary_dark));
+        mSplashView.setRotationRadius(getResources().getDimensionPixelOffset(R.dimen.splash_rotation_radius));
+        mSplashView.setCircleRadius(getResources().getDimensionPixelSize(R.dimen.splash_circle_radius));
+        mSplashView.setRotationDuration(getResources().getInteger(R.integer.splash_rotation_duration));
+        mSplashView.setSplashDuration(getResources().getInteger(R.integer.splash_duration));
+        mSplashView.setCircleColors(new ColorGenerator().getColors());
+
+        mMainView.addView(mSplashView, 0);
+        startLoadingData();
     }
 
     @Override
@@ -85,6 +119,35 @@ public class MainActivity extends ParentActivity {
 
             headerResult.updateProfile(profileDrawerItem);
         }
+    }
+
+    private void startLoadingData() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                onLoadingDataEnded();
+            }
+        }, 2000);
+    }
+
+    private void onLoadingDataEnded() {
+        replaceFragment(new HomeFragment());
+        mSplashView.splashAndDisappear(new SplashView.ISplashListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onUpdate(float completionFraction) {
+
+            }
+
+            @Override
+            public void onEnd() {
+                mSplashView = null;
+            }
+        });
     }
 
     private void setupNavigationDrawer() {
@@ -116,15 +179,6 @@ public class MainActivity extends ParentActivity {
                 })
                 .build();
 
-        ArrayList<IDrawerItem> drawerItems = new ArrayList<>();
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.home).withIcon(R.drawable.ic_home_normal).withSelectedIcon(R.drawable.ic_home_pressed));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.players).withIcon(R.drawable.ic_players_normal).withSelectedIcon(R.drawable.ic_players_pressed));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.decks).withIcon(R.drawable.ic_deck_normal).withSelectedIcon(R.drawable.ic_deck_pressed));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.matches).withIcon(R.drawable.ic_match_normal).withSelectedIcon(R.drawable.ic_match_pressed));
-        drawerItems.add(new PrimaryDrawerItem().withName(R.string.calculator).withIcon(R.drawable.ic_calc_normal).withSelectedIcon(R.drawable.ic_calc_pressed));
-        drawerItems.add(new DividerDrawerItem());
-        drawerItems.add(new SecondaryDrawerItem().withName(R.string.configuration));
-        drawerItems.add(new SecondaryDrawerItem().withName(R.string.about));
 
         drawerResult = new DrawerBuilder()
                 .withActivity(this)

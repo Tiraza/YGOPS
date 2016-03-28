@@ -37,6 +37,11 @@ public class ColorGenerator {
         return colorsList;
     }
 
+    public int[] getColors(){
+        int[] colors = {0xff90a4ae, 0xffe57373, 0xfff06292, 0xffba68c8, 0xff9575cd, 0xff7986cb, 0xff64b5f6, 0xff4fc3f7, 0xff4dd0e1, 0xff4db6ac};
+        return colors;
+    }
+
     public class Color {
         private int id;
         private int color;
