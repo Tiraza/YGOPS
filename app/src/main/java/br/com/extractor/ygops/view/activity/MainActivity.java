@@ -32,11 +32,13 @@ import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.util.SplashView;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.activity.edit.ProfileEditActivity;
+import br.com.extractor.ygops.view.activity.register.ProfileRegisterActivity;
 import br.com.extractor.ygops.view.fragment.CalcFragment;
 import br.com.extractor.ygops.view.fragment.HomeFragment;
 import br.com.extractor.ygops.view.fragment.ListDeckFragment;
 import br.com.extractor.ygops.view.fragment.ListMatchFragment;
 import br.com.extractor.ygops.view.fragment.ListPlayerFragment;
+import io.realm.Realm;
 
 public class MainActivity extends ParentActivity {
 
@@ -56,6 +58,7 @@ public class MainActivity extends ParentActivity {
     private boolean isClose = false;
     private static final Integer PROFILE_EDIT = 1;
 
+    private Profile profile;
     private Drawer drawerResult;
     private AccountHeader headerResult;
     private ProfileDrawerItem profileDrawerItem;
@@ -74,23 +77,30 @@ public class MainActivity extends ParentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        onCreate(savedInstanceState, R.layout.activity_main);
-        fm = getSupportFragmentManager();
+        profile = Realm.getDefaultInstance().where(Profile.class).findFirst();
 
-        setupNavigationDrawer();
+        if(profile != null) {
+            onCreate(savedInstanceState, R.layout.activity_main);
+            fm = getSupportFragmentManager();
 
-        mMainView = (FrameLayout) findViewById(R.id.splashContainer);
-        mSplashView = new SplashView(this);
-        mSplashView.setRemoveFromParentOnEnd(true);
-        mSplashView.setSplashBackgroundColor(ContextCompat.getColor(this, R.color.primary_dark));
-        mSplashView.setRotationRadius(getResources().getDimensionPixelOffset(R.dimen.splash_rotation_radius));
-        mSplashView.setCircleRadius(getResources().getDimensionPixelSize(R.dimen.splash_circle_radius));
-        mSplashView.setRotationDuration(getResources().getInteger(R.integer.splash_rotation_duration));
-        mSplashView.setSplashDuration(getResources().getInteger(R.integer.splash_duration));
-        mSplashView.setCircleColors(new ColorGenerator().getColors());
+            setupNavigationDrawer();
 
-        mMainView.addView(mSplashView, 0);
-        startLoadingData();
+            mMainView = (FrameLayout) findViewById(R.id.splashContainer);
+            mSplashView = new SplashView(this);
+            mSplashView.setRemoveFromParentOnEnd(true);
+            mSplashView.setSplashBackgroundColor(ContextCompat.getColor(this, R.color.primary_dark));
+            mSplashView.setRotationRadius(getResources().getDimensionPixelOffset(R.dimen.splash_rotation_radius));
+            mSplashView.setCircleRadius(getResources().getDimensionPixelSize(R.dimen.splash_circle_radius));
+            mSplashView.setRotationDuration(getResources().getInteger(R.integer.splash_rotation_duration));
+            mSplashView.setSplashDuration(getResources().getInteger(R.integer.splash_duration));
+            mSplashView.setCircleColors(new ColorGenerator().getColors());
+
+            mMainView.addView(mSplashView, 0);
+            startLoadingData();
+        } else {
+            startActivity(new Intent(this, ProfileRegisterActivity.class));
+            finish();
+        }
     }
 
     @Override
@@ -134,14 +144,10 @@ public class MainActivity extends ParentActivity {
         replaceFragment(new HomeFragment());
         mSplashView.splashAndDisappear(new SplashView.ISplashListener() {
             @Override
-            public void onStart() {
-
-            }
+            public void onStart() {}
 
             @Override
-            public void onUpdate(float completionFraction) {
-
-            }
+            public void onUpdate(float completionFraction) {}
 
             @Override
             public void onEnd() {
@@ -151,8 +157,6 @@ public class MainActivity extends ParentActivity {
     }
 
     private void setupNavigationDrawer() {
-        Profile profile = RealmUtils.getInstance().get(Profile.class);
-
         profileDrawerItem = new ProfileDrawerItem();
         profileDrawerItem.withName(profile.getNome());
         if (profile.getImage() != null) {

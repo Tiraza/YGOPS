@@ -75,7 +75,7 @@
 
             </android.support.v7.widget.CardView>
 
-            <include layout="@layout/consult_details" />
+            <include layout="@layout/card_consult_details" />
 
         </LinearLayout>
 

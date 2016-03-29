@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">YGO PS</string>
     <string name="title_activity_main">Home</string>
 
     <string name="hello_world">Hello world!</string>
@@ -59,4 +58,6 @@
     <string name="reset">Resetar</string>
     <string name="clear">Limpar</string>
     <string name="wins_losses">Vitórias / Derrotas</string>
+    <string name="greatest_defeat">Maiores Derrotas</string>
+    <string name="empty_list_hint">Não há nenhum registro,\nclique no botão abaixo para criar o primeiro :)</string>
 </resources>

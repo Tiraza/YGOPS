@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">YGO PS</string>
+    <string name="app_name">Duel Statistics</string>
     <string name="title_activity_main">Home</string>
 
     <string name="hello_world">Hello world!</string>
@@ -74,4 +74,6 @@
     <string name="clear">Clear</string>
     <string name="wins_losses">Wins / Losses</string>
     <string name="title_activity_profile_edit">ProfileEditActivity</string>
+    <string name="greatest_defeat">Greatest defeats</string>
+    <string name="empty_list_hint">There is no record,\nclick the button below to create the first :)</string>
 </resources>

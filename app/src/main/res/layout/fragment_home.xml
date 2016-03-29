@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
     <include
         android:id="@+id/graph_wins"
-        layout="@layout/graph_piechart" />
+        layout="@layout/card_graph_piechart" />
 
     <include
-        android:id="@+id/used_decks"
-        layout="@layout/more_used_decks"
+        android:id="@+id/defeats"
+        layout="@layout/card_defeats"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/graph_wins"
@@ -21,55 +20,15 @@
         android:layout_marginStart="8dp" />
 
     <include
-        android:id="@+id/info_decks"
-        layout="@layout/consult_details"
+        android:id="@+id/used_decks"
+        layout="@layout/card_more_used_decks"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/used_decks"
+        android:layout_below="@+id/defeats"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp" />
-
-    <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/fab_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
-        android:elevation="4dp"
-        android:src="@drawable/fab_add"
-        fab:menu_animationDelayPerItem="0"
-        fab:menu_labels_hideAnimation="@anim/jump_to_down"
-        fab:menu_labels_showAnimation="@anim/jump_from_down"
-        fab:menu_labels_style="@style/MenuLabelsStyle"
-        fab:menu_shadowColor="#444">
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabDeck"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_check"
-            fab:fab_label="@string/deck" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabPlayer"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_player_add"
-            fab:fab_label="@string/player" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabMatch"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_match"
-            fab:fab_label="@string/match" />
-
-    </com.github.clans.fab.FloatingActionMenu>
 
 </RelativeLayout>

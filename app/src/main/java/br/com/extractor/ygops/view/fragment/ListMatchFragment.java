@@ -123,6 +123,7 @@ public class ListMatchFragment extends RealmFragment implements OnDeleteRealm {
         adapter = new MatchesAdapter(matchesList, activity, realm);
         listView = getElementById(R.id.listView);
         listView.setAdapter(adapter);
+        listView.setEmptyView((View) getElementById(R.id.empty_list_view));
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {

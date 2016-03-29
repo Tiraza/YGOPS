@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:fab="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <ListView
         android:id="@+id/listView"
@@ -20,6 +20,18 @@
         android:layout_margin="8dp"
         android:src="@drawable/fab_add"
         fab:fab_colorNormal="?attr/colorPrimary"
-        fab:fab_colorPressed="?attr/colorAccent" />
+        fab:fab_colorPressed="?attr/colorAccent"/>
+
+    <TextView
+        android:id="@+id/empty_list_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="@string/empty_list_hint"
+        android:textSize="22sp"
+        android:visibility="gone"/>
 
 </RelativeLayout>
