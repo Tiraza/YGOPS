@@ -31,7 +31,6 @@ import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.model.ItemCount;
 import br.com.extractor.ygops.model.Match;
-import br.com.extractor.ygops.model.Profile;
 import br.com.extractor.ygops.util.MapUtils;
 import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.RealmFragment;
@@ -65,6 +64,8 @@ public class HomeFragment extends RealmFragment {
     @Bind(R.id.txtTotalDeckDefeat3) TextView txtTotalDeckDefeat3;
     @Bind(R.id.defeats) CardView cardDefeats;
 
+    @Bind(R.id.empty_home) TextView txtEmptyHome;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return onCreateView(inflater, container, R.layout.fragment_home);
@@ -76,8 +77,13 @@ public class HomeFragment extends RealmFragment {
         activity.setTitle(R.string.home);
         ButterKnife.bind(this, view);
 
-        setupCardMoreUsedDecks();
-        setupCardGratesteDefeats();
+        RealmResults<Match> matches = Realm.getDefaultInstance().where(Match.class).findAll();
+        setupCardMoreUsedDecks(matches);
+        setupCardGratesteDefeats(matches);
+
+        if(matches.isEmpty()){
+            txtEmptyHome.setVisibility(View.VISIBLE);
+        }
 
         setup(chart);
         chart.setCenterText(generateCenterSpannableText());
@@ -89,8 +95,7 @@ public class HomeFragment extends RealmFragment {
         setData();
     }
 
-    private void setupCardGratesteDefeats(){
-        RealmResults<Match> matches = Realm.getDefaultInstance().where(Match.class).equalTo("winner", false).findAll();
+    private void setupCardGratesteDefeats(RealmResults<Match> matches){
         List<ItemCount> sortedList = getOpponentDecks(matches);
 
         if (!sortedList.isEmpty()) {
@@ -124,8 +129,7 @@ public class HomeFragment extends RealmFragment {
         }
     }
 
-    private void setupCardMoreUsedDecks() {
-        RealmResults<Match> matches = Realm.getDefaultInstance().where(Match.class).findAll();
+    private void setupCardMoreUsedDecks(RealmResults<Match> matches) {
         List<ItemCount> sortedList = getDecks(matches);
 
         if (!sortedList.isEmpty()) {

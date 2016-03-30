@@ -60,4 +60,5 @@
     <string name="wins_losses">Vitórias / Derrotas</string>
     <string name="greatest_defeat">Maiores Derrotas</string>
     <string name="empty_list_hint">Não há nenhum registro,\nclique no botão abaixo para criar o primeiro :)</string>
+    <string name="empty_home">Cadastre a primeira partida para ver suas estatísticas :)</string>
 </resources>

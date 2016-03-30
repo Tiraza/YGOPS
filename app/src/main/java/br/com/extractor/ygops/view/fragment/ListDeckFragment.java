@@ -109,6 +109,7 @@ public class ListDeckFragment extends RealmFragment implements OnDeleteRealm {
         adapter = new DecksAdapter(activity, decks, true);
 
         listView.setAdapter(adapter);
+        listView.setEmptyView((View) getElementById(R.id.empty_list_view));
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {

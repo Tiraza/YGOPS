@@ -31,4 +31,16 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp" />
 
+    <TextView
+        android:id="@+id/empty_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="@string/empty_home"
+        android:textSize="22sp"
+        android:visibility="gone"/>
+
 </RelativeLayout>

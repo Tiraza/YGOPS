@@ -77,10 +77,10 @@ public class MainActivity extends ParentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        onCreate(savedInstanceState, R.layout.activity_main);
         profile = Realm.getDefaultInstance().where(Profile.class).findFirst();
 
         if(profile != null) {
-            onCreate(savedInstanceState, R.layout.activity_main);
             fm = getSupportFragmentManager();
 
             setupNavigationDrawer();
