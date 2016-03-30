@@ -46,8 +46,8 @@
     <string name="duelist">Duelist</string>
     <string name="match_winner_hint">W</string>
     <string name="match_loser_hint">L</string>
-    <string name="vs">VS</string>
-    <string name="empty" />
+    <string name="vs" translatable="false">VS</string>
+    <string name="empty" translatable="false"/>
     <string name="successfully_included">Successfully included</string>
     <string name="info">Info</string>
     <string name="total_matches">Total matches</string>
@@ -57,23 +57,23 @@
     <string name="deck_consult">Deck Consult</string>
     <string name="player_consult">Player Consult</string>
     <string name="more_used_decks">More used decks</string>
-    <string name="number_1">1</string>
-    <string name="number_2">2</string>
-    <string name="number_3">3</string>
-    <string name="number_4">4</string>
-    <string name="number_5">5</string>
-    <string name="number_6">6</string>
-    <string name="number_7">7</string>
-    <string name="number_8">8</string>
-    <string name="number_9">9</string>
-    <string name="number_000">000</string>
-    <string name="number_00">00</string>
-    <string name="number_0">0</string>
+    <string name="number_1" translatable="false">1</string>
+    <string name="number_2" translatable="false">2</string>
+    <string name="number_3" translatable="false">3</string>
+    <string name="number_4" translatable="false">4</string>
+    <string name="number_5" translatable="false">5</string>
+    <string name="number_6" translatable="false">6</string>
+    <string name="number_7" translatable="false">7</string>
+    <string name="number_8" translatable="false">8</string>
+    <string name="number_9" translatable="false">9</string>
+    <string name="number_000" translatable="false">000</string>
+    <string name="number_00" translatable="false">00</string>
+    <string name="number_0" translatable="false">0</string>
     <string name="calculator">Calculator</string>
     <string name="reset">Reset</string>
     <string name="clear">Clear</string>
     <string name="wins_losses">Wins / Losses</string>
-    <string name="title_activity_profile_edit">ProfileEditActivity</string>
+    <string name="title_activity_profile_edit" translatable="false">ProfileEditActivity</string>
     <string name="greatest_defeat">Greatest defeats</string>
     <string name="empty_list_hint">There is no record,\nclick the button below to create the first :)</string>
     <string name="empty_home">Register first match to see your statistcs :)</string>
