@@ -36,6 +36,7 @@ public class ProfileRegisterActivity extends ParentActivity {
         onCreate(savedInstanceState, R.layout.activity_profile_register);
         ButterKnife.bind(this);
 
+        btnImage.setVisibility(View.GONE);
         btnImage.setColorFilter(getResources().getColor(R.color.primary));
         btnImage.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -52,8 +52,8 @@ public class MainActivity extends ParentActivity {
     private final int DECKS = 3;
     private final int MATCHES = 4;
     private final int CALCULATOR = 5;
-    private final int CONFIGURATION = 7;
-    private final int ABOUT = 8;
+    //private final int CONFIGURATION = 7;
+    //private final int ABOUT = 7;
 
     private boolean isClose = false;
     private static final Integer PROFILE_EDIT = 1;
@@ -71,8 +71,8 @@ public class MainActivity extends ParentActivity {
         drawerItems.add(new PrimaryDrawerItem().withName(R.string.matches).withIcon(R.drawable.ic_match_normal).withSelectedIcon(R.drawable.ic_match_pressed));
         drawerItems.add(new PrimaryDrawerItem().withName(R.string.calculator).withIcon(R.drawable.ic_calc_normal).withSelectedIcon(R.drawable.ic_calc_pressed));
         drawerItems.add(new DividerDrawerItem());
-        drawerItems.add(new SecondaryDrawerItem().withName(R.string.configuration));
-        drawerItems.add(new SecondaryDrawerItem().withName(R.string.about));
+        //drawerItems.add(new SecondaryDrawerItem().withName(R.string.configuration));
+        //drawerItems.add(new SecondaryDrawerItem().withName(R.string.about));
     }
 
     @Override
@@ -159,9 +159,7 @@ public class MainActivity extends ParentActivity {
     private void setupNavigationDrawer() {
         profileDrawerItem = new ProfileDrawerItem();
         profileDrawerItem.withName(profile.getNome());
-        if (profile.getImage() != null) {
-            profileDrawerItem.withIcon(ImageUtils.getInstance().getRoundedCornerBitmap(profile.getImage()));
-        }
+        profileDrawerItem.withIcon(R.mipmap.ic_launcher);
 
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -169,18 +167,6 @@ public class MainActivity extends ParentActivity {
                 .addProfiles(profileDrawerItem)
                 .withSelectionListEnabledForSingleProfile(false)
                 .withHeaderBackground(R.color.primary)
-                .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener() {
-                    @Override
-                    public boolean onProfileImageClick(View view, IProfile iProfile, boolean b) {
-                        startActivityForResult(new Intent(MainActivity.this, ProfileEditActivity.class), PROFILE_EDIT);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onProfileImageLongClick(View view, IProfile iProfile, boolean b) {
-                        return false;
-                    }
-                })
                 .build();
 
 
@@ -208,10 +194,6 @@ public class MainActivity extends ParentActivity {
                                 break;
                             case CALCULATOR:
                                 replaceFragment(new CalcFragment());
-                                break;
-                            case CONFIGURATION:
-                                break;
-                            case ABOUT:
                                 break;
                         }
                         return false;

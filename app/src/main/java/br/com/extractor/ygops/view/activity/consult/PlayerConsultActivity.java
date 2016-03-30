@@ -8,12 +8,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
 import br.com.extractor.ygops.R;
+import br.com.extractor.ygops.application.YgoPS;
 import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.model.ItemCount;
 import br.com.extractor.ygops.model.Match;
@@ -24,8 +26,8 @@ import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 /**
  * Created by Muryllo Tiraza on 11/02/2016.
@@ -61,9 +63,12 @@ public class PlayerConsultActivity extends ParentActivity {
             Player player = RealmUtils.getInstance().getForUuid(Player.class, playerUuid);
             player.load();
 
+            RealmQuery<Match> query = YgoPS.getDefaultRealm().where(Match.class);
+            RealmResults<Match> matches = query.equalTo("player.uuid", player.getUuid()).findAll();
+
+            setupCardMoreUsedDecks(matches);
             setupPlayerInfo(player);
-            setupCardInfo(player);
-            setupCardMoreUsedDecks(player);
+            setupCardInfo(matches);
         }
     }
 
@@ -72,26 +77,19 @@ public class PlayerConsultActivity extends ParentActivity {
         img.setImageDrawable(ImageUtils.getInstance().getDrawableRealm(R.string.empty, player.getColor(), this));
     }
 
-    private void setupCardInfo(Player player) {
-        Realm realm = Realm.getDefaultInstance();
-
-        RealmQuery<Match> query = realm.where(Match.class);
-        query.equalTo("player.uuid", player.getUuid());
-
-        int total = query.findAll().size();
+    private void setupCardInfo(RealmResults<Match> results) {
+        int total = results.size();
         txtTotal.setText("" + total);
 
-        int wins = query.findAll().where().equalTo("winner", false).findAll().size();
+        int wins = results.where().equalTo("winner", false).findAll().size();
         txtWins.setText("" + wins);
 
         Integer losses = total - wins;
         txtLosses.setText(losses.toString());
-
-        realm.close();
     }
 
-    private void setupCardMoreUsedDecks(Player player) {
-        List<ItemCount> sortedList = getSortedValues(player);
+    private void setupCardMoreUsedDecks(RealmResults<Match> results) {
+        List<ItemCount> sortedList = getDecks(results);
 
         if (!sortedList.isEmpty()) {
             ItemCount item = sortedList.get(0);
@@ -124,8 +122,11 @@ public class PlayerConsultActivity extends ParentActivity {
         }
     }
 
-    public List<ItemCount> getSortedValues(Player player) {
-        List<Deck> decks = player.getDecks();
+    public List<ItemCount> getDecks(List<Match> matches) {
+        List<Deck> decks = new ArrayList<>();
+        for(Match match : matches){
+            decks.add(match.getPlayerDeck());
+        }
 
         HashMap<String, Integer> map = new HashMap<>();
         HashSet<Deck> set = new HashSet<>(decks);
