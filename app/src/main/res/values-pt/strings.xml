@@ -62,4 +62,5 @@
     <string name="empty_home">Cadastre a primeira partida para ver suas estatísticas :)</string>
     <string name="info">Info</string>
     <string name="title_activity_main">Home</string>
+    <string name="search">Pesquisar</string>
 </resources>

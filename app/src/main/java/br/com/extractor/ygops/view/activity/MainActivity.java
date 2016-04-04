@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.lapism.searchview.view.SearchCodes;
+import com.lapism.searchview.view.SearchView;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -18,9 +20,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,6 @@ import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.util.SplashView;
 import br.com.extractor.ygops.view.ParentActivity;
-import br.com.extractor.ygops.view.activity.edit.ProfileEditActivity;
 import br.com.extractor.ygops.view.activity.register.ProfileRegisterActivity;
 import br.com.extractor.ygops.view.fragment.CalcFragment;
 import br.com.extractor.ygops.view.fragment.HomeFragment;
@@ -64,6 +63,8 @@ public class MainActivity extends ParentActivity {
     private ProfileDrawerItem profileDrawerItem;
     private static ArrayList<IDrawerItem> drawerItems = new ArrayList<>();
 
+    private SearchView mSearchView;
+
     static {
         drawerItems.add(new PrimaryDrawerItem().withName(R.string.home).withIcon(R.drawable.ic_home_normal).withSelectedIcon(R.drawable.ic_home_pressed));
         drawerItems.add(new PrimaryDrawerItem().withName(R.string.players).withIcon(R.drawable.ic_players_normal).withSelectedIcon(R.drawable.ic_players_pressed));
@@ -84,8 +85,8 @@ public class MainActivity extends ParentActivity {
             fm = getSupportFragmentManager();
 
             setupNavigationDrawer();
-
             mMainView = (FrameLayout) findViewById(R.id.splashContainer);
+
             mSplashView = new SplashView(this);
             mSplashView.setRemoveFromParentOnEnd(true);
             mSplashView.setSplashBackgroundColor(ContextCompat.getColor(this, R.color.primary_dark));
@@ -105,7 +106,9 @@ public class MainActivity extends ParentActivity {
 
     @Override
     public void onBackPressed() {
-        if (drawerResult != null && drawerResult.isDrawerOpen()) {
+        if(mSearchView != null && mSearchView.isSearchOpen()){
+            mSearchView.hide(true);
+        } else if (drawerResult != null && drawerResult.isDrawerOpen()) {
             drawerResult.closeDrawer();
         } else if (!isClose && fm.getBackStackEntryCount() == 1) {
             replaceFragment(new HomeFragment(), true);
@@ -144,10 +147,12 @@ public class MainActivity extends ParentActivity {
         replaceFragment(new HomeFragment());
         mSplashView.splashAndDisappear(new SplashView.ISplashListener() {
             @Override
-            public void onStart() {}
+            public void onStart() {
+            }
 
             @Override
-            public void onUpdate(float completionFraction) {}
+            public void onUpdate(float completionFraction) {
+            }
 
             @Override
             public void onEnd() {
@@ -163,10 +168,9 @@ public class MainActivity extends ParentActivity {
 
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withCompactStyle(true)
                 .addProfiles(profileDrawerItem)
                 .withSelectionListEnabledForSingleProfile(false)
-                .withHeaderBackground(R.color.primary)
+                .withHeaderBackground(R.drawable.drawer_bg)
                 .build();
 
 
@@ -236,5 +240,21 @@ public class MainActivity extends ParentActivity {
                 drawerResult.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
             }
         }
+    }
+
+    public SearchView getSearchView(){
+        mSearchView = (SearchView) findViewById(R.id.searchView);
+        mSearchView.setVersion(SearchCodes.VERSION_MENU_ITEM);
+        mSearchView.setStyle(SearchCodes.STYLE_MENU_ITEM_CLASSIC);
+        mSearchView.setTheme(SearchCodes.THEME_LIGHT);
+
+        mSearchView.setDivider(false);
+        mSearchView.setHint("Search");
+        mSearchView.setHint(R.string.search);
+        mSearchView.setHintSize(getResources().getDimension(R.dimen.search_text_medium));
+        mSearchView.setAnimationDuration(300);
+        mSearchView.setShadowColor(ContextCompat.getColor(this, R.color.search_shadow_layout));
+
+        return mSearchView;
     }
 }

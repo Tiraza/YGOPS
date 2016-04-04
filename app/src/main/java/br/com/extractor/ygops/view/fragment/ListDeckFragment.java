@@ -2,6 +2,7 @@ package br.com.extractor.ygops.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,8 +13,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.lapism.searchview.adapter.SearchAdapter;
+import com.lapism.searchview.adapter.SearchItem;
+import com.lapism.searchview.history.SearchHistoryTable;
+import com.lapism.searchview.view.SearchCodes;
+import com.lapism.searchview.view.SearchView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Deck;
@@ -35,9 +45,13 @@ import io.realm.Sort;
  */
 public class ListDeckFragment extends RealmFragment implements OnDeleteRealm {
 
+    private SearchView mSearchView;
     private DecksAdapter adapter;
     private DecksDeleteAdapter deleteAdapter;
     private MenuItem menuDelete;
+
+    private SearchHistoryTable mHistoryDatabase;
+    private List<SearchItem> mSuggestionsList;
 
     @Bind(R.id.listView) ListView listView;
     @Bind(R.id.fab) FloatingActionButton fab;
@@ -55,16 +69,18 @@ public class ListDeckFragment extends RealmFragment implements OnDeleteRealm {
         setHasOptionsMenu(true);
         activity.setTitle(R.string.decks);
         ((MainActivity) activity).toggleIconToolbar(true);
+
         ButterKnife.bind(this, view);
 
         setupFab();
         setupListView();
+        setupSearchView();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_delete, menu);
+        inflater.inflate(R.menu.menu_search, menu);
 
         menuDelete = menu.findItem(R.id.menuDelete);
         menuDelete.setVisible(false);
@@ -72,12 +88,21 @@ public class ListDeckFragment extends RealmFragment implements OnDeleteRealm {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menuDelete) {
-            for (String uuid : deleteAdapter.getSelectedItens()) {
-                RealmUtils.getInstance().removeDeckForUuid(uuid);
-            }
+        switch (item.getItemId()){
+            case R.id.menuDelete:
+                for (String uuid : deleteAdapter.getSelectedItens()) {
+                    RealmUtils.getInstance().removeDeckForUuid(uuid);
+                }
 
-            listView.setAdapter(adapter);
+                listView.setAdapter(adapter);
+                break;
+
+            case R.id.action_search:
+                mSuggestionsList.clear();
+                mSuggestionsList.addAll(mHistoryDatabase.getAllItems());
+                mSearchView.setVisibility(View.VISIBLE);
+                mSearchView.show(true);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -150,5 +175,50 @@ public class ListDeckFragment extends RealmFragment implements OnDeleteRealm {
                 mLastFirstVisibleItem = firstVisibleItem;
             }
         });
+    }
+
+    private void setupSearchView(){
+        mSuggestionsList = new ArrayList<>();
+        mHistoryDatabase = new SearchHistoryTable(activity);
+
+        mSearchView = ((MainActivity) activity).getSearchView();
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mSearchView.hide(false);
+                mHistoryDatabase.addItem(new SearchItem(query));
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        mSearchView.setOnSearchViewListener(new SearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                fab.hide(false);
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                fab.show(false);
+            }
+        });
+
+        List<SearchItem> mResultsList = new ArrayList<>();
+        SearchAdapter mSearchAdapter = new SearchAdapter(activity, mResultsList, mSuggestionsList, SearchCodes.THEME_LIGHT);
+        mSearchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                mSearchView.hide(false);
+                TextView textView = (TextView) view.findViewById(R.id.textView_item_text);
+                CharSequence text = textView.getText();
+                mHistoryDatabase.addItem(new SearchItem(text));
+            }
+        });
+
+        mSearchView.setAdapter(mSearchAdapter);
     }
 }

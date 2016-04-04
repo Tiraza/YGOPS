@@ -34,6 +34,7 @@ import br.com.extractor.ygops.model.Match;
 import br.com.extractor.ygops.util.MapUtils;
 import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.RealmFragment;
+import br.com.extractor.ygops.view.activity.MainActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.realm.Realm;
@@ -76,6 +77,7 @@ public class HomeFragment extends RealmFragment {
         super.onViewCreated(view, savedInstanceState);
         activity.setTitle(R.string.home);
         ButterKnife.bind(this, view);
+        ((MainActivity) activity).toggleIconToolbar(false);
 
         RealmResults<Match> matches = Realm.getDefaultInstance().where(Match.class).findAll();
         setupCardMoreUsedDecks(matches);

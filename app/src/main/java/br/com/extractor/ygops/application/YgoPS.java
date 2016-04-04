@@ -26,6 +26,13 @@ public class YgoPS extends Application {
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
+
+        GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+        analytics.setLocalDispatchPeriod(1800);
+
+        mTracker = analytics.newTracker(ANALYTICS_ID);
+        mTracker.enableExceptionReporting(true);
+        mTracker.enableAutoActivityTracking(true);
     }
 
     public static Realm getDefaultRealm() {
@@ -37,14 +44,6 @@ public class YgoPS extends Application {
     }
 
     synchronized public Tracker getDefaultTracker() {
-        if (mTracker == null) {
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            analytics.setLocalDispatchPeriod(1800);
-
-            mTracker = analytics.newTracker(ANALYTICS_ID);
-            mTracker.enableExceptionReporting(true);
-            mTracker.enableAutoActivityTracking(true);
-        }
         return mTracker;
     }
 }
