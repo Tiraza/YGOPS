@@ -272,6 +272,7 @@ public class MainActivity extends ParentActivity {
         mSearchView.setStyle(SearchCodes.STYLE_MENU_ITEM_CLASSIC);
         mSearchView.setTheme(SearchCodes.THEME_LIGHT);
 
+        mSearchView.setVoice(false);
         mSearchView.setDivider(false);
         mSearchView.setHint("Search");
         mSearchView.setHint(R.string.search);
