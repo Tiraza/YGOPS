@@ -1,9 +1,14 @@
 package br.com.extractor.ygops.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;

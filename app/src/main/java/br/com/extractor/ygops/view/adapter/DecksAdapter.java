@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,8 @@ import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.ImageUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Case;
+import io.realm.Realm;
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
 
@@ -22,25 +25,25 @@ import io.realm.RealmResults;
 public class DecksAdapter extends RealmBaseAdapter {
 
     private Context context;
-    private RealmResults<Deck> decks;
+    private RealmResults<Deck> originalDecks;
     private ColorGenerator colorGenerator;
 
     public DecksAdapter(Context context, RealmResults<Deck> realmResults, boolean automaticUpdate) {
         super(context, realmResults, automaticUpdate);
 
-        this.decks = realmResults;
+        this.originalDecks = realmResults;
         this.context = context;
         this.colorGenerator = new ColorGenerator();
     }
 
     @Override
     public int getCount() {
-        return decks.size();
+        return originalDecks.size();
     }
 
     @Override
     public Deck getItem(int position) {
-        return decks.get(position);
+        return originalDecks.get(position);
     }
 
     @Override
@@ -65,6 +68,21 @@ public class DecksAdapter extends RealmBaseAdapter {
         holder.txtDeck.setText(deck.getNome());
         holder.imgDeck.setImageDrawable(ImageUtils.getInstance().getDrawable(deck.getNome().substring(0, 1).toUpperCase(), colorGenerator.getColor(deck.getColor())));
         return view;
+    }
+
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                return new FilterResults();
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                originalDecks = Realm.getDefaultInstance().where(Deck.class).contains("nome", constraint.toString(), Case.INSENSITIVE).findAll();
+                DecksAdapter.this.notifyDataSetChanged();
+            }
+        };
     }
 
     static class ViewHolder {

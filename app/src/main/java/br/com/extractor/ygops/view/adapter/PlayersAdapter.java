@@ -4,15 +4,19 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import br.com.extractor.ygops.R;
+import br.com.extractor.ygops.model.Deck;
 import br.com.extractor.ygops.model.Player;
 import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.ImageUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Case;
+import io.realm.Realm;
 import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
 
@@ -65,6 +69,21 @@ public class PlayersAdapter extends RealmBaseAdapter {
         holder.txtPlayer.setText(player.getNome());
         holder.imgPlayer.setImageDrawable(ImageUtils.getInstance().getDrawable(player.getNome().substring(0, 1).toUpperCase(), colorGenerator.getColor(player.getColor())));
         return view;
+    }
+
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                return new FilterResults();
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                players = Realm.getDefaultInstance().where(Player.class).contains("nome", constraint.toString(), Case.INSENSITIVE).findAll();
+                PlayersAdapter.this.notifyDataSetChanged();
+            }
+        };
     }
 
     static class ViewHolder {

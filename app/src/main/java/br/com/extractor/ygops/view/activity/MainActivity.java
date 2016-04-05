@@ -1,15 +1,19 @@
 package br.com.extractor.ygops.view.activity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.lapism.searchview.view.SearchCodes;
 import com.lapism.searchview.view.SearchView;
@@ -62,6 +66,7 @@ public class MainActivity extends ParentActivity {
     private AccountHeader headerResult;
     private ProfileDrawerItem profileDrawerItem;
     private static ArrayList<IDrawerItem> drawerItems = new ArrayList<>();
+    private Boolean keyboardUp = false;
 
     private SearchView mSearchView;
 
@@ -95,6 +100,25 @@ public class MainActivity extends ParentActivity {
             mSplashView.setRotationDuration(getResources().getInteger(R.integer.splash_rotation_duration));
             mSplashView.setSplashDuration(getResources().getInteger(R.integer.splash_duration));
             mSplashView.setCircleColors(new ColorGenerator().getColors());
+
+            final View activityRootView = findViewById(R.id.activityRoot);
+            activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    Rect r = new Rect();
+                    activityRootView.getWindowVisibleDisplayFrame(r);
+
+                    int heightDiff = activityRootView.getRootView().getHeight() - (r.bottom - r.top);
+                    if (heightDiff > 100) {
+                        keyboardUp = true;
+                    } else if (heightDiff < 100 && keyboardUp) {
+                        if(mSearchView != null && mSearchView.isSearchOpen()){
+                            mSearchView.hide(true);
+                        }
+                        keyboardUp = false;
+                    }
+                }
+            });
 
             mMainView.addView(mSplashView, 0);
             startLoadingData();

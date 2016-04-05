@@ -3,6 +3,7 @@ package br.com.extractor.ygops.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +15,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.lapism.searchview.adapter.SearchAdapter;
@@ -49,6 +51,7 @@ public class ListDeckFragment extends RealmFragment implements OnDeleteRealm {
     private DecksAdapter adapter;
     private DecksDeleteAdapter deleteAdapter;
     private MenuItem menuDelete;
+    private MenuItem menuSearch;
 
     private SearchHistoryTable mHistoryDatabase;
     private List<SearchItem> mSuggestionsList;
@@ -82,6 +85,7 @@ public class ListDeckFragment extends RealmFragment implements OnDeleteRealm {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_search, menu);
 
+        menuSearch = menu.findItem(R.id.action_search);
         menuDelete = menu.findItem(R.id.menuDelete);
         menuDelete.setVisible(false);
     }
@@ -112,6 +116,7 @@ public class ListDeckFragment extends RealmFragment implements OnDeleteRealm {
     public void onDelete() {
         listView.setAdapter(adapter);
         menuDelete.setVisible(false);
+        menuSearch.setVisible(true);
     }
 
     private void setupFab() {
@@ -141,6 +146,7 @@ public class ListDeckFragment extends RealmFragment implements OnDeleteRealm {
                 deleteAdapter = new DecksDeleteAdapter(decks, activity, ListDeckFragment.this, decks.get(position).getUuid());
                 listView.setAdapter(deleteAdapter);
                 menuDelete.setVisible(true);
+                menuSearch.setVisible(false);
                 return true;
             }
         });
@@ -187,6 +193,7 @@ public class ListDeckFragment extends RealmFragment implements OnDeleteRealm {
             public boolean onQueryTextSubmit(String query) {
                 mSearchView.hide(false);
                 mHistoryDatabase.addItem(new SearchItem(query));
+                adapter.getFilter().filter(query);
                 return false;
             }
 
