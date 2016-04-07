@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -24,14 +26,10 @@ import butterknife.ButterKnife;
 
 public class ProfileEditActivity extends ParentActivity {
 
-    @Bind(R.id.txtName)
-    TextView txtName;
-    @Bind(R.id.imgProfile)
-    ImageButton imgProfile;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
+    @Bind(R.id.txtName) TextView txtName;
+    @Bind(R.id.imgProfile) ImageView imgProfile;
+    @Bind(R.id.fab) FloatingActionButton fab;
 
-    private Profile profile;
     private byte[] image = null;
 
     @Override
@@ -41,7 +39,7 @@ public class ProfileEditActivity extends ParentActivity {
         displayHomeEnabled();
         ButterKnife.bind(this);
 
-        imgProfile.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = ImagePicker.getPickImageIntent(ProfileEditActivity.this);
@@ -49,44 +47,22 @@ public class ProfileEditActivity extends ParentActivity {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = txtName.getText().toString();
-                if ("".equals(name)) {
-                    txtName.setError(getResources().getString(R.string.field_required));
-                } else {
-                    Profile update = new Profile();
-                    update.setUuid(profile.getUuid());
-                    update.setNome(name);
-                    update.setDecks(profile.getDecks());
-                    if (image != null) {
-                        update.setImage(image);
-                    }
-
-                    RealmUtils.getInstance().update(update);
-
-                    Intent returnIntent = new Intent();
-                    setResult(0, returnIntent);
-                    finish();
-                }
-            }
-        });
-
-        profile = RealmUtils.getInstance().get(Profile.class);
+        Profile profile = RealmUtils.getInstance().get(Profile.class);
         if (profile.getImage() != null) {
             imgProfile.setImageBitmap(ImageUtils.getInstance().getRoundedCornerBitmap(profile.getImage()));
         }
 
         txtName.setText(profile.getNome());
+        txtName.clearFocus();
         fab.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fab_scale_in));
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override
     protected void onActivityResult(int requestCode, final int resultCode, final Intent data) {
         if (requestCode == ImagePicker.IMAGE_PICKER_ID && resultCode != 0) {
             new AsyncTask<Void, Void, Void>() {
-                private Bitmap roundedImage;
+                private Bitmap bitmapImage;
 
                 @Override
                 protected void onPreExecute() {
@@ -99,13 +75,13 @@ public class ProfileEditActivity extends ParentActivity {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     image = stream.toByteArray();
-                    roundedImage = ImageUtils.getInstance().getRoundedCornerBitmap(image);
+                    bitmapImage = ImageUtils.getInstance().getRoundedCornerBitmap(image);
                     return null;
                 }
 
                 @Override
                 protected void onPostExecute(Void aVoid) {
-                    imgProfile.setImageBitmap(roundedImage);
+                    imgProfile.setImageBitmap(bitmapImage);
                 }
             }.execute();
         }

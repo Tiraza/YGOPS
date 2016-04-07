@@ -35,6 +35,7 @@ import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.util.SplashView;
 import br.com.extractor.ygops.view.ParentActivity;
+import br.com.extractor.ygops.view.activity.edit.ProfileEditActivity;
 import br.com.extractor.ygops.view.activity.register.ProfileRegisterActivity;
 import br.com.extractor.ygops.view.fragment.CalcFragment;
 import br.com.extractor.ygops.view.fragment.HomeFragment;
@@ -55,6 +56,7 @@ public class MainActivity extends ParentActivity {
     private final int DECKS = 3;
     private final int MATCHES = 4;
     private final int CALCULATOR = 5;
+    private final int PROFILE = 7;
     //private final int CONFIGURATION = 7;
     //private final int ABOUT = 7;
 
@@ -77,6 +79,7 @@ public class MainActivity extends ParentActivity {
         drawerItems.add(new PrimaryDrawerItem().withName(R.string.matches).withIcon(R.drawable.ic_match_normal).withSelectedIcon(R.drawable.ic_match_pressed));
         drawerItems.add(new PrimaryDrawerItem().withName(R.string.calculator).withIcon(R.drawable.ic_calc_normal).withSelectedIcon(R.drawable.ic_calc_pressed));
         drawerItems.add(new DividerDrawerItem());
+        drawerItems.add(new PrimaryDrawerItem().withName(R.string.profile).withIcon(R.drawable.ic_person).withSelectedIcon(R.drawable.ic_person));
         //drawerItems.add(new SecondaryDrawerItem().withName(R.string.configuration));
         //drawerItems.add(new SecondaryDrawerItem().withName(R.string.about));
     }
@@ -197,7 +200,6 @@ public class MainActivity extends ParentActivity {
                 .withHeaderBackground(R.drawable.drawer_bg)
                 .build();
 
-
         drawerResult = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
@@ -222,6 +224,10 @@ public class MainActivity extends ParentActivity {
                                 break;
                             case CALCULATOR:
                                 replaceFragment(new CalcFragment());
+                                break;
+                            case PROFILE:
+                                Intent intent = new Intent(MainActivity.this, ProfileEditActivity.class);
+                                startActivity(intent);
                                 break;
                         }
                         return false;
