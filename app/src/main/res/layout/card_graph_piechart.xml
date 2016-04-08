@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.CardView
     android:id="@+id/card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="250dp"
     android:layout_margin="8dp"
     android:layout_marginTop="?attr/actionBarSize"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     card_view:cardCornerRadius="4dp"
     card_view:elevation="4dp">
 
@@ -21,13 +24,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="?attr/colorAccent" />
+            android:textColor="?attr/colorAccent"/>
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/chart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/txtGraphName" />
+            android:layout_below="@+id/txtGraphName"/>
 
     </RelativeLayout>
 

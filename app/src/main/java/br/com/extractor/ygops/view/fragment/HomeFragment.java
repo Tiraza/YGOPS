@@ -98,7 +98,7 @@ public class HomeFragment extends RealmFragment {
     }
 
     private void setupCardGratesteDefeats(RealmResults<Match> matches){
-        List<ItemCount> sortedList = getOpponentDecks(matches);
+        List<ItemCount> sortedList = getOpponentDecks(matches.where().equalTo("winner", false).findAll());
 
         if (!sortedList.isEmpty()) {
             ItemCount item = sortedList.get(0);
@@ -132,7 +132,7 @@ public class HomeFragment extends RealmFragment {
     }
 
     private void setupCardMoreUsedDecks(RealmResults<Match> matches) {
-        List<ItemCount> sortedList = getDecks(matches);
+        List<ItemCount> sortedList = getDecks(matches.where().equalTo("winner", true).findAll());
 
         if (!sortedList.isEmpty()) {
             ItemCount item = sortedList.get(0);

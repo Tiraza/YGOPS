@@ -65,7 +65,7 @@ public abstract class ParentFragment extends Fragment {
     protected void setup(Chart<?> chart) {
         chart.setDescription("");
         chart.setNoDataTextDescription("You need to provide data for the chart.");
-        chart.setTouchEnabled(true);
+        chart.setTouchEnabled(false);
 
         if (chart instanceof BarLineChartBase) {
 
