@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
@@ -23,6 +22,8 @@ import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.dialog.ImagePicker;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.realm.Realm;
 
 public class ProfileEditActivity extends ParentActivity {
 
@@ -30,6 +31,7 @@ public class ProfileEditActivity extends ParentActivity {
     @Bind(R.id.imgProfile) ImageView imgProfile;
     @Bind(R.id.fab) FloatingActionButton fab;
 
+    private Profile profile;
     private byte[] image = null;
 
     @Override
@@ -47,7 +49,7 @@ public class ProfileEditActivity extends ParentActivity {
             }
         });
 
-        Profile profile = RealmUtils.getInstance().get(Profile.class);
+        profile = RealmUtils.getInstance().get(Profile.class);
         if (profile.getImage() != null) {
             imgProfile.setImageBitmap(ImageUtils.getInstance().getRoundedCornerBitmap(profile.getImage()));
         }
@@ -84,6 +86,30 @@ public class ProfileEditActivity extends ParentActivity {
                     imgProfile.setImageBitmap(bitmapImage);
                 }
             }.execute();
+        }
+    }
+
+    @OnClick(R.id.btnDone)
+    public void onClickBtnDone(View v){
+        String name = txtName.getText().toString();
+        if ("".equals(name)) {
+            txtName.setError(getResources().getString(R.string.field_required));
+        } else {
+            //TODO REFACTOR
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+
+            profile.setNome(name);
+            if (image != null) {
+                profile.setImage(image);
+            }
+
+            realm.commitTransaction();
+            realm.close();
+
+            Intent returnIntent = new Intent();
+            setResult(0, returnIntent);
+            finish();
         }
     }
 }

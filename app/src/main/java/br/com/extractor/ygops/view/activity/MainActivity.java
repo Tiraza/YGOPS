@@ -8,12 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.lapism.searchview.view.SearchCodes;
 import com.lapism.searchview.view.SearchView;
@@ -191,7 +189,12 @@ public class MainActivity extends ParentActivity {
     private void setupNavigationDrawer() {
         profileDrawerItem = new ProfileDrawerItem();
         profileDrawerItem.withName(profile.getNome());
-        profileDrawerItem.withIcon(R.mipmap.ic_launcher);
+
+        if(profile.getImage() != null){
+            profileDrawerItem.withIcon(ImageUtils.getInstance().getRoundedCornerBitmap(profile.getImage()));
+        } else {
+            profileDrawerItem.withIcon(R.mipmap.ic_launcher);
+        }
 
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -227,7 +230,7 @@ public class MainActivity extends ParentActivity {
                                 break;
                             case PROFILE:
                                 Intent intent = new Intent(MainActivity.this, ProfileEditActivity.class);
-                                startActivity(intent);
+                                startActivityForResult(intent, PROFILE_EDIT);
                                 break;
                         }
                         return false;
