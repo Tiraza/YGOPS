@@ -19,8 +19,8 @@
         android:layout_alignParentRight="true"
         android:layout_margin="8dp"
         android:src="@drawable/fab_add"
-        fab:fab_colorNormal="?attr/colorPrimary"
-        fab:fab_colorPressed="?attr/colorAccent"/>
+        fab:fab_colorNormal="?attr/colorAccent"
+        fab:fab_colorPressed="?attr/colorPrimary"/>
 
     <TextView
         android:id="@+id/empty_list_view"
