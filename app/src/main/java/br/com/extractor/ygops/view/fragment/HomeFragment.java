@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
@@ -37,6 +38,7 @@ import br.com.extractor.ygops.view.RealmFragment;
 import br.com.extractor.ygops.view.activity.MainActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -95,6 +97,21 @@ public class HomeFragment extends RealmFragment {
     public void onResume() {
         super.onResume();
         setData();
+    }
+
+    @OnClick(R.id.graph_wins)
+    public void graphClick() {
+        makeToast("Graph Click", Toast.LENGTH_SHORT);
+    }
+
+    @OnClick(R.id.defeats)
+    public void defeatsClick() {
+        makeToast("Defeats Click", Toast.LENGTH_SHORT);
+    }
+
+    @OnClick(R.id.used_decks)
+    public void moreUsedDecksClick() {
+        makeToast("More Used Decks Click", Toast.LENGTH_SHORT);
     }
 
     private void setupCardGratesteDefeats(RealmResults<Match> matches){

@@ -5,14 +5,17 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
 import java.util.UUID;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
+import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.activity.MainActivity;
@@ -26,19 +29,18 @@ import butterknife.OnClick;
  */
 public class ProfileRegisterActivity extends ParentActivity {
 
-    @Bind(R.id.edtName) EditText edtName;
-    @Bind(R.id.btnImage) ImageButton btnImage;
+    @Bind(R.id.txtName) TextView txtName;
+    @Bind(R.id.imgProfile) ImageView imgProfile;
+    @Bind(R.id.fab) FloatingActionButton fab;
 
     private byte[] image = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        onCreate(savedInstanceState, R.layout.activity_profile_register);
+        onCreate(savedInstanceState, R.layout.activity_profile_edit);
         ButterKnife.bind(this);
 
-        btnImage.setVisibility(View.GONE);
-        btnImage.setColorFilter(getResources().getColor(R.color.primary));
-        btnImage.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = ImagePicker.getPickImageIntent(ProfileRegisterActivity.this);
@@ -51,23 +53,36 @@ public class ProfileRegisterActivity extends ParentActivity {
     protected void onActivityResult(int requestCode, final int resultCode, final Intent data) {
         if (requestCode == ImagePicker.IMAGE_PICKER_ID && resultCode != 0) {
             new AsyncTask<Void, Void, Void>() {
+                private Bitmap bitmapImage;
+
+                @Override
+                protected void onPreExecute() {
+                    imgProfile.setImageBitmap(null);
+                }
+
                 @Override
                 protected Void doInBackground(Void... voids) {
                     Bitmap bitmap = ImagePicker.getImageFromResult(ProfileRegisterActivity.this, resultCode, data);
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     image = stream.toByteArray();
+                    bitmapImage = ImageUtils.getInstance().getRoundedCornerBitmap(image);
                     return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    imgProfile.setImageBitmap(bitmapImage);
                 }
             }.execute();
         }
     }
     @OnClick(R.id.btnDone)
     public void done(){
-        if (edtName.getText() != null && !"".equals(edtName.getText().toString())) {
+        if (txtName.getText() != null && !"".equals(txtName.getText().toString())) {
             Profile profile = new Profile();
             profile.setUuid(UUID.randomUUID().toString());
-            profile.setNome(edtName.getText().toString());
+            profile.setNome(txtName.getText().toString());
 
             if (image != null) {
                 profile.setImage(image);
@@ -79,7 +94,7 @@ public class ProfileRegisterActivity extends ParentActivity {
             startActivity(intent);
             ProfileRegisterActivity.this.finish();
         } else {
-            edtName.setError(getString(R.string.field_required));
+            txtName.setError(getString(R.string.field_required));
         }
     }
 }
