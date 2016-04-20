@@ -1,5 +1,6 @@
 package br.com.extractor.ygops.view.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import br.com.extractor.ygops.util.MapUtils;
 import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.RealmFragment;
 import br.com.extractor.ygops.view.activity.MainActivity;
+import br.com.extractor.ygops.view.activity.details.DefeatsDetailsActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -106,7 +108,8 @@ public class HomeFragment extends RealmFragment {
 
     @OnClick(R.id.defeats)
     public void defeatsClick() {
-        makeToast("Defeats Click", Toast.LENGTH_SHORT);
+        Intent intent = new Intent(activity, DefeatsDetailsActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.used_decks)
@@ -149,7 +152,7 @@ public class HomeFragment extends RealmFragment {
     }
 
     private void setupCardMoreUsedDecks(RealmResults<Match> matches) {
-        List<ItemCount> sortedList = getDecks(matches.where().equalTo("winner", true).findAll());
+        List<ItemCount> sortedList = getDecks(matches);
 
         if (!sortedList.isEmpty()) {
             ItemCount item = sortedList.get(0);

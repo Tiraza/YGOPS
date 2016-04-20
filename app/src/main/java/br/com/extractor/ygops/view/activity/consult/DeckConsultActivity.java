@@ -22,16 +22,11 @@ import io.realm.RealmQuery;
  */
 public class DeckConsultActivity extends ParentActivity {
 
-    @Bind(R.id.edtDeckName)
-    EditText edtDeckName;
-    @Bind(R.id.image_view)
-    ImageView img;
-    @Bind(R.id.txtTotal)
-    TextView txtTotal;
-    @Bind(R.id.txtWins)
-    TextView txtWins;
-    @Bind(R.id.txtLosses)
-    TextView txtLosses;
+    @Bind(R.id.edtDeckName) EditText edtDeckName;
+    @Bind(R.id.image_view) ImageView img;
+    @Bind(R.id.txtTotal) TextView txtTotal;
+    @Bind(R.id.txtWins) TextView txtWins;
+    @Bind(R.id.txtLosses) TextView txtLosses;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
