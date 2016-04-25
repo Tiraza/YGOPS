@@ -66,4 +66,5 @@
     <string name="quantity">Quantidade</string>
     <string name="percentage">Porcentagem</string>
     <string name="others">Outros</string>
+    <string name="total_losses">Total de Derrotas</string>
 </resources>

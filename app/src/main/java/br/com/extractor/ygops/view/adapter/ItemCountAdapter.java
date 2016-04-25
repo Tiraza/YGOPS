@@ -77,7 +77,7 @@ public class ItemCountAdapter extends BaseAdapter {
         StringBuilder string = new StringBuilder();
         string.append(context.getString(R.string.quantity)).append(": ").append(item.getQuantidade());
         string.append(" / ");
-        string.append(context.getString(R.string.percentage)).append(": ").append(percetage).append("%");
+        string.append(context.getString(R.string.percentage)).append(": ").append(String.format(context.getResources().getConfiguration().locale, "%.1f", percetage)).append("%");
         return string.toString();
     }
 

@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import br.com.extractor.ygops.R;
@@ -19,7 +19,7 @@ import br.com.extractor.ygops.view.dialog.DicePicker;
 /**
  * Created by Muryllo Tiraza on 29/02/2016.
  */
-public class CalcFragment extends ParentFragment implements View.OnClickListener{
+public class CalcFragment extends ParentFragment implements View.OnClickListener {
 
     private TextView txtValue;
     private TextView txtLifePlayer;
@@ -44,8 +44,20 @@ public class CalcFragment extends ParentFragment implements View.OnClickListener
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_1:
                 setValue("1");
                 break;
@@ -150,7 +162,7 @@ public class CalcFragment extends ParentFragment implements View.OnClickListener
         btnDice.setOnClickListener(this);
     }
 
-    private void setupCalcButtons(){
+    private void setupCalcButtons() {
         Animation animation = AnimationUtils.loadAnimation(activity, R.anim.fab_scale_in);
 
         Button btn_1 = getElementById(R.id.btn_1);
@@ -212,7 +224,7 @@ public class CalcFragment extends ParentFragment implements View.OnClickListener
 
     private void setValue(String value) {
         String valueTxt = txtValue.getText().toString();
-        if(valueTxt.length() <= MAX_LENGTH) {
+        if (valueTxt.length() <= MAX_LENGTH) {
             if (value.contains("0") && !"".equals(valueTxt)) {
                 valueTxt = valueTxt + value;
             } else if (!value.contains("0")) {
@@ -220,15 +232,15 @@ public class CalcFragment extends ParentFragment implements View.OnClickListener
             }
         }
 
-        if(valueTxt.length() > MAX_LENGTH){
+        if (valueTxt.length() > MAX_LENGTH) {
             valueTxt = valueTxt.substring(0, 5);
         }
 
         txtValue.setText(valueTxt);
     }
 
-    private void addValue(TextView txt){
-        if(!"".equals(txtValue.getText().toString())){
+    private void addValue(TextView txt) {
+        if (!"".equals(txtValue.getText().toString())) {
             Integer val1 = Integer.valueOf(txtValue.getText().toString());
             Integer val2 = Integer.valueOf(txt.getText().toString());
             Integer result = val1 + val2;
@@ -237,13 +249,13 @@ public class CalcFragment extends ParentFragment implements View.OnClickListener
         }
     }
 
-    private void removeValue(TextView txt){
-        if(!"".equals(txtValue.getText().toString())){
+    private void removeValue(TextView txt) {
+        if (!"".equals(txtValue.getText().toString())) {
             Integer val1 = Integer.valueOf(txtValue.getText().toString());
             Integer val2 = Integer.valueOf(txt.getText().toString());
             Integer result = val2 - val1;
 
-            if(result < 0){
+            if (result < 0) {
                 txt.setText("0000");
             } else {
                 txt.setText(getStringResult(result));
@@ -253,16 +265,16 @@ public class CalcFragment extends ParentFragment implements View.OnClickListener
         }
     }
 
-    private void contentRemove(){
+    private void contentRemove() {
         String value = txtValue.getText().toString();
-        if(value.length() > 0) {
+        if (value.length() > 0) {
             txtValue.setText(value.substring(0, value.length() - 1));
         }
     }
 
-    private String getStringResult(Integer value){
+    private String getStringResult(Integer value) {
         String valueResult = "" + value;
-        if(valueResult.length() < 4) {
+        if (valueResult.length() < 4) {
             while (valueResult.length() != 4) {
                 valueResult = "0" + valueResult;
             }

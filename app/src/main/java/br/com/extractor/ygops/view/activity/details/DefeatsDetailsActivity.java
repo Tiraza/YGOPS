@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
@@ -33,8 +34,10 @@ import io.realm.RealmResults;
  */
 public class DefeatsDetailsActivity extends ParentActivity {
 
-    @Bind(R.id.chart) PieChart chart;
     @Bind(R.id.list) ListView list;
+    @Bind(R.id.chart) PieChart chart;
+    @Bind(R.id.txtTitle) TextView txtTitle;
+    @Bind(R.id.txtResult) TextView txtResult;
 
     private Integer total = 0;
     private List<ItemCount> itens;
@@ -42,7 +45,7 @@ public class DefeatsDetailsActivity extends ParentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        onCreate(savedInstanceState, R.layout.activity_card_details);
+        super.onCreate(savedInstanceState, R.layout.activity_card_details);
         displayHomeEnabled();
         ButterKnife.bind(this);
 
@@ -51,6 +54,9 @@ public class DefeatsDetailsActivity extends ParentActivity {
 
         ItemCountAdapter adapter = new ItemCountAdapter(itens, total, this);
         list.setAdapter(adapter);
+
+        txtTitle.setText(getString(R.string.total_losses));
+        txtResult.setText(total.toString());
     }
 
     @Override
@@ -106,7 +112,6 @@ public class DefeatsDetailsActivity extends ParentActivity {
         chart.setDrawSliceText(false);
         chart.getLegend().setEnabled(false);
         chart.setData(data);
-        chart.animateY(1000);
     }
 
     public List<ItemCount> getOpponentDecks(List<Match> matches) {

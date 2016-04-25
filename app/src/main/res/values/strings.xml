@@ -81,4 +81,5 @@
     <string name="quantity">Quantity</string>
     <string name="percentage">Percentage</string>
     <string name="others">Others</string>
+    <string name="total_losses">Total Losses</string>
 </resources>

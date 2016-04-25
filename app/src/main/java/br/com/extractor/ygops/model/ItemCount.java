@@ -44,9 +44,9 @@ public class ItemCount implements Comparable<ItemCount> {
     @Override
     public int compareTo(ItemCount another) {
         if (this.quantidade < another.quantidade) {
-            return -1;
-        } else if (this.quantidade > another.quantidade) {
             return 1;
+        } else if (this.quantidade > another.quantidade) {
+            return -1;
         }
 
         return 0;

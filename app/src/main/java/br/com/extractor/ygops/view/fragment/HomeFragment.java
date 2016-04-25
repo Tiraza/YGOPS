@@ -38,6 +38,7 @@ import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.view.RealmFragment;
 import br.com.extractor.ygops.view.activity.MainActivity;
 import br.com.extractor.ygops.view.activity.details.DefeatsDetailsActivity;
+import br.com.extractor.ygops.view.activity.details.MoreUsedDecksDetailsActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -114,7 +115,8 @@ public class HomeFragment extends RealmFragment {
 
     @OnClick(R.id.used_decks)
     public void moreUsedDecksClick() {
-        makeToast("More Used Decks Click", Toast.LENGTH_SHORT);
+        Intent intent = new Intent(activity, MoreUsedDecksDetailsActivity.class);
+        startActivity(intent);
     }
 
     private void setupCardGratesteDefeats(RealmResults<Match> matches){

@@ -95,7 +95,6 @@ public class ProfileEditActivity extends ParentActivity {
         if ("".equals(name)) {
             txtName.setError(getResources().getString(R.string.field_required));
         } else {
-            //TODO REFACTOR
             Realm realm = Realm.getDefaultInstance();
             realm.beginTransaction();
 
