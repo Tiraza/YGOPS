@@ -104,7 +104,7 @@ public class HomeFragment extends RealmFragment {
 
     @OnClick(R.id.graph_wins)
     public void graphClick() {
-        makeToast("Graph Click", Toast.LENGTH_SHORT);
+
     }
 
     @OnClick(R.id.defeats)
