@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 
@@ -124,6 +125,7 @@ public class ListMatchFragment extends RealmFragment implements OnDeleteRealm {
         listView = getElementById(R.id.listView);
         listView.setAdapter(adapter);
         listView.setEmptyView((View) getElementById(R.id.empty_list_view));
+
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -132,6 +134,14 @@ public class ListMatchFragment extends RealmFragment implements OnDeleteRealm {
                 listView.setAdapter(deleteAdapter);
                 menuDelete.setVisible(true);
                 return true;
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Match match = adapter.getItem(position);
+                Toast.makeText(ListMatchFragment.this.getContext(), "OTK: " + match.getOtk(), Toast.LENGTH_SHORT).show();
             }
         });
 

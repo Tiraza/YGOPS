@@ -38,4 +38,23 @@
         <item name="android:layout_weight">1</item>
     </style>
 
+    <style name="edittext_login" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_edittext_login</item>
+        <item name="android:drawablePadding">20dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingTop">12dp</item>
+    </style>
+
+    <style name="button_login" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@drawable/bg_button_login</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>

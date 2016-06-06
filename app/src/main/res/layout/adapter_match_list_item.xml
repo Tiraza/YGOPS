@@ -10,50 +10,63 @@
         android:layout_height="40dp"
         android:layout_margin="8dp" />
 
-    <TextView
-        android:id="@+id/txtPlayer1"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
         android:layout_toEndOf="@+id/image_view"
-        android:layout_toRightOf="@+id/image_view"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_toRightOf="@+id/image_view">
 
-    <TextView
-        android:id="@+id/txtDeck1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtPlayer1"
-        android:layout_toEndOf="@+id/image_view"
-        android:layout_toRightOf="@+id/image_view"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:id="@+id/txtPlayer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/txtPlayer2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/txtPlayer1"
-        android:layout_toRightOf="@+id/txtPlayer1"
-        android:gravity="end"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/txtDeck1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtPlayer1"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <TextView
-        android:id="@+id/txtDeck2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/txtPlayer2"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_toEndOf="@+id/txtPlayer1"
-        android:layout_toRightOf="@+id/txtPlayer1"
-        android:gravity="end"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:id="@+id/txtPlayer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/txtPlayer1"
+            android:layout_toRightOf="@+id/txtPlayer1"
+            android:gravity="end"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/txtDeck2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/txtPlayer2"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_toEndOf="@+id/txtPlayer1"
+            android:layout_toRightOf="@+id/txtPlayer1"
+            android:gravity="end"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/txtOtk"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -18,6 +18,7 @@ public class Match extends RealmObject {
     private Player player;
     private Deck playerDeck;
     private Boolean winner;
+    private Boolean otk;
 
     @Ignore
     private Boolean isSelected;
@@ -65,6 +66,13 @@ public class Match extends RealmObject {
     }
     public void setWinner(Boolean winner) {
         this.winner = winner;
+    }
+
+    public Boolean getOtk() {
+        return otk;
+    }
+    public void setOtk(Boolean otk) {
+        this.otk = otk;
     }
 
     public Boolean getIsSelected() {

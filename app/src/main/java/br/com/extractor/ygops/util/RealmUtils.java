@@ -31,6 +31,10 @@ public final class RealmUtils {
         return INSTANCE;
     }
 
+    public Realm getRealm() {
+        return realm;
+    }
+
     public <T extends RealmObject> T get(Class<T> tClass) {
         T result = realm.where(tClass).findFirst();
         result.load();

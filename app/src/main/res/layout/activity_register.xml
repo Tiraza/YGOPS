@@ -1,0 +1,95 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_dark"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/viewA"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:background="@null"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imgProfile"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:contentDescription="@string/about"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_image_profile" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/viewB"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="32dp"
+                android:layout_weight="0.4"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/txtNome"
+                    style="@style/edittext_login"
+                    android:layout_marginTop="8dp"
+                    android:drawableLeft="@drawable/ic_person_18dp"
+                    android:hint="@string/name"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/txtEmail"
+                    style="@style/edittext_login"
+                    android:layout_marginTop="8dp"
+                    android:drawableLeft="@drawable/ic_email_18dp"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress" />
+
+                <EditText
+                    android:id="@+id/txtSenha"
+                    style="@style/edittext_login"
+                    android:layout_marginTop="8dp"
+                    android:drawableLeft="@drawable/ic_key_18dp"
+                    android:hint="@string/password"
+                    android:inputType="textPassword" />
+
+                <Button
+                    android:id="@+id/btnRegister"
+                    style="@style/button_login"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/register" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_camera"
+            app:elevation="100dp"
+            app:layout_anchor="@id/imgProfile"
+            app:layout_anchorGravity="bottom|right"
+            fab:fab_colorNormal="?attr/colorAccent"
+            fab:fab_colorPressed="?attr/colorPrimaryDark" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

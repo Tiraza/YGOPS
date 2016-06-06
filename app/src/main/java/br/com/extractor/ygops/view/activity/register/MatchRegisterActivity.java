@@ -1,8 +1,6 @@
 package br.com.extractor.ygops.view.activity.register;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -35,9 +33,11 @@ public class MatchRegisterActivity extends ParentActivity {
     @Bind(R.id.spnDeck1) Spinner spnDeck1;
     @Bind(R.id.spnDeck2) Spinner spnDeck2;
     @Bind(R.id.spnPlayer) Spinner spnPlayer;
+    @Bind(R.id.swtOtk) Switch swtOtk;
     @Bind(R.id.swtWinner) Switch swtWinner;
     @Bind(R.id.txtDuelist) TextView txtDuelist;
 
+    private Boolean isOtk = false;
     private Boolean isWinner = false;
     private RealmResults<Deck> listDeck;
     private RealmResults<Player> listPlayer;
@@ -73,6 +73,7 @@ public class MatchRegisterActivity extends ParentActivity {
             match.setPlayer(opponent);
             match.setPlayerDeck(opponentDeck);
             match.setWinner(isWinner);
+            match.setOtk(isOtk);
 
             makeToast(R.string.successfully_included, Toast.LENGTH_SHORT);
             RealmUtils.getInstance().insert(match);
@@ -132,6 +133,13 @@ public class MatchRegisterActivity extends ParentActivity {
             @Override
             public void onCheckedChanged(CompoundButton button, boolean isChecked) {
                 isWinner = isChecked;
+            }
+        });
+
+        swtOtk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+                isOtk = isChecked;
             }
         });
     }

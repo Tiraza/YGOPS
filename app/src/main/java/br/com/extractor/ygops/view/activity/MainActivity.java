@@ -1,7 +1,6 @@
 package br.com.extractor.ygops.view.activity;
 
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -10,8 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 
 import com.lapism.searchview.view.SearchCodes;
 import com.lapism.searchview.view.SearchView;
@@ -28,13 +25,12 @@ import java.util.ArrayList;
 
 import br.com.extractor.ygops.R;
 import br.com.extractor.ygops.model.Profile;
-import br.com.extractor.ygops.util.ColorGenerator;
 import br.com.extractor.ygops.util.ImageUtils;
 import br.com.extractor.ygops.util.RealmUtils;
 import br.com.extractor.ygops.util.SplashView;
 import br.com.extractor.ygops.view.ParentActivity;
 import br.com.extractor.ygops.view.activity.edit.ProfileEditActivity;
-import br.com.extractor.ygops.view.activity.register.ProfileRegisterActivity;
+import br.com.extractor.ygops.view.activity.login.LoginActivity;
 import br.com.extractor.ygops.view.fragment.CalcFragment;
 import br.com.extractor.ygops.view.fragment.HomeFragment;
 import br.com.extractor.ygops.view.fragment.ListDeckFragment;
@@ -87,51 +83,18 @@ public class MainActivity extends ParentActivity {
         onCreate(savedInstanceState, R.layout.activity_main);
         profile = Realm.getDefaultInstance().where(Profile.class).findFirst();
 
-        if(profile != null) {
+        if (profile != null) {
             fm = getSupportFragmentManager();
-
             setupNavigationDrawer();
-            mMainView = (FrameLayout) findViewById(R.id.splashContainer);
-
-            mSplashView = new SplashView(this);
-            mSplashView.setRemoveFromParentOnEnd(true);
-            mSplashView.setSplashBackgroundColor(ContextCompat.getColor(this, R.color.primary_dark));
-            mSplashView.setRotationRadius(getResources().getDimensionPixelOffset(R.dimen.splash_rotation_radius));
-            mSplashView.setCircleRadius(getResources().getDimensionPixelSize(R.dimen.splash_circle_radius));
-            mSplashView.setRotationDuration(getResources().getInteger(R.integer.splash_rotation_duration));
-            mSplashView.setSplashDuration(getResources().getInteger(R.integer.splash_duration));
-            mSplashView.setCircleColors(new ColorGenerator().getColors());
-
-            final View activityRootView = findViewById(R.id.activityRoot);
-            activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    Rect r = new Rect();
-                    activityRootView.getWindowVisibleDisplayFrame(r);
-
-                    int heightDiff = activityRootView.getRootView().getHeight() - (r.bottom - r.top);
-                    if (heightDiff > 100) {
-                        keyboardUp = true;
-                    } else if (heightDiff < 100 && keyboardUp) {
-                        if(mSearchView != null && mSearchView.isSearchOpen()){
-                            mSearchView.hide(true);
-                        }
-                        keyboardUp = false;
-                    }
-                }
-            });
-
-            mMainView.addView(mSplashView, 0);
-            startLoadingData();
         } else {
-            startActivity(new Intent(this, ProfileRegisterActivity.class));
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
     }
 
     @Override
     public void onBackPressed() {
-        if(mSearchView != null && mSearchView.isSearchOpen()){
+        if (mSearchView != null && mSearchView.isSearchOpen()) {
             mSearchView.hide(true);
         } else if (drawerResult != null && drawerResult.isDrawerOpen()) {
             drawerResult.closeDrawer();
@@ -190,7 +153,7 @@ public class MainActivity extends ParentActivity {
         profileDrawerItem = new ProfileDrawerItem();
         profileDrawerItem.withName(profile.getNome());
 
-        if(profile.getImage() != null){
+        if (profile.getImage() != null) {
             profileDrawerItem.withIcon(ImageUtils.getInstance().getRoundedCornerBitmap(profile.getImage()));
         } else {
             profileDrawerItem.withIcon(R.mipmap.ic_launcher);
@@ -275,7 +238,7 @@ public class MainActivity extends ParentActivity {
         }
     }
 
-    public SearchView getSearchView(){
+    public SearchView getSearchView() {
         mSearchView = (SearchView) findViewById(R.id.searchView);
         mSearchView.setVersion(SearchCodes.VERSION_MENU_ITEM);
         mSearchView.setStyle(SearchCodes.STYLE_MENU_ITEM_CLASSIC);

@@ -1,46 +1,42 @@
 {
   "project_info": {
-    "project_id": "duel-statistcs",
-    "project_number": "953656268315",
-    "name": "Duel Statistcs"
+    "project_number": "850600529063",
+    "firebase_url": "https://project-5256336167522048750.firebaseio.com",
+    "project_id": "project-5256336167522048750",
+    "storage_bucket": "project-5256336167522048750.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:953656268315:android:2e7f6a35454a2dc5",
-        "client_id": "android:br.com.extractor.ygops",
-        "client_type": 1,
+        "mobilesdk_app_id": "1:850600529063:android:2e7f6a35454a2dc5",
         "android_client_info": {
-          "package_name": "br.com.extractor.ygops",
-          "certificate_hash": []
+          "package_name": "br.com.extractor.ygops"
         }
       },
-      "oauth_client": [],
-      "api_key": [],
+      "oauth_client": [
+        {
+          "client_id": "850600529063-019jt98klh97uhroafi8jl4bjlg7aqqa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4p9mlE53S6raNj29um5MFAioRIDyroq0"
+        }
+      ],
       "services": {
         "analytics_service": {
-          "status": 2,
-          "analytics_property": {
-            "tracking_id": "UA-45287204-4"
-          }
-        },
-        "cloud_messaging_service": {
-          "status": 1,
-          "apns_config": []
+          "status": 1
         },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
         },
-        "google_signin_service": {
-          "status": 1
-        },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
   ],
-  "client_info": [],
-  "ARTIFACT_VERSION": "1"
+  "configuration_version": "1"
 }

@@ -110,8 +110,17 @@
                 android:id="@+id/swtWinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/winner"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/secondary_text" />
+
+            <Switch
+                android:id="@+id/swtOtk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/otk"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/secondary_text" />
 

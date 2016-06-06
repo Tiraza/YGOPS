@@ -67,4 +67,9 @@
     <string name="percentage">Porcentagem</string>
     <string name="others">Outros</string>
     <string name="total_losses">Total de Derrotas</string>
+    <string name="password">Senha</string>
+    <string name="forgot_your_password">Esqueceu sua senha?</string>
+    <string name="please_wait">Aguarge</string>
+    <string name="authenticating">Autenticando</string>
+    <string name="registering">Registrando</string>
 </resources>

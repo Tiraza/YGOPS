@@ -42,8 +42,17 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.2'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
-    compile 'com.google.android.gms:play-services-analytics:8.4.0'
+
+    compile 'com.google.android.gms:play-services-analytics:9.0.1'
+    compile 'com.google.firebase:firebase-auth:9.0.1'
+    compile 'com.google.firebase:firebase-storage:9.0.1'
+    compile 'com.google.firebase:firebase-database:9.0.1'
+
+    compile 'com.afollestad.material-dialogs:core:0.8.5.9'
+
     compile('com.mikepenz:materialdrawer:5.0.5@aar') {
         transitive = true
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

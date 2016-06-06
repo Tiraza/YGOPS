@@ -68,28 +68,34 @@ public class MatchesAdapter extends BaseAdapter {
         holder.opponentDeck.setText(match.getPlayerDeck().getNome());
 
         if (match.getWinner()) {
-            holder.image.setImageDrawable(
-                    ImageUtils.getInstance().getDrawable(context.getResources().getString(R.string.match_winner_hint), ContextCompat.getColor(context, R.color.match_winner)));
+            int color = ContextCompat.getColor(context, R.color.match_winner);
+            holder.image.setImageDrawable(ImageUtils.getInstance().getDrawable(context.getResources().getString(R.string.match_winner_hint), color));
+            setupTextOtk(holder, match.getOtk(), color);
         } else {
-            holder.image.setImageDrawable(
-                    ImageUtils.getInstance().getDrawable(context.getResources().getString(R.string.match_loser_hint), ContextCompat.getColor(context, R.color.match_loser)));
+            int color = ContextCompat.getColor(context, R.color.match_loser);
+            holder.image.setImageDrawable(ImageUtils.getInstance().getDrawable(context.getResources().getString(R.string.match_loser_hint), color));
+            setupTextOtk(holder, match.getOtk(), color);
         }
 
         return convertView;
     }
 
+    private void setupTextOtk(MatchHolder holder, Boolean otk, int color) {
+        if (otk != null && otk) {
+            holder.txtOtk.setVisibility(View.VISIBLE);
+            holder.txtOtk.setText(context.getResources().getString(R.string.otk).toUpperCase());
+            holder.txtOtk.setTextColor(color);
+        }
+    }
+
     static class MatchHolder {
         View row;
-        @Bind(R.id.image_view)
-        ImageView image;
-        @Bind(R.id.txtPlayer1)
-        TextView myName;
-        @Bind(R.id.txtDeck1)
-        TextView myDeck;
-        @Bind(R.id.txtPlayer2)
-        TextView opponentName;
-        @Bind(R.id.txtDeck2)
-        TextView opponentDeck;
+        @Bind(R.id.image_view) ImageView image;
+        @Bind(R.id.txtPlayer1) TextView myName;
+        @Bind(R.id.txtDeck1) TextView myDeck;
+        @Bind(R.id.txtPlayer2) TextView opponentName;
+        @Bind(R.id.txtDeck2) TextView opponentDeck;
+        @Bind(R.id.txtOtk) TextView txtOtk;
 
         public MatchHolder(View view) {
             row = view;
