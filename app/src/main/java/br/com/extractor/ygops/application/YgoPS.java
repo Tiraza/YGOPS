@@ -17,8 +17,6 @@ import io.realm.RealmSchema;
 public class YgoPS extends Application {
 
     private static Realm mRealm;
-    private static Tracker mTracker;
-    private static final String ANALYTICS_ID = "UA-45287204-4";
 
     @Override
     public void onCreate() {
@@ -30,13 +28,6 @@ public class YgoPS extends Application {
                 .migration(getMigration())
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
-
-        GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-
-        mTracker = analytics.newTracker(ANALYTICS_ID);
-        mTracker.enableExceptionReporting(true);
-        mTracker.enableAutoActivityTracking(true);
     }
 
     public static Realm getDefaultRealm() {
@@ -45,10 +36,6 @@ public class YgoPS extends Application {
         }
 
         return mRealm;
-    }
-
-    synchronized public Tracker getDefaultTracker() {
-        return mTracker;
     }
 
     private RealmMigration getMigration () {

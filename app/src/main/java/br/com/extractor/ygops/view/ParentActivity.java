@@ -34,18 +34,6 @@ public abstract class ParentActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
-    }
-
     protected final void makeToast(int idMensagem, int duracao) {
         makeToast(getString(idMensagem), duracao);
     }
