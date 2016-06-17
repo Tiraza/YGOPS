@@ -50,6 +50,7 @@ dependencies {
 
     compile 'com.afollestad.material-dialogs:core:0.8.5.9'
 
+    testCompile "org.robolectric:robolectric:3.0"
     compile('com.mikepenz:materialdrawer:5.0.5@aar') {
         transitive = true
     }
