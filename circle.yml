@@ -1,7 +1,13 @@
 machine:
+  environment:
+    ANDROID_HOME: /usr/local/android-sdk-linux
+    GRADLE_OPTS: -Xmx512m
   pre:
     - wget "https://services.gradle.org/distributions/gradle-2.10-bin.zip"; unzip gradle-2.10-bin.zip
 
 dependencies:
   cache_directories:
     - ~/.android
+  post:
+    - echo y | android update sdk --no-ui --all --filter "platform-tools,build-tools-21.0.2,build-tools-20.0.0,android-21,sys-img-armeabi-v7a-android-21,android-20,sys-img-armeabi-v7a-android-wear-20,android-19,sys-img-armeabi-v7a-android-19,android-18,sys-img-armeabi-v7a-android-18,android-17,sys-img-armeabi-v7a-android-17,android-16,sys-img-armeabi-v7a-android-16,android-15,sys-img-armeabi-v7a-android-15,android-10,extra-android-support,extra-google-google_play_services,extra-google-m2repository,extra-android-m2repository"
+    -  echo n | android create avd -n testing -f -t android-18
